@@ -11,7 +11,7 @@ const Hamburger = () => {
     };
 
     return (
-        <div data-testid="hamburger" className="relative w-7 h-7" onClick={handleClick}>
+        <div data-testid="hamburger" className="relative w-9 h-7" onClick={handleClick}>
             <div id="hamburger" className={`w-full h-1 bg-white transition duration-300 transform ${isOpen ? 'rotate-45 translate-y-3': ''}`}></div>
             <div id="hamburger" className={`absolute top-3 w-full h-1 bg-white transition duration-300 transform  ${isOpen ? 'opacity-0': ''}`}></div>
             <div id="hamburger" className={`absolute bottom-0 w-full h-1 bg-white transition duration-300 transform ${isOpen ? '-rotate-45 -translate-y-3': ''}`}></div>
