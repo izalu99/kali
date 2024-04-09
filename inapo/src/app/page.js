@@ -12,7 +12,7 @@ export default function Home() {
   
 
   return (
-    <main className="flex min-h-screen justify-between flex-col p-24">
+    <main className="flex min-h-screen justify-between flex-col p-24 pt-10">
       
       <div className="flex flex-row justify-between">
         <div className="p-4"><BlogName /></div>
