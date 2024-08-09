@@ -1,7 +1,7 @@
 
 import Header from "@/components/header"
 
-const MenuLayout = ({ children }) => {
+const MenuLayout = ({ children }: { children: React.ReactNode }) => {
     return (
         <div>
             <Header />

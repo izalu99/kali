@@ -1,6 +1,5 @@
 "use client"
 
-import Image from "next/image";
 import Header from "@/components/header";
 import Headline from "@/components/headline";
 import SearchBar from "@/components/searchbar";
