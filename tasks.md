@@ -10,5 +10,4 @@
 - [] deploy to vercel
 - [] create admin interface for managing the words and definitions. (only admin can access this interface)
 - [] user interface continue elevating the landing page (where the search bar is)
-- [] incorporate docker??
-- [] add a way to learn words?
+- [] edit the read me file so this project can be reviewed by future you.
