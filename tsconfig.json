@@ -11,8 +11,7 @@
         "./*"
       ]
     },
-    "target": "es5",
-    "module": "ESNext",
+    "module": "esnext",
     "strict": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
