@@ -33,9 +33,9 @@ export const users = sqliteTable('users',{
     email:text('email').notNull().unique(),
 });
 
-export const userRelations = relations(users, ({ many }) =>({
-    words: many(words),
-}));
+//export const userRelations = relations(users, ({ many }) =>({
+//    words: many(words),
+//}));
 
 
 export const words = sqliteTable('words',{
@@ -50,8 +50,8 @@ export const words = sqliteTable('words',{
 });
 
 // export inferred types for better type safety
-export type InsertUser = typeof users.$inferInsert;
-export type SelectUser = typeof users.$inferSelect;
+//export type InsertUser = typeof users.$inferInsert;
+//export type SelectUser = typeof users.$inferSelect;
 
-export type InsertWord = typeof words.$inferInsert;
-export type SelectWord = typeof words.$inferSelect;
+//export type InsertWord = typeof words.$inferInsert;
+//export type SelectWord = typeof words.$inferSelect;
