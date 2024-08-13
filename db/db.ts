@@ -1,5 +1,3 @@
-//import { config } from 'dotenv'
-//config({ path: '.env' })
 
 import 'dotenv/config'
 import { drizzle } from 'drizzle-orm/libsql'
@@ -28,9 +26,9 @@ console.log('Auth Token:', token);
 // validate url using URL constructor
 try {
     new URL(url);
-    console.log('URL is valid:', url);
+    console.log('URL is valid');
 } catch (error) {
-    console.error('Invalid URL:', url);
+    console.error('Invalid URL');
     throw error;
 }
 
@@ -41,7 +39,7 @@ try{
         url: url!,
         authToken: token,
     });
-    console.log('Client created successfully: client');
+    console.log('Client created successfully');
 } catch (error) {
     console.error('Error creating client:', error);
     throw error;

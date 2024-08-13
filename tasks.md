@@ -4,8 +4,8 @@
 - [x] rename and rebrand
 - [x] landing page (where the interface to search for a dictionary is)
 - [x] sign up and sign in page with clerk
-- [] setup database with turso
-- [] integrate drizzle orm
+- [x] setup database with turso
+- [x] integrate drizzle orm
 - [] build the graphql api
 - [] deploy to vercel
 - [] create admin interface for managing the words and definitions. (only admin can access this interface)

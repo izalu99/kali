@@ -1,10 +1,7 @@
 
-//import { config } from 'dotenv'
-//config({path:'.env'});
-//import { defineConfig } from 'drizzle-kit'
 
 import'dotenv/config';
-import type { Config } from 'drizzle-kit'
+import { defineConfig } from 'drizzle-kit'
 
 
 let url = process.env.TURSO_CONNECTION_URL;
@@ -23,21 +20,20 @@ if (!token) {
 }
 
 //log the url 
-console.log('Connection URL:', url);
 console.log(typeof url)
 
 //validate the url 
 try{
     new URL(url);
-    console.log('URL is valid:', url);
+    console.log('URL is valid');
 } catch (error) {
-    console.error('Invalid TURSO_CONNECTION_URL:', url);
+    console.error('Invalid TURSO_CONNECTION_URL');
     throw error;
 
 }
 
 
-export default {
+export default defineConfig({
     schema:'./db/schema.ts',
     out: './migrations',
     driver: 'turso',
@@ -46,4 +42,4 @@ export default {
         url: url ?? '',
         authToken: token,
     },
-} satisfies Config;
+});
