@@ -1,26 +1,37 @@
 
 //import { config } from 'dotenv'
 //config({path:'.env'});
-
-import 'dotenv/config';
 //import { defineConfig } from 'drizzle-kit'
+
+import'dotenv/config';
 import type { Config } from 'drizzle-kit'
 
+
+let url = process.env.TURSO_CONNECTION_URL;
+if (url?.includes(' '))  {
+    url = url.trim();
+}
+
+const token = process.env.TURSO_AUTH_TOKEN;
+
 //ensure env variables are set
-if (!process.env.TURSO_CONNECTION_URL) {
+if (!url) {
     throw new Error('TURSO_CONNECTION_URL is not set')
 }
-if (!process.env.TURSO_AUTH_TOKEN) {
+if (!token) {
     throw new Error('TURSO_AUTH_TOKEN is not set')
 }
 
+//log the url 
+console.log('Connection URL:', url);
+console.log(typeof url)
 
-console.log(typeof process.env.TURSO_CONNECTION_URL)
-//validate the url
+//validate the url 
 try{
-    new URL(process.env.TURSO_CONNECTION_URL);
+    new URL(url);
+    console.log('URL is valid:', url);
 } catch (error) {
-    console.error('Invalid TURSO_CONNECTION_URL:', process.env.TURSO_CONNECTION_URL);
+    console.error('Invalid TURSO_CONNECTION_URL:', url);
     throw error;
 
 }
@@ -32,7 +43,7 @@ export default {
     driver: 'turso',
     dialect: 'sqlite',
     dbCredentials: {
-        url: process.env.TURSO_CONNECTION_URL!,
-        authToken: process.env.TURSO_AUTH_TOKEN,
+        url: url ?? '',
+        authToken: token,
     },
 } satisfies Config;

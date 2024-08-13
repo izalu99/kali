@@ -14,7 +14,7 @@
     "@apollo/server": "^4.11.0",
     "@as-integrations/next": "^3.1.0",
     "@clerk/nextjs": "^5.3.0",
-    "@libsql/client": "^0.6.2",
+    "@libsql/client": "^0.5.6",
     "@urql/exchange-graphcache": "^7.1.2",
     "@urql/next": "^1.1.1",
     "dotenv": "^16.4.5",

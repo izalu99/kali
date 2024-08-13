@@ -50,8 +50,8 @@ export const words = sqliteTable('words',{
 });
 
 // export inferred types for better type safety
-//export type InsertUser = typeof users.$inferInsert;
-//export type SelectUser = typeof users.$inferSelect;
+export type InsertUser = typeof users.$inferInsert;
+export type SelectUser = typeof users.$inferSelect;
 
-//export type InsertWord = typeof words.$inferInsert;
-//export type SelectWord = typeof words.$inferSelect;
+export type InsertWord = typeof words.$inferInsert;
+export type SelectWord = typeof words.$inferSelect;
