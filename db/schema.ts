@@ -1,6 +1,7 @@
 import { randomUUID } from "crypto";
 import { relations, sql } from 'drizzle-orm'
-import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
+import { integer, sqliteTable, text, foreignKey } from 'drizzle-orm/sqlite-core'
+
 
 
 // Define the schema for the database
@@ -43,11 +44,26 @@ export const words = sqliteTable('words',{
     createdAt: createdAt(),
     updatedAt: updatedAt(),
     word: text('word').notNull(),
-    translation: text('translation').notNull(),
+    translationId: text('translationId').notNull(),
     type: text('type'),
     tense: text('tense'),
     example: text('example'),
 });
+
+export const translations = sqliteTable('translations',{
+    id: id(),
+    createdAt: createdAt(),
+    updatedAt: updatedAt(),
+    language: text('language').notNull(),
+    text: text('text').notNull(),
+});
+
+export const wordRelations = relations(words, ({ one }) =>({
+    translation: one(translations, {
+        fields: [words.translationId],
+        references: [translations.id]
+    }),
+}));
 
 // export inferred types for better type safety
 export type InsertUser = typeof users.$inferInsert;
@@ -55,3 +71,6 @@ export type SelectUser = typeof users.$inferSelect;
 
 export type InsertWord = typeof words.$inferInsert;
 export type SelectWord = typeof words.$inferSelect;
+
+export type InsertTranslation = typeof translations.$inferInsert;
+export type SelectTranslation = typeof translations.$inferSelect;
