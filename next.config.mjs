@@ -11,16 +11,7 @@ const nextConfig = {
                     },
                     {
                         key: 'Access-Control-Allow-Origin',
-                        value: (req) =>  {
-                            // later include the domain when deployed
-                            const allowedOrigins = ['http://localhost:3000', 'https://localhost:3000', 'https://localhost'];
-                            const origin = req.headers.origin;
-                            if (allowedOrigins.includes(origin)) {
-                                return origin;
-                            } else {
-                                return allowedOrigins[0];  
-                            }
-                        },
+                        value: 'http://localhost:3000' || 'https://localhost:3000'
                     },
                     {
                         key: 'Access-Control-Allow-Methods',

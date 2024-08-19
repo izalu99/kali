@@ -1,6 +1,7 @@
 import { randomUUID } from "crypto";
 import { relations, sql } from 'drizzle-orm'
-import { integer, sqliteTable, text, foreignKey } from 'drizzle-orm/sqlite-core'
+import { ForeignKey } from "drizzle-orm/mysql-core";
+import {foreignKey, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 
 
 
@@ -13,8 +14,8 @@ import { integer, sqliteTable, text, foreignKey } from 'drizzle-orm/sqlite-core'
 // make some utility functions
 const id = () =>
     text('id')
+        .$defaultFn(() => randomUUID())
         .primaryKey()
-        .$default(() => randomUUID())
 
 
 const createdAt = () =>
@@ -29,48 +30,37 @@ const updatedAt = () =>
 
 
 export const users = sqliteTable('users',{
-    id: id(),
+    id: id().primaryKey(),
     createdAt: createdAt(),
     email:text('email').notNull().unique(),
 });
 
-//export const userRelations = relations(users, ({ many }) =>({
-//    words: many(words),
-//}));
-
 
 export const words = sqliteTable('words',{
-    id: id(),
+    id: id().primaryKey(),
     createdAt: createdAt(),
     updatedAt: updatedAt(),
-    word: text('word').notNull(),
-    translationId: text('translationId').notNull(),
+    text: text('text').notNull(),
+    translation: text('translation'),
     type: text('type'),
     tense: text('tense'),
     example: text('example'),
 });
 
+//create a table for translations
 export const translations = sqliteTable('translations',{
-    id: id(),
+    id: id().primaryKey(),
     createdAt: createdAt(),
     updatedAt: updatedAt(),
-    language: text('language').notNull(),
     text: text('text').notNull(),
+    wordId: text('wordId').notNull().references(()=>words.id),
 });
 
-export const wordRelations = relations(words, ({ one }) =>({
-    translation: one(translations, {
-        fields: [words.translationId],
-        references: [translations.id]
+// create relations for words
+export const translationRelations = relations(translations, ({ one }) =>({
+    word: one(words, {
+        fields: [translations.wordId],
+        references: [words.id],
     }),
-}));
-
-// export inferred types for better type safety
-export type InsertUser = typeof users.$inferInsert;
-export type SelectUser = typeof users.$inferSelect;
-
-export type InsertWord = typeof words.$inferInsert;
-export type SelectWord = typeof words.$inferSelect;
-
-export type InsertTranslation = typeof translations.$inferInsert;
-export type SelectTranslation = typeof translations.$inferSelect;
+})
+);
