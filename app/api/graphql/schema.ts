@@ -10,12 +10,13 @@ const schema = `
         id: ID!
         language: String!
         text: String!
+        wordId: String
     }
 
     type Word {
         id: ID!
         text: String!
-        translation: Translation!
+        translations: [Translation]
         type: String
         tense: String
         example: String
@@ -32,6 +33,11 @@ const schema = `
         email: String!
     }
 
+    type GetWordAndTranslation {
+        word: Word
+        translations: Translation
+    }
+
 
     type Query {
         me: String!
@@ -40,6 +46,7 @@ const schema = `
         words: [Word]
         translations: [Translation]
         example: [Example]
+        GetWordAndTranslation(wordId: ID!): GetWordAndTranslation
     }
     
     type Mutation {

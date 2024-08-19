@@ -41,7 +41,6 @@ export const words = sqliteTable('words',{
     createdAt: createdAt(),
     updatedAt: updatedAt(),
     text: text('text').notNull(),
-    translation: text('translation'),
     type: text('type'),
     tense: text('tense'),
     example: text('example'),
@@ -64,3 +63,11 @@ export const translationRelations = relations(translations, ({ one }) =>({
     }),
 })
 );
+
+
+
+export const SelectUser = users.$inferSelect;
+export const SelectWord = words.$inferSelect;
+export const SelectTranslation = translations.$inferSelect;
+export const CreateWord = words.$inferInsert;
+export const CreateTranslation = translations.$inferInsert;

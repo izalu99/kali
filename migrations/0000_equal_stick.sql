@@ -18,7 +18,6 @@ CREATE TABLE `words` (
 	`created_at` text DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	`updated_at` text DEFAULT CURRENT_TIMESTAMP,
 	`text` text NOT NULL,
-	`translation` text,
 	`type` text,
 	`tense` text,
 	`example` text
