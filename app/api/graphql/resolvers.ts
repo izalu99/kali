@@ -1,6 +1,6 @@
 import { db } from "@/db/db";
 import { __InputValue, GraphQLError } from "graphql";
-import data from '@/data.json';
+
 import { and, asc, desc, eq, or, sql, } from 'drizzle-orm';
 
 import { SelectUser, SelectWord, SelectTranslation, CreateWord, CreateTranslation, words, translations } from "@/db/schema";
@@ -68,14 +68,48 @@ const resolvers = {
 
         createWord: async (_:any, { input }:any, __:any) => {
             try {
+                // Check if the word already exists
+                const existingWord = await db.query.words.findFirst({
+                    where: eq(words.text, input.text),
+                });
+                if (existingWord) {
+                    throw new GraphQLError('Word already exists');
+                }
+
+                // Create the word (if it doesn't exist)
                 const word = await db.insert(words).values({...input}).returning();
                 return word[0];
-            } catch (error) {
+            } catch (error: any) {
+                if (error.message === 'Word already exists') {
+                    throw new GraphQLError(error.message);
+                }
                 throw new GraphQLError('Error creating word');
             }
         },
 
-    }
-}
+        createTranslation: async (_:any, { input }:any, __:any) => {
+            try {
+                // Check if the translation already exists
+                const existingTranslation = await db.query.translations.findFirst({
+                    where: eq(translations.text, input.text),
+                });
+                if (existingTranslation) {
+                    throw new GraphQLError('Translation already exists');
+                }
+
+                // Create the translation (if it doesn't exist)
+                const translation = await db.insert(translations).values({...input}).returning();
+                return translation[0];
+            
+            } catch(error:any){
+                if (error.message === 'Translation already exists') {
+                    throw new GraphQLError(error.message);
+                }
+                throw new GraphQLError('Error creating translation');
+            }
+        },
+
+    }//end of Mutation
+}//end of resolvers
 
 export default resolvers;

@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "e2cc41e6-7241-4838-925d-aaf6445311a7",
+  "id": "98c4a2d5-3d49-4a38-b8b2-f4ee3382e8ea",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "translations": {
@@ -32,6 +32,13 @@
         },
         "text": {
           "name": "text",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "language": {
+          "name": "language",
           "type": "text",
           "primaryKey": false,
           "notNull": true,

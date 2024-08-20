@@ -51,6 +51,7 @@ export const translations = sqliteTable('translations',{
     createdAt: createdAt(),
     updatedAt: updatedAt(),
     text: text('text').notNull(),
+    language: text('language').notNull(),
     wordId: text('wordId').notNull().references(()=>words.id),
 });
 

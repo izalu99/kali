@@ -49,21 +49,17 @@ const schema = `
         example: String
     }
     
+    input CreateTranslationInput {
+        id: ID!
+        language: String!
+        text: String!
+        wordId: String!
+    }
+
+    
     type Mutation {
-        createUser(id:ID!, email: String!): User!
-        createAdmin(id:ID!, email: String!): Admin!
         createWord(input: CreateWordInput): Word!
-        createTranslation(id: ID!, language: String!, text: String!): Translation!
-
-        updateUser(email: String!): User!
-        updateAdmin(email: String!): Admin!
-        updateWord(text: String!, type: String, tense: String, example: String): Word!
-        updateTranslation(language: String!, text: String!): Translation!
-
-        deleteUser(email: String!): User!
-        deleteAdmin(email: String!): Admin!
-        deleteWord(text: String!): Word!
-        deleteTranslation(text: String!): Translation!
+        createTranslation(input: CreateTranslationInput): Translation!
 
     }
 `
