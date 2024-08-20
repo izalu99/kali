@@ -41,15 +41,23 @@ const schema = `
         search(input:String!): [SearchResult]
     }
     
+    input CreateWordInput {
+        id: ID!
+        text: String!
+        type: String
+        tense: String
+        example: String
+    }
+    
     type Mutation {
         createUser(id:ID!, email: String!): User!
         createAdmin(id:ID!, email: String!): Admin!
-        createWord(id:ID!, text: String!, translation: String!, type: String, tense: String, example: String): Word!
+        createWord(input: CreateWordInput): Word!
         createTranslation(id: ID!, language: String!, text: String!): Translation!
 
         updateUser(email: String!): User!
         updateAdmin(email: String!): Admin!
-        updateWord(text: String!, translation: String!, type: String, tense: String, example: String): Word!
+        updateWord(text: String!, type: String, tense: String, example: String): Word!
         updateTranslation(language: String!, text: String!): Translation!
 
         deleteUser(email: String!): User!

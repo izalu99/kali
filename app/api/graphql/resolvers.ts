@@ -1,5 +1,5 @@
 import { db } from "@/db/db";
-import { GraphQLError } from "graphql";
+import { __InputValue, GraphQLError } from "graphql";
 import data from '@/data.json';
 import { and, asc, desc, eq, or, sql, } from 'drizzle-orm';
 
@@ -63,6 +63,19 @@ const resolvers = {
         },
 
     },
+
+    Mutation: {
+
+        createWord: async (_:any, { input }:any, __:any) => {
+            try {
+                const word = await db.insert(words).values({...input}).returning();
+                return word[0];
+            } catch (error) {
+                throw new GraphQLError('Error creating word');
+            }
+        },
+
+    }
 }
 
 export default resolvers;
