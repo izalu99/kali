@@ -1,18 +1,28 @@
 import { db } from "@/db/db";
 import { GraphQLError } from "graphql";
 import data from '@/data.json';
+import { and, asc, desc, eq, or, sql, } from 'drizzle-orm';
 
-import { SelectUser, SelectWord, SelectTranslation, CreateWord, CreateTranslation } from "@/db/schema";
-import { asc, count, eq, getTableColumns, gt, sql } from 'drizzle-orm';
+import { SelectUser, SelectWord, SelectTranslation, CreateWord, CreateTranslation, words, translations } from "@/db/schema";
 
 const resolvers = {
+    SearchResult : {
+        __resolveType(obj: any, context: any, info: any) {
+            if (obj.text) {
+                return 'Word';
+            }
+            if (obj.language) {
+                return 'Translation';
+            }
+            return null;
+        }
+    },
     Query: {
+
         me: async () => {
             return "Hi there!";
         },
-        example: async () => {
-            return data;
-        },
+
         words: async () => {
             try{
                 const words = await db.query.words.findMany();
@@ -30,24 +40,28 @@ const resolvers = {
                 throw new GraphQLError('Error getting translations');
             }
         },
-
-        GetWordAndTranslation: async (_, { wordId }, __) => {
+    
+        search: async (_: any, { input }: any) => {
             try {
-                const word = await db.query.words.findFirst({
-                    where: {
-                        id: wordId
-                    }
+                let searchResults = [];
+                const wordss = await db.query.words.findMany({
+                    where: eq(words.text, input),
                 });
-                const translations = await db.query.translations.findFirst({
-                    where: {
-                        wordId: wordId
-                    }
-                });
-                return { word, translations };
+                searchResults = [...wordss]; 
+                
+                if (wordss.length === 0) {
+                    const translationss = await db.query.translations.findMany({
+                        where: eq(translations.text, input),
+                    });
+                    searchResults = [...translationss];
+                }
+               
+                return searchResults;
             } catch (error) {
-                throw new GraphQLError('Error getting word and translation');
+                throw new GraphQLError('Error searching');
             }
         },
+
     },
 }
 

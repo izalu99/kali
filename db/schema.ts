@@ -1,7 +1,6 @@
 import { randomUUID } from "crypto";
 import { relations, sql } from 'drizzle-orm'
-import { ForeignKey } from "drizzle-orm/mysql-core";
-import {foreignKey, sqliteTable, text } from 'drizzle-orm/sqlite-core'
+import {sqliteTable, text } from 'drizzle-orm/sqlite-core'
 
 
 
