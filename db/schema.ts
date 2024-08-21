@@ -1,6 +1,7 @@
 import { randomUUID } from "crypto";
 import { relations, sql } from 'drizzle-orm'
-import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
+import {sqliteTable, text } from 'drizzle-orm/sqlite-core'
+
 
 
 // Define the schema for the database
@@ -12,8 +13,8 @@ import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 // make some utility functions
 const id = () =>
     text('id')
+        .$defaultFn(() => randomUUID())
         .primaryKey()
-        .$default(() => randomUUID())
 
 
 const createdAt = () =>
@@ -28,30 +29,45 @@ const updatedAt = () =>
 
 
 export const users = sqliteTable('users',{
-    id: id(),
+    id: id().primaryKey(),
     createdAt: createdAt(),
     email:text('email').notNull().unique(),
 });
 
-//export const userRelations = relations(users, ({ many }) =>({
-//    words: many(words),
-//}));
-
 
 export const words = sqliteTable('words',{
-    id: id(),
+    id: id().primaryKey(),
     createdAt: createdAt(),
     updatedAt: updatedAt(),
-    word: text('word').notNull(),
-    translation: text('translation').notNull(),
+    text: text('text').notNull(),
     type: text('type'),
     tense: text('tense'),
     example: text('example'),
 });
 
-// export inferred types for better type safety
-export type InsertUser = typeof users.$inferInsert;
-export type SelectUser = typeof users.$inferSelect;
+//create a table for translations
+export const translations = sqliteTable('translations',{
+    id: id().primaryKey(),
+    createdAt: createdAt(),
+    updatedAt: updatedAt(),
+    text: text('text').notNull(),
+    language: text('language').notNull(),
+    wordId: text('wordId').notNull().references(()=>words.id),
+});
 
-export type InsertWord = typeof words.$inferInsert;
-export type SelectWord = typeof words.$inferSelect;
+// create relations for words
+export const translationRelations = relations(translations, ({ one }) =>({
+    word: one(words, {
+        fields: [translations.wordId],
+        references: [words.id],
+    }),
+})
+);
+
+
+
+export const SelectUser = users.$inferSelect;
+export const SelectWord = words.$inferSelect;
+export const SelectTranslation = translations.$inferSelect;
+export const CreateWord = words.$inferInsert;
+export const CreateTranslation = translations.$inferInsert;
