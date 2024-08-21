@@ -79,6 +79,10 @@ const schema = `
         updateWord(input: UpdateWordInput): Word!
         updateTranslation(input: UpdateTranslationInput): Translation!
 
+
+        deleteWord(id: ID!): Word!
+        deleteTranslation(id: ID!): Translation!
+
     }
 `
 
