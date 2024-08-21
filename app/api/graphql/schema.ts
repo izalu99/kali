@@ -56,10 +56,28 @@ const schema = `
         wordId: String!
     }
 
+    input UpdateWordInput {
+        id: ID!
+        text: String!
+        type: String
+        tense: String
+        example: String
+    }
+    
+    input UpdateTranslationInput {
+        id: ID!
+        text: String!
+        language: String!
+        wordId: String!
+    }
+
     
     type Mutation {
         createWord(input: CreateWordInput): Word!
         createTranslation(input: CreateTranslationInput): Translation!
+
+        updateWord(input: UpdateWordInput): Word!
+        updateTranslation(input: UpdateTranslationInput): Translation!
 
     }
 `

@@ -109,7 +109,51 @@ const resolvers = {
             }
         },
 
+        updateWord: async (_:any, { input }:any, __:any) => {
+            try {
+                // Check if the word exists
+                const existingWord = await db.query.words.findFirst({
+                    where: eq(words.id, input.id),
+                });
+                if (!existingWord) {
+                    throw new GraphQLError('Word does not exist or Word ID not found.');
+                }
+
+                // Update the word
+                const word = await db.update(words).set({...input}).where(eq(words.id, input.id)).returning();
+                return word[0];
+            } catch (error: any) {
+                if (error.message === 'Word does not exist or Word ID not found.') {
+                    throw new GraphQLError(error.message);
+                }
+                throw new GraphQLError('Error updating word');
+            }
+        },
+
+
+        updateTranslation: async (_:any, { input }:any, __:any) => {
+            try {
+                // Check if the translation exists
+                const existingTranslation = await db.query.translations.findFirst({
+                    where: eq(translations.id, input.id),
+                });
+                if (!existingTranslation) {
+                    throw new GraphQLError('Translation does not exist or Translation ID not found.');
+                }
+
+                // Update the translation
+                const translation = await db.update(translations).set({...input}).where(eq(translations.id, input.id)).returning();
+                return translation[0];
+            }catch (error: any) {
+                if (error.message === 'Translation does not exist or Translation ID not found.') {
+                    throw new GraphQLError(error.message);
+                }
+                throw new GraphQLError('Error updating translation');
+            }
+        },
         
+
+
 
     }//end of Mutation
 }//end of resolvers
