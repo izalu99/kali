@@ -27,9 +27,6 @@ const adminPage = () => {
                 <WordCard initialWord={testWord} Title= {"Update"} CrudAction={"Update"} />
                 <TranslationCard initialTranslation={testTranslation} Title= {"New Translation"} CrudAction={"Create Translation"} />
             </div>
-            
-            
-
         </div>
     )
 }
