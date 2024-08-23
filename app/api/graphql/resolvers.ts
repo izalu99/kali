@@ -1,22 +1,13 @@
 import { db } from "@/db/db";
 import { __InputValue, GraphQLError } from "graphql";
 
-import { and, asc, desc, eq, or, sql, } from 'drizzle-orm';
+import { eq, like} from 'drizzle-orm';
 
 import { SelectUser, SelectWord, SelectTranslation, CreateWord, CreateTranslation, words, translations } from "@/db/schema";
 
+
 const resolvers = {
-    SearchResult : {
-        __resolveType(obj: any, context: any, info: any) {
-            if (obj.text) {
-                return 'Word';
-            }
-            if (obj.language) {
-                return 'Translation';
-            }
-            return null;
-        }
-    },
+    
     Query: {
 
         me: async () => {
@@ -43,26 +34,77 @@ const resolvers = {
     
         search: async (_: any, { input }: any) => {
             try {
-                let searchResults = [];
-                const wordss = await db.query.words.findMany({
-                    where: eq(words.text, input),
-                });
-                searchResults = [...wordss]; 
-                
-                if (wordss.length === 0) {
-                    const translationss = await db.query.translations.findMany({
-                        where: eq(translations.text, input),
+               // search in the words table
+               const foundWords = await db.query.words.findMany({
+                    where: like(words.text, `%${input}%`),
+               });
+
+               // if no words are found, search in the translations table
+                if (foundWords.length === 0) {
+                     const foundTranslations = await db.query.translations.findMany({
+                        where: like(translations.text, `%${input}%`),
                     });
-                    searchResults = [...translationss];
+
+                    // now we map the found translations to their respective words
+                    const wordsFromTranslations = await Promise.all(
+                        foundTranslations.map(
+                            async (translation: any) => {
+                            const associatedWord = await db.query.words.findFirst({
+                                where: eq(words.id, translation.wordId),
+                            });
+                            return associatedWord;
+                            }
+                        )
+                    );
+
+                    return wordsFromTranslations.filter((word: any) => word !== null);
                 }
-               
-                return searchResults;
+
+                return foundWords;
             } catch (error) {
                 throw new GraphQLError('Error searching');
             }
         },
 
     },
+
+    /**
+     * Note:
+     * The Word and Translation field resolvers are used to resolve the relationships between the Word and Translation types.
+     * graphql uses these implicitly; 
+     * e.g., when a query is made for a Word, the translations field resolver is called to resolve the translations field of the type Word.
+     * find out more by searching for "graphql field resolvers..."
+     */
+
+    Word: {
+        translations: async (parent: any) => {
+            try {
+                const theTranslations: any = await db.query.translations.findMany({
+                    where: eq(translations.wordId, parent.id),
+                });
+                return theTranslations;
+            } catch (error) {
+                throw new GraphQLError('Error getting translations');
+            }
+        }
+    },
+
+
+    Translation: {
+        word: async (parent: any) => {
+            try {
+                const theWord: any = await db.query.words.findFirst({
+                    where: eq(words.id, parent.wordId),
+                });
+                return theWord;
+            } catch (error) {
+                throw new GraphQLError('Error getting word');
+            }
+        }
+    },
+
+
+
 
     Mutation: {
 
