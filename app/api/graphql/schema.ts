@@ -10,7 +10,9 @@ const schema = `
         id: ID!
         language: String!
         text: String!
-        wordId: String
+        wordId: String!
+        word: Word
+
     }
 
     type Word {
@@ -19,6 +21,7 @@ const schema = `
         type: String
         tense: String
         example: String
+        translations: [Translation]
     }
 
     type Admin implements User {
@@ -38,7 +41,7 @@ const schema = `
         me: String!
         words: [Word]
         translations: [Translation]
-        search(input:String!): [SearchResult]
+        search(input:String!): [SearchResult]!
     }
     
     input CreateWordInput {

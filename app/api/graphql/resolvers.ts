@@ -1,14 +1,14 @@
 import { db } from "@/db/db";
 import { __InputValue, GraphQLError } from "graphql";
 
-import { and, asc, desc, eq, or, sql, } from 'drizzle-orm';
+import { eq, like} from 'drizzle-orm';
 
 import { SelectUser, SelectWord, SelectTranslation, CreateWord, CreateTranslation, words, translations } from "@/db/schema";
 
 const resolvers = {
     SearchResult : {
         __resolveType(obj: any, context: any, info: any) {
-            if (obj.text) {
+            if (obj.text && obj.type) {
                 return 'Word';
             }
             if (obj.language) {
@@ -43,20 +43,52 @@ const resolvers = {
     
         search: async (_: any, { input }: any) => {
             try {
-                let searchResults = [];
-                const wordss = await db.query.words.findMany({
-                    where: eq(words.text, input),
+                let searchResults: any[] = [];
+                // Search for word in the words table
+                const foundWords = await db.query.words.findMany({
+                    where: like(words.text, `%${input}%`),
                 });
-                searchResults = [...wordss]; 
-                
-                if (wordss.length === 0) {
-                    const translationss = await db.query.translations.findMany({
-                        where: eq(translations.text, input),
+
+                if (foundWords.length > 0) {
+                    searchResults = await Promise.all(
+                        foundWords.map(
+                            async word => {
+                                const associatedTranslations = await db.query.translations.findMany({
+                                    where: eq(translations.wordId, word.id),
+                                });
+                                return {
+                                    ...word,
+                                    translations: associatedTranslations,
+                                };
+                            }    
+                        )
+                    );
+                } else {
+                    // Search for translation in the translations table
+                    const foundTranslations = await db.query.translations.findMany({
+                        where: like(translations.text, `%${input}%`),
                     });
-                    searchResults = [...translationss];
+
+                    if (foundTranslations.length > 0) {
+                        searchResults = await Promise.all(
+                            foundTranslations.map(
+                                async translation => {
+                                    const associatedWord = await db.query.words.findFirst({
+                                        where: eq(words.id, translation.wordId),
+                                    });
+                                    return {
+                                        ...translation,
+                                        word: associatedWord,
+                                    };
+                                }
+                            )
+                        );
+                    }
                 }
-               
-                return searchResults;
+
+                // Return the search results or an empty array if no results were found
+                return searchResults.length > 0 ? searchResults : [];
+                
             } catch (error) {
                 throw new GraphQLError('Error searching');
             }

@@ -1,5 +1,7 @@
 'use client'
 import React from 'react';
+import TranslationCard from './translationCard';
+import WordCard from './wordCard';
 
 const WordTranslation = ({word, translation}:any) => {
     const language = translation.language ? translation.language : "translation";
