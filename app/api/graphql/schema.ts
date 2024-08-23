@@ -35,13 +35,12 @@ const schema = `
         email: String!
     }
 
-    union SearchResult = Word | Translation
     
     type Query {
         me: String!
         words: [Word]
         translations: [Translation]
-        search(input:String!): [SearchResult]!
+        search(input:String!): [Word]!
     }
     
     input CreateWordInput {
