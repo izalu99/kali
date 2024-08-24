@@ -22,7 +22,7 @@ const SearchBar = () =>{
 
     return (    
     <div className=''>
-        <div className=' flex flex-col'>
+        <div className=' flex flex-col justify-items-center'>
             <div className='flex flex-row justify-center'>
                 <input 
                 type="text" 
@@ -36,7 +36,7 @@ const SearchBar = () =>{
                 onClick={handleSearch}
                 >Search</button>
             </div>
-            <div>
+            <div className="flex justify-center w-full">
                 {loading && <p>Loading...</p>}
                 {error && <p>Error: {error.message}</p>}
                 {searchResults.length > 0 && <SearchResults results={searchResults}/>}

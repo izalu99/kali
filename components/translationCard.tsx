@@ -1,6 +1,8 @@
 'use client'
 import React, { useState } from 'react';
 
+
+// for performing CRUD operations on translations
 const TranslationCard = ({ Title, initialTranslation, CrudAction}: { Title: string, initialTranslation: any, CrudAction: string}) => {
     
     const [translation, setTranslation] = useState(initialTranslation);
