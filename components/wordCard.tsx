@@ -13,7 +13,7 @@ const WordCard = ({ Title, initialWord, CrudAction}: { Title: string, initialWor
 
     const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('Word: ',word,);
+        console.log('Word: ',word);
     }
     
     
