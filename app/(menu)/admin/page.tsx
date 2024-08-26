@@ -1,5 +1,5 @@
 
-import SearchBar from "@/components/searchbar";
+import Search from "@/components/search";
 import WordCard from "@/components/wordCard";
 import TranslationCard from "@/components/translationCard";
 
@@ -22,7 +22,7 @@ const adminPage = () => {
     return (
         <div className='flex flex-col'>
             <h1>Admin Page</h1>      
-            <SearchBar />
+            <Search />
             <div className='flex flex-wrap justify-evenly m-10'>
                 <WordCard initialWord={testWord} Title= {"Update"} CrudAction={"Update"} />
                 <TranslationCard initialTranslation={testTranslation} Title= {"New Translation"} CrudAction={"Create Translation"} />

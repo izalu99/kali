@@ -6,7 +6,7 @@ import SEARCH_QUERY from '@/gql/searchQuery';
 import SearchResults from '@/components/searchResults';
 
 
-const SearchBar = () =>{
+const Search = () =>{
     const [input, setInput] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [search, {loading, error}] = useLazyQuery(SEARCH_QUERY,{
@@ -21,18 +21,18 @@ const SearchBar = () =>{
     };
 
     return (    
-    <div className=''>
+    <div className='font-serif'>
         <div className=' flex flex-col justify-items-center'>
             <div className='flex flex-row justify-center'>
                 <input 
                 type="text" 
-                className="rounded-l-md border-gray-300 p-2 w-1/2"
+                className="rounded-l-md border p-2 w-1/2 text-black bg-white"
                 placeholder="Search for a word or translation..."
                 value= {input}
                 onChange= {(e) => setInput(e.target.value)}
                 />
                 <button 
-                className="bg-blue-500 text-white p-2 rounded-r-md"
+                className="p-2 rounded-r-md bg-blue-500 text-white"
                 onClick={handleSearch}
                 >Search</button>
             </div>
@@ -48,4 +48,4 @@ const SearchBar = () =>{
     )
 }
 
-export default SearchBar;
+export default Search;

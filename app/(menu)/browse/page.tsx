@@ -1,6 +1,6 @@
 
 
-const contact = () => {
+const browse = () => {
     return (
         <div>
             <h1 className='text-white'>Contact page. Under constructions atm.</h1>
@@ -8,4 +8,4 @@ const contact = () => {
     );
 }
 
-export default contact;
+export default browse;
