@@ -5,15 +5,19 @@ import WordTranslation from './wordTranslation';
 
 
 const SearchResults = ({ results }: any) => {
-    console.log(results);
+    
+    const allResultsEmpty = results.every((result: any) => result.length === 0);
 
     return (
         <div className="w-full bg-white border border-gray-200 rounded-lg shadow-lg">
             <div className="py-4 space-y-6">
                 <h1 className="text-2xl font-semibold text-gray-900 text-center">Search Results</h1>
                 <div className="max-h-screen overflow-y-auto">
-                    {results.length === 0 ? (
-                        <p className="text-sm text-gray-500">No results found</p>
+                    {allResultsEmpty ? (
+                        <div className='text-gray-600 w-full p-6 text-center'>
+                            <p className="text-sm">No results found</p>
+                        </div>
+                        
                     ) : (
                         <div className="space-y-4">
                             {results?.map((result: any) => (
