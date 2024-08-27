@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import { useLazyQuery} from '@apollo/client';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { ClipLoader } from 'react-spinners';
 import SEARCH_QUERY from '@/gql/searchQuery';
 import SearchResults from '@/components/searchResults';
 
@@ -32,12 +35,13 @@ const Search = () =>{
                 onChange= {(e) => setInput(e.target.value)}
                 />
                 <button 
-                className="px-4 rounded-r-md bg-blue-500 text-white"
-                onClick={handleSearch}
-                >Search</button>
+                className="px-4 rounded-r-md bg-blue-500 text-white transition-colors duration-200 hover:bg-blue-600"
+                onClick={handleSearch}>
+                    <FontAwesomeIcon icon={faSearch} />
+                </button>
             </div>
             <div className="w-full pt-4 flex justify-center">
-                {loading && <p>Loading...</p>}
+                {loading && <ClipLoader color="#ffffff" />}
                 {error && <p>Error: {error.message}</p>}
                 {searchResults.length > 0 && <SearchResults results={searchResults}/>}
             </div>
