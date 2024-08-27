@@ -21,22 +21,22 @@ const Search = () =>{
     };
 
     return (    
-    <div className='font-serif'>
-        <div className=' flex flex-col justify-items-center'>
+    <div className='font-serif flex justify-center items-center min-h-screen'>
+        <div className='w-4/5 p-10 flex flex-col'>
             <div className='flex flex-row justify-center'>
                 <input 
                 type="text" 
-                className="rounded-l-md border p-2 w-1/2 text-black bg-white"
+                className="w-full text-black p-2 rounded-l-md border"
                 placeholder="Search for a word or translation..."
                 value= {input}
                 onChange= {(e) => setInput(e.target.value)}
                 />
                 <button 
-                className="p-2 rounded-r-md bg-blue-500 text-white"
+                className="px-4 rounded-r-md bg-blue-500 text-white"
                 onClick={handleSearch}
                 >Search</button>
             </div>
-            <div className="flex justify-center w-full">
+            <div className="w-full pt-4 flex justify-center">
                 {loading && <p>Loading...</p>}
                 {error && <p>Error: {error.message}</p>}
                 {searchResults.length > 0 && <SearchResults results={searchResults}/>}
