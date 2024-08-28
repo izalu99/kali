@@ -5,7 +5,7 @@ import React from 'react';
 const WordTranslation = ({word, translation}: any) => {
     const language = translation.language ? translation.language : "translation";
     return (
-        <div key={word.id} className="w-full p-6 bg-white border border-gray-300 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-200">
+        <div key={word.id} className="w-full p-6 bg-chiffon border border-gray-300 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-200">
             <div className="space-y-4">
                 <h1 className="text-2xl font-semibold text-gray-900">{word.text}</h1>
                 <h2 className="text-xl font-medium text-gray-700">

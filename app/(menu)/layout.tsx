@@ -1,11 +1,13 @@
 
 import Header from "@/components/header"
+import Footer from "@/components/footer";
 
 const MenuLayout = ({ children }: { children: React.ReactNode }) => {
     return (
-        <div>
+        <div className="flex min-h-screen justify-between flex-col bg-darkRed">
             <Header />
             <div>{children}</div>
+            <Footer />
         </div>
     );
 };

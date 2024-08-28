@@ -30,12 +30,14 @@
     "react": "^18",
     "react-dom": "^18",
     "react-spinners": "^0.14.1",
-    "urql": "^4.1.0"
+    "urql": "^4.1.0",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@types/dotenv": "^8.2.0",
     "@types/node": "22.2.0",
     "@types/react": "^18.3.3",
+    "@types/uuid": "^10.0.0",
     "autoprefixer": "^10.0.1",
     "drizzle-kit": "^0.24.0",
     "eslint": "^8",

@@ -7,6 +7,13 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        black: '#050505',
+        darkRed: '#8C0000',
+        sunglow:'#FFC917',
+        mikadoYellow:'#FFE602',
+        chiffon:'#FAF3CD',
+      },
     },
   },
   plugins: [],
