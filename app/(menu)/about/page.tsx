@@ -3,7 +3,7 @@
 const about = () => {
     return (
         <div>
-            <h1 className='text-white'>About Page</h1>
+            <h1 className='text-chiffon'>About Page</h1>
             <h1 className="text-5xl font-sans">kkd short for kankanaey dictionary is all about curiosity, discovery and remembrance.</h1>
             <h1 className="text-5xl font-sans">This is a place for learning.</h1>
             <h1 className="text-5xl font-sans">This is a place for sharing.</h1>
