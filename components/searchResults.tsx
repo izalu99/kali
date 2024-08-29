@@ -8,6 +8,8 @@ const SearchResults = ({ results }: any) => {
     
     const allResultsEmpty = results.every((result: any) => result.length === 0);
 
+    //console.log('the search results:', results);
+
     return (
         <div className="w-full bg-transparent">
             <div className="py-4 space-y-6">
