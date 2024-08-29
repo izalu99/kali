@@ -38,9 +38,9 @@ const NewWordForm = () => {
             await createWord({ variables: { input: wData } });
             await createTranslation({ variables: { input: tData } });
             setModalMessage('Word and translation created successfully!');
-        } catch(e){
-            console.error('Error creating the word and translation: ', e);
-            setModalMessage('Error creating the word and translation.');
+        } catch(event: any) {
+            console.error('Error creating the word and translation: ', event);
+            setModalMessage('Error creating the word and translation: ' + event.message);
         } finally {
             setLoading(false);
         }
