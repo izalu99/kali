@@ -4,11 +4,13 @@ import { useMutation } from '@apollo/client';
 import UPDATEWORD_MUTATION from '@/gql/updateWord';
 import UPDATETRANSLATION_MUTATION from '@/gql/updateTranslation';
 import Modal from '@/components/modal';
+import DELETETRANSLATIONANDWORD_MUTATION from '@/gql/deleteTranslationAndWord';
 
 // for word display after search
 const AdminWordTranslation = ({ word, translation }: any) => {
     const [updateWord] = useMutation(UPDATEWORD_MUTATION);
     const [updateTranslation] = useMutation(UPDATETRANSLATION_MUTATION);
+    const [deleteTranslationAndWord] = useMutation(DELETETRANSLATIONANDWORD_MUTATION);
     const [loading, setLoading] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
 
@@ -50,6 +52,27 @@ const AdminWordTranslation = ({ word, translation }: any) => {
         } catch (event: any) {
             console.error('Error updating the word and translation: ', event);
             setModalMessage('Error updating the word and translation: ' + event.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
+    const handleDelete = async () => {
+        setLoading(true);
+        try{
+            await deleteTranslationAndWord({ variables:{
+                input: {
+                    id: translation.id,
+                    text: translation.text,
+                    language: translation.language,
+                    wordId: translation.wordId
+                }
+            }});
+            setModalMessage('Word and translation deleted successfully!');
+        } catch(event: any){
+            console.error('Error deleting the word and translation: ', event);
+            setModalMessage('Error deleting the word and translation: ' + event.message);
         } finally {
             setLoading(false);
         }
@@ -118,10 +141,18 @@ const AdminWordTranslation = ({ word, translation }: any) => {
                         </div>
                     </div>
                 </div>
-                <button 
-                    className='bg-sunglow text-black font-medium text-lg rounded-lg p-2 mt-4 hover:bg-sunglow transition-colors duration-200'>
-                    {loading ? 'Updating...' : 'Update Word and Translation'}
-                </button>
+                <div className="flex justify-between">
+                    <button 
+                        className='bg-sunglow text-black font-medium text-lg rounded-lg p-2 mt-4 hover:bg-black hover:text-chiffon transition-colors duration-200'>
+                        {loading ? 'Updating...' : 'Update Word and Translation'}
+                    </button>
+                    <button 
+                        type="button"
+                        onClick={handleDelete}
+                        className='bg-darkRed text-chiffon font-medium text-lg rounded-lg p-2 mt-4 hover:bg-black hover:text-darkRed transition-colors duration-200'>
+                        {loading ? 'Deleting...' : 'Delete Word and Translation'}
+                    </button>
+                </div>
             </form>
         </div>
     );

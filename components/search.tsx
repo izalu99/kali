@@ -13,9 +13,9 @@ const Search = () =>{
     const [input, setInput] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [hasSearched, setHasSearched] = useState(false);
-    const [search, {loading, error}] = useLazyQuery(SEARCH_QUERY,{
+    const [search, {loading, data, error}] = useLazyQuery(SEARCH_QUERY,{
         onCompleted: (data) => {
-            console.log(data);
+            //console.log(data);
             setSearchResults(data.search);
             setHasSearched(true);
         },
@@ -27,6 +27,7 @@ const Search = () =>{
 
     const handleKeyDown = (event: any) => {
         if(event.key === 'Enter'){
+            event.preventDefault();
             handleSearch();
         }
     };
@@ -52,7 +53,7 @@ const Search = () =>{
             <div className="w-full pt-4 flex flex-col items-center justify-center space-y-4">
                 {loading && <ClipLoader color="#faf3cd" />}
                 {error && <p>Error: {error.message}</p>}
-                {hasSearched && <SearchResults results={searchResults}/>}
+                {data && hasSearched && <SearchResults results={searchResults}/>}
             </div>
         </div>
         

@@ -73,6 +73,19 @@ const schema = `
         wordId: String!
     }
 
+
+    input DeleteTranslationInput {
+        id: ID!
+        text: String!
+        language: String!
+        wordId: String!
+    }
+
+    type DeleteTranslationAndWordPayload {
+        deletedTranslation: Translation
+        deletedWord: Word
+    }
+
     
     type Mutation {
         createWord(input: CreateWordInput): Word!
@@ -81,9 +94,7 @@ const schema = `
         updateWord(input: UpdateWordInput): Word!
         updateTranslation(input: UpdateTranslationInput): Translation!
 
-
-        deleteWord(id: ID!): Word!
-        deleteTranslation(id: ID!): Translation!
+        deleteTranslationAndWord(input: DeleteTranslationInput): DeleteTranslationAndWordPayload!
 
     }
 `

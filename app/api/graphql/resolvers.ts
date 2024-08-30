@@ -196,49 +196,42 @@ const resolvers = {
 
 
         //delete a translation
-        deleteTranslation: async (_:any, { id }:any, __:any) => {
+        deleteTranslationAndWord: async (_:any, { input }:any, __:any) => {
             try {
                 // Check if the translation exists
                 const existingTranslation = await db.query.translations.findFirst({
-                    where: eq(translations.id, id),
+                    where: eq(translations.id, input.id),
                 });
                 if (!existingTranslation) {
                     throw new GraphQLError('Translation does not exist or Translation ID not found.');
                 }
-                const deletedTranslation = await db.delete(translations).where(eq(translations.id, id)).returning();
-                return deletedTranslation[0];
-            
-            } catch (error: any) {
-                if (error.message === 'Translation does not exist or Translation ID not found.') {
-                    throw new GraphQLError(error.message);
-                }
-                throw new GraphQLError('Error deleting translation');
-            }
-        },
 
-        //delete a word
-        deleteWord: async (_:any, { id }:any, __:any) => {
-            try {
-                // Check if the word exists
                 const existingWord = await db.query.words.findFirst({
-                    where: eq(words.id, id),
+                    where: eq(words.id, existingTranslation.wordId),
                 });
                 if (!existingWord) {
                     throw new GraphQLError('Word does not exist or Word ID not found.');
                 }
-                const deletedWord = await db.delete(words).where(eq(words.id, id)).returning();
-                return deletedWord[0];
+
+                // delete the translation first
+                const deletedTranslation = await db.delete(translations).where(eq(translations.id, input.id)).returning();
+                
+                // then delete the associated word
+                const deletedWord = await db.delete(words).where(eq(words.id, existingWord.id)).returning();
+
+                return {
+                    deletedTranslation: deletedTranslation[0],
+                    deletedWord: deletedWord[0],
+                }
             
             } catch (error: any) {
-                if (error.message === 'Word does not exist or Word ID not found.') {
-                    throw new GraphQLError(error.message);
+                if (error.message === 'Translation does not exist or Translation ID not found.' ||
+                    error.message === 'Word does not exist or Word ID not found.')  {
+                        throw new GraphQLError(error.message);
                 }
-                throw new GraphQLError('Error deleting word');
+                throw new GraphQLError('Error deleting translation and word.');
             }
         },
-
-        
-
 
 
     }//end of Mutation

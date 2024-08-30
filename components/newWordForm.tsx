@@ -1,5 +1,5 @@
 'use client'
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { v4 as uuidv4 } from 'uuid';
 import CREATEWORD_MUTATION from '@/gql/createWord';
@@ -7,8 +7,8 @@ import CREATETRANSLATION_MUTATION from '@/gql/createTranslation';
 import Modal from '@/components/modal';
 
 const NewWordForm = () => {
-    const generateWordId = () => {return uuidv4();};
-    const generateTransId = () => { return uuidv4();};
+    const generateWordId = () => uuidv4();
+    const generateTransId = () => uuidv4();
     const wordId = generateWordId();
     const translationId = generateTransId();
 
@@ -17,28 +17,37 @@ const NewWordForm = () => {
     const [loading, setLoading] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
 
-    const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
+    const [wordText, setWordText] = useState('');
+    const [wordType, setWordType] = useState('');
+    const [wordTense, setWordTense] = useState('');
+    const [wordExample, setWordExample] = useState('');
+    const [translationText, setTranslationText] = useState('');
+    const [translationLanguage, setTranslationLanguage] = useState('');
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const formData = new FormData(e.currentTarget);
+        setLoading(true);
+
         const wData = {
             id: wordId,
-            text: formData.get('wordText'),
-            type: formData.get('type'),
-            tense: formData.get('tense'),
-            example: formData.get('example')
+            text: wordText,
+            type: wordType,
+            tense: wordTense,
+            example: wordExample
         };
+
         const tData = {
             id: translationId,
-            text: formData.get('translationText'),
-            language: formData.get('language'),
+            text: translationText,
+            language: translationLanguage,
             wordId: wordId
         };
 
-        try{
+        try {
             await createWord({ variables: { input: wData } });
             await createTranslation({ variables: { input: tData } });
             setModalMessage('Word and translation created successfully!');
-        } catch(event: any) {
+        } catch (event: any) {
             console.error('Error creating the word and translation: ', event);
             setModalMessage('Error creating the word and translation: ' + event.message);
         } finally {
@@ -61,22 +70,22 @@ const NewWordForm = () => {
                         
                         <div className='flex flex-col'>
                             <label className="font-medium text-black mb-2">Text</label>
-                            <input name='wordText' className="bg-gray-100 p-2 rounded-lg text-black" placeholder='Word text' required></input>
+                            <input name='wordText' className="bg-gray-100 p-2 rounded-lg text-black" value={wordText} onChange={(e) => setWordText(e.target.value)} placeholder='Word text' required></input>
                         </div>
     
                         <div className='flex flex-col'>
                             <label className="font-medium text-black mb-2">Word Type</label>
-                            <input name='type' className="bg-gray-100 p-2 rounded-lg text-black" placeholder='e.g., adjective, adverb, noun, verb,...'></input>
+                            <input name='wordType' className="bg-gray-100 p-2 rounded-lg text-black" value={wordType} onChange={(e) => setWordType(e.target.value)} placeholder='e.g., adjective, adverb, noun, verb,...'></input>
                         </div>
     
                         <div className='flex flex-col'>
                             <label className="font-medium text-black mb-2">Tense</label>
-                            <input name='tense' className="bg-gray-100 p-2 rounded-lg text-black" placeholder='e.g., past, present, future'></input>
+                            <input name='wordTense' className="bg-gray-100 p-2 rounded-lg text-black" value={wordTense} onChange={(e) => setWordTense(e.target.value)} placeholder='e.g., past, present, future'></input>
                         </div>
     
                         <div className='flex flex-col'>
                             <label className="font-medium text-black mb-2">Example Sentence</label>
-                            <input name='example' className="bg-gray-100 p-2 rounded-lg text-black" placeholder='Example'></input>
+                            <input name='wordExample' className="bg-gray-100 p-2 rounded-lg text-black" value={wordExample} onChange={(e) => setWordExample(e.target.value)} placeholder='Example'></input>
                         </div>
                     </div>
                     
@@ -90,12 +99,12 @@ const NewWordForm = () => {
                         
                         <div className='flex flex-col'>
                             <label className="font-medium text-black mb-2">Translation Text</label>
-                            <input name='translationText' className="bg-gray-100 p-2 rounded-lg text-black" placeholder='Translation text' required></input>
+                            <input name='translationText' className="bg-gray-100 p-2 rounded-lg text-black" value={translationText} onChange={(e) => setTranslationText(e.target.value)} placeholder='Translation text' required></input>
                         </div>
                         
                         <div className='flex flex-col'>
                             <label className="font-medium text-black mb-2">Translation Language</label>
-                            <input name='language' className="bg-gray-100 p-2 rounded-lg text-black" placeholder='e.g., English' required></input>
+                            <input name='translationLanguage' className="bg-gray-100 p-2 rounded-lg text-black" value={translationLanguage} onChange={(e) => setTranslationLanguage(e.target.value)} placeholder='e.g., English' required></input>
                         </div>
                         
                         <div className='flex flex-col group'>
@@ -106,7 +115,7 @@ const NewWordForm = () => {
                     </div>
                 </div>
                 <button 
-                    className='bg-sunglow text-black font-medium text-lg rounded-lg p-2 mt-4 hover:bg-sunglow transition-colors duration-200'>
+                    className='bg-sunglow text-black hover:text-chiffon font-medium text-lg rounded-lg p-2 mt-4 hover:bg-black transition-colors duration-200'>
                     {loading ? 'Creating...' : 'Create'}
                 </button>
             </form>

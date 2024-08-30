@@ -44,7 +44,7 @@ const AdminSearch = () =>{
                 onKeyDown={handleKeyDown}
                 />
                 <button 
-                className="px-4 rounded-r-md bg-sunglow text-chiffon transition-colors duration-200 hover:bg-sunglow"
+                className="px-4 rounded-r-md bg-sunglow text-black hover:text-chiffon transition-colors duration-200 hover:bg-black"
                 onClick={handleSearch}>
                     <FontAwesomeIcon icon={faSearch} />
                 </button>
