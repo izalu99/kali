@@ -1,8 +1,15 @@
 
 import { gql} from '@apollo/client';
 
-const CREATEWORD_MUTATION = gql`
-    
+const CREATETRANSLATION_MUTATION = gql`
+    mutation CreateTranslation($input: CreateTranslationInput) {
+    createTranslation(input: $input) {
+        id
+        language
+        text
+        wordId
+    }
+    }
 `;
 
-export default CREATEWORD_MUTATION;
+export default CREATETRANSLATION_MUTATION;

@@ -40,8 +40,7 @@ const NewWord = () => {
         <div className='font-serif p-4'>
             <button 
                 onClick={handleNewWordBtn} 
-                className='bg-sunglow text-black font-medium text-sm lg:text-lg rounded-lg p-2 mx-auto hover:bg-mikadoYellow focus:outline-none transition-colors duration-200 flex items-center space-x-2'
-            >
+                className='bg-sunglow hover:bg-black text-black hover:text-chiffon font-medium text-sm lg:text-lg rounded-lg p-2 mx-auto focus:outline-none transition-colors duration-200 flex items-center space-x-2'>
                 <FontAwesomeIcon icon={faPlus} />
                 <span>New Word</span>
             </button>
@@ -50,10 +49,10 @@ const NewWord = () => {
                     <div key={index} className="relative mt-4">
                         <button 
                             onClick={()=>handleCloseBtn(index)} 
-                            className="absolute top-0 right-0 bg-red-500 text-chiffon font-medium text-sm lg:text-lg rounded-lg px-2 pb-1 hover:bg-red-600 focus:outline-none focus:ring-red-500 transition-colors duration-200 flex items-center space-x-2"
+                            className=" bg-black rounded-tr-lg absolute top-0 right-0 text-chiffon font-medium text-sm lg:text-lg px-2 pb-1 hover:text-darkRed transition-colors duration-200 flex items-center space-x-2"
                         >
-                            <FontAwesomeIcon icon={faTimes} />
                             <span>Close</span>
+                            <FontAwesomeIcon icon={faTimes} />
                         </button>
                         <NewWordForm />
                     </div>
