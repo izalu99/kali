@@ -5,6 +5,7 @@ const isProtectedRoute = createRouteMatcher([
     '/settings',
     '/admin',
     '/api',
+    '/api/graphql',
   ]);
   
   

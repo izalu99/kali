@@ -20,7 +20,7 @@ const AdminWordTranslation = ({ word, translation }: any) => {
     const [wordExample, setWordExample] = useState(word.example || '');
     const [translationText, setTranslationText] = useState(translation.text);
     const [translationLanguage, setTranslationLanguage] = useState(translation.language || '');
-
+    const [wordTransDeleted, setWordTransDeleted] = useState(false);
     useEffect(() => {
         console.log('Rendered word:', word);
         console.log('Rendered translation:', translation);
@@ -70,6 +70,7 @@ const AdminWordTranslation = ({ word, translation }: any) => {
                 }
             }});
             setModalMessage('Word and translation deleted successfully!');
+            setWordTransDeleted(true);
         } catch(event: any){
             console.error('Error deleting the word and translation: ', event);
             setModalMessage('Error deleting the word and translation: ' + event.message);
@@ -78,6 +79,8 @@ const AdminWordTranslation = ({ word, translation }: any) => {
         }
     };
 
+    if(wordTransDeleted) return null;
+    
     return (
         <div key={word.id} className="font-serif w-full p-6 bg-chiffon border border-gray-300 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-200">
             {modalMessage && <Modal message={modalMessage} onClose={() => setModalMessage('')} />}
