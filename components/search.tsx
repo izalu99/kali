@@ -36,7 +36,8 @@ const Search = () =>{
     <div className='font-serif flex justify-center items-center'>
         <div className='w-4/5 p-10 flex flex-col'>
             <div className='flex flex-row justify-center'>
-                <input 
+                <input
+                name='searchInput' 
                 type="text" 
                 className="w-full text-black p-2 rounded-l-md border bg-chiffon"
                 placeholder="Search for a word or translation..."

@@ -1,11 +1,9 @@
 
-import { SignUp } from "@clerk/nextjs";
-
 
 export default function Page() {
     return (
-        <div className='flex justify-center align-middle'>
-            <SignUp />
+        <div className='flex flex-grow justify-center align-middle'>
+            Cannot sign up.
         </div>
     )
 }

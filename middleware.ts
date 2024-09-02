@@ -12,9 +12,16 @@ const isProtectedRoute = createRouteMatcher([
   
   export default clerkMiddleware((auth, req) => {
   
+
+      //alow get requests w/o auth so non-logged in users can search
+      if(req.method==='POST'){
+        return;
+      }
+
       if (isProtectedRoute(req)) {
         auth().protect()
       };
+
   });
   
   export const config = {
