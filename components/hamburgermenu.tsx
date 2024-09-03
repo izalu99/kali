@@ -15,7 +15,7 @@ const HamburgerMenu = () => {
         <div data-testid="hamburger-menu" className="relative items-center" onClick={handleHamburgerClick}>
             <Hamburger isOpen={isMenuOpen}/>
             {isMenuOpen && 
-                <div className="absolute right-0 mt-12 items-center">
+                <div className="absolute right-0 mt-8 items-center">
                     <Menu/>    
                 </div>
             }

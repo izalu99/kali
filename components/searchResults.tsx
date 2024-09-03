@@ -14,7 +14,7 @@ const SearchResults = ({ results }: any) => {
         <div className="w-full bg-transparent flex flex-col justify-center">
             <div className="py-4 space-y-6">
                 <h1 className="text-2xl font-semibold text-chiffon text-center">Search Results</h1>
-                <div className="max-h-screen overflow-y-auto pr-4">
+                <div className="max-h-screen overflow-y-auto p-2">
                     {allResultsEmpty ? (
                         <div className='text-chiffon w-full p-6 text-center'>
                             <p className="text-sm">No results found</p>
