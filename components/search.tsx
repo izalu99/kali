@@ -34,8 +34,8 @@ const Search = () =>{
 
     return (    
     <div className='font-serif flex justify-center items-center'>
-        <div className='w-4/5 p-10 flex flex-col'>
-            <div className='flex flex-row justify-center'>
+        <div className='w-screen sm:max-screen-xs md:max-w-screen-sm lg:max-w-screen-md xl:max-w-screen-md p-10 flex flex-col justify-center'>
+            <div className='flex flex-row justify-center '>
                 <input
                 name='searchInput' 
                 type="text" 

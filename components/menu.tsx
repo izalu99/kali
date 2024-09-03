@@ -1,6 +1,7 @@
 
 
 import Link from "next/link";
+import { SignedIn, UserButton } from '@clerk/nextjs';
 
 const Menu = () => {
     return (
