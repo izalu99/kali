@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Hamburger from "./hamburger"
 import Menu from "./menu"
 
+
 const HamburgerMenu = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     
@@ -14,8 +15,8 @@ const HamburgerMenu = () => {
         <div data-testid="hamburger-menu" className="relative items-center" onClick={handleHamburgerClick}>
             <Hamburger isOpen={isMenuOpen}/>
             {isMenuOpen && 
-                <div className="absolute right-0 mt-12 items-center">
-                    <Menu/>
+                <div className="absolute right-0 mt-8 items-center">
+                    <Menu/>    
                 </div>
             }
         </div>

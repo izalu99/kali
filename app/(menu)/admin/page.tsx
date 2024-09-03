@@ -1,7 +1,6 @@
 
 import AdminSearch from "@/components/adminSearch";
 import NewWord from "@/components/newWord";
-
 const AdminPage = () => {
     return (
         <div className='font-serif flex flex-col items-center bg-darkRed p-6'>

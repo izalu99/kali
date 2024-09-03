@@ -7,15 +7,15 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { ClipLoader } from 'react-spinners';
 import SEARCH_QUERY from '@/gql/searchQuery';
 import AdminSearchResults from '@/components/adminSearchResults';
+import { useSearch } from "@/app/context/searchContext";
 
 
 const AdminSearch = () =>{
     const [input, setInput] = useState('');
-    const [searchResults, setSearchResults] = useState([]);
+    const {setSearchResults, searchResults} = useSearch();
     const [hasSearched, setHasSearched] = useState(false);
     const [search, {loading, error}] = useLazyQuery(SEARCH_QUERY,{
         onCompleted: (data) => {
-            console.log(data);
             setSearchResults(data.search);
             setHasSearched(true);
         },
@@ -52,7 +52,7 @@ const AdminSearch = () =>{
             <div className="w-full pt-4 flex flex-col items-center justify-center space-y-4">
                 {loading && <ClipLoader color="#faf3cd" />}
                 {error && <p>Error: {error.message}</p>}
-                {hasSearched && <AdminSearchResults results={searchResults}/>}
+                {hasSearched && <AdminSearchResults results={searchResults} />}
             </div>
         </div>
         

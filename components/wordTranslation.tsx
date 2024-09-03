@@ -6,17 +6,24 @@ const WordTranslation = ({word, translation}: any) => {
     //console.log('word:', word);
     //console.log('translation:', translation);
     return (
-        <div key={word.id} className="w-full p-6 bg-chiffon border border-gray-300 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-200">
+        <div key={word.id} 
+        className="h-96 p-6 bg-black rounded-md flex flex-col justify-end">
             <div className="space-y-4">
-                <h1 className="text-2xl font-semibold text-gray-900">{word.text}</h1>
-                <h2 className="text-xl font-medium text-gray-700">
-                    <span className='text-xl font-semibold'>{translation.text}</span>
-                </h2>
-                <ul className='text-base text-gray-600 space-y-1'>
-                    {word.type && <li className="flex items-center"><span className="font-semibold">Type:</span> {word.type}</li>}
-                    {word.tense && <li className="flex items-center"><span className="font-semibold">Tense:</span> {word.tense}</li>}
-                    {word.example && <li className="flex items-center"><span className="font-semibold">Example:</span> {word.example}</li>}
-                </ul>
+                <h1 className="text-4xl font-semibold text-chiffon">{word.text}</h1>
+                <div className='text-base text-lightGray space-y-1'>
+                    {word.type && <span className="font-semibold">{word.type}</span>}
+                    {word.type && word.tense && <span className="font-semibold">, </span>}
+                    {word.tense && <span className="font-semibold">{word.tense}</span>}
+                </div>
+                <hr className='border-chiffon'/>
+                <div className='text-base text-lightGray space-y-1'>
+                    <h2 className="text-xl font-medium text-lightGray">
+                        <span className='text-2xl font-semibold text-chiffon'>{translation.text}</span>
+                        {translation.language && 
+                        <span className='text-lg font-style: italic'> ({translation.language})</span>}
+                    </h2>
+                    {word.example && <span className="font-semibold">{word.example}</span>}
+                </div>
             </div>
         </div>
     );

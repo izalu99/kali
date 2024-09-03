@@ -13,15 +13,23 @@ const Search = () =>{
     const [input, setInput] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [hasSearched, setHasSearched] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
     const [search, {loading, data, error}] = useLazyQuery(SEARCH_QUERY,{
         onCompleted: (data) => {
             //console.log(data);
             setSearchResults(data.search);
             setHasSearched(true);
+            setInput('');
         },
     });
     
     const handleSearch = async () => {
+        if(!input.trim()|| input.length === 0){
+            setErrorMessage('Please enter a word or translation.');
+            setHasSearched(false);
+            return;
+        }
+
         search({variables: {input}});
     };
 
@@ -34,9 +42,10 @@ const Search = () =>{
 
     return (    
     <div className='font-serif flex justify-center items-center'>
-        <div className='w-4/5 p-10 flex flex-col'>
-            <div className='flex flex-row justify-center'>
-                <input 
+        <div className='w-screen sm:max-screen-xs md:max-w-screen-sm lg:max-w-screen-md xl:max-w-screen-md p-10 flex flex-col justify-center'>
+            <div className='flex flex-row justify-center '>
+                <input
+                name='searchInput' 
                 type="text" 
                 className="w-full text-black p-2 rounded-l-md border bg-chiffon"
                 placeholder="Search for a word or translation..."
@@ -45,15 +54,16 @@ const Search = () =>{
                 onKeyDown={handleKeyDown}
                 />
                 <button 
-                className="px-4 rounded-r-md bg-sunglow text-black transition-colors duration-200 hover:bg-mikadoYellow"
+                className="px-4 rounded-r-md bg-black text-white transition-colors duration-200 hover:bg-darkRed"
                 onClick={handleSearch}>
                     <FontAwesomeIcon icon={faSearch} />
                 </button>
             </div>
+            {errorMessage && hasSearched=== false && <small className="text-chiffon text-center">{errorMessage}</small>}
             <div className="w-full pt-4 flex flex-col items-center justify-center space-y-4">
                 {loading && <ClipLoader color="#faf3cd" />}
                 {error && <p>Error: {error.message}</p>}
-                {data && hasSearched && <SearchResults results={searchResults}/>}
+                {data && <SearchResults results={searchResults}/>}
             </div>
         </div>
         

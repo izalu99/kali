@@ -3,10 +3,9 @@
 import React from 'react';
 import AdminWordTranslation from './adminWordTranslation';
 
-
 const AdminSearchResults = ({ results }: any) => {
     
-    const allResultsEmpty = results.every((result: any) => result.length === 0);
+    const allResultsEmpty = results.every((result:any) => result.length === 0);
 
     return (
         <div className="w-full bg-chiffon border border-gray-200 rounded-lg shadow-lg">

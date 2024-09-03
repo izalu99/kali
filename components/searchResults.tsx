@@ -11,10 +11,10 @@ const SearchResults = ({ results }: any) => {
     //console.log('the search results:', results);
 
     return (
-        <div className="w-full bg-transparent">
+        <div className="w-full bg-transparent flex flex-col justify-center">
             <div className="py-4 space-y-6">
                 <h1 className="text-2xl font-semibold text-chiffon text-center">Search Results</h1>
-                <div className="max-h-screen overflow-y-auto">
+                <div className="max-h-screen overflow-y-auto p-2">
                     {allResultsEmpty ? (
                         <div className='text-chiffon w-full p-6 text-center'>
                             <p className="text-sm">No results found</p>
@@ -23,12 +23,7 @@ const SearchResults = ({ results }: any) => {
                     ) : (
                         <div className="space-y-4">
                             {results?.map((result: any) => (
-                                <div
-                                    key={result.id}
-                                    className="p-4"
-                                >
-                                    <WordTranslation word={result} translation={result.translations[0]} />
-                                </div>
+                                    <WordTranslation key={result.id} word={result} translation={result.translations[0]} />
                             ))}
                         </div>
                     )}
