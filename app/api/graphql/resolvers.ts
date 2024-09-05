@@ -1,9 +1,9 @@
 import { db } from "@/db/db";
 import { __InputValue, GraphQLError } from "graphql";
 
-import { eq, like} from 'drizzle-orm';
+import { eq, like, or} from 'drizzle-orm';
 
-import { SelectUser, SelectWord, SelectTranslation, CreateWord, CreateTranslation, words, translations } from "@/db/schema";
+import { words, translations } from "@/db/schema";
 
 
 const resolvers = {
@@ -33,16 +33,22 @@ const resolvers = {
         },
     
         search: async (_: any, { input }: any) => {
+
+            const sanitizedInput = input.trim().toLowerCase();
+
             try {
                // search in the words table
                const foundWords = await db.query.words.findMany({
-                    where: like(words.text, `%${input}%`),
+                    where: or(
+                        like(words.text, `%${sanitizedInput}%`),
+                        like(words.example, `%${sanitizedInput}%`),
+                    ),
                });
 
                // if no words are found, search in the translations table
                 if (foundWords.length === 0) {
                      const foundTranslations = await db.query.translations.findMany({
-                        where: like(translations.text, `%${input}%`),
+                        where:like(translations.text, `%${sanitizedInput}%`)
                     });
 
                     // now we map the found translations to their respective words
@@ -70,7 +76,7 @@ const resolvers = {
 
     /**
      * Note:
-     * The Word and Translation field resolvers are used to resolve the relationships between the Word and Translation types.
+     * The Word and Translation field resolvers below are used to resolve the relationships between the Word and Translation types.
      * graphql uses these implicitly; 
      * e.g., when a query is made for a Word, the translations field resolver is called to resolve the translations field of the type Word.
      * find out more by searching for "graphql field resolvers..."

@@ -7,6 +7,7 @@ const CREATEWORD_MUTATION = gql`
         id
         tense
         text
+        pronunciation
         example
         type
         }

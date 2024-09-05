@@ -27,19 +27,12 @@ const updatedAt = () =>
         .default(sql`CURRENT_TIMESTAMP`)
 
 
-
-export const users = sqliteTable('users',{
-    id: id().primaryKey(),
-    createdAt: createdAt(),
-    email:text('email').notNull().unique(),
-});
-
-
 export const words = sqliteTable('words',{
     id: id().primaryKey(),
     createdAt: createdAt(),
     updatedAt: updatedAt(),
     text: text('text').notNull(),
+    pronunciation: text('pronunciation'),
     type: text('type'),
     tense: text('tense'),
     example: text('example'),
@@ -66,7 +59,6 @@ export const translationRelations = relations(translations, ({ one }) =>({
 
 
 
-export const SelectUser = users.$inferSelect;
 export const SelectWord = words.$inferSelect;
 export const SelectTranslation = translations.$inferSelect;
 export const CreateWord = words.$inferInsert;

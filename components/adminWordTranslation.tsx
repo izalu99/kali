@@ -15,6 +15,7 @@ const AdminWordTranslation = ({ word, translation }: any) => {
     const [modalMessage, setModalMessage] = useState('');
 
     const [wordText, setWordText] = useState(word.text);
+    const [wordPronunciation, setWordPronunciation] = useState(word.pronunciation || '');
     const [wordType, setWordType] = useState(word.type || '');
     const [wordTense, setWordTense] = useState(word.tense || '');
     const [wordExample, setWordExample] = useState(word.example || '');
@@ -33,6 +34,7 @@ const AdminWordTranslation = ({ word, translation }: any) => {
         const wData = {
             id: word.id,
             text: wordText,
+            pronunciation: wordPronunciation,
             type: wordType,
             tense: wordTense,
             example: wordExample
@@ -98,6 +100,11 @@ const AdminWordTranslation = ({ word, translation }: any) => {
                             <div className='flex flex-col'>
                                 <label className="font-medium text-black mb-2">Text</label>
                                 <input name="wordText" className="bg-gray-100 p-2 rounded-lg text-gray-700" value={wordText} onChange={(e) => setWordText(e.target.value)} required></input>
+                            </div>
+
+                            <div className='flex flex-col'>
+                                <label className="font-medium text-black mb-2">Pronunciation</label>
+                                <input name='wordPronunciation' className="bg-gray-100 p-2 rounded-lg text-black" value={wordPronunciation} onChange={(e) => setWordPronunciation(e.target.value)} placeholder='How is the word is spoken by ear...'></input>
                             </div>
         
                             <div className='flex flex-col'>

@@ -18,6 +18,7 @@ const schema = `
     type Word {
         id: ID!
         text: String!
+        pronunciation: String
         type: String
         tense: String
         example: String
@@ -46,6 +47,7 @@ const schema = `
     input CreateWordInput {
         id: ID!
         text: String!
+        pronunciation: String
         type: String
         tense: String
         example: String
@@ -62,6 +64,7 @@ const schema = `
         id: ID!
         text: String!
         type: String
+        pronunciation: String
         tense: String
         example: String
     }
