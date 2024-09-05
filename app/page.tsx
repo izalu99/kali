@@ -8,7 +8,7 @@ import React from 'react';
 export default function Home() {
 
   return (
-    <main className="flex min-h-screen justify-between flex-col bg-darkRed">
+    <main className="flex min-h-screen justify-between flex-col bg-chiffon">
       <Header />
       <div className='flex flex-col items-center justify-center p-4'>
         <Headline />

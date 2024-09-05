@@ -12,9 +12,9 @@ const Header = () => {
                 <div className=''><BlogName /></div>
                 <div className='hidden lg:flex pr-4'>
                     <ul className="flex flex-row space-x-8 items-center lg:text-2xl">
-                        <li><Link href="/" className="text-chiffon no-underline hover:text-black">Main page</Link></li>
-                        <li><Link href="/browse" className="text-chiffon no-underline hover:text-black">Browse</Link></li>
-                        <li><Link href="/about" className="text-chiffon no-underline hover:text-black">About</Link></li>
+                        <li><Link href="/" className="text-black no-underline hover:text-darkRed">Main page</Link></li>
+                        <li><Link href="/browse" className="text-black no-underline hover:text-darkRed">Browse</Link></li>
+                        <li><Link href="/about" className="text-black no-underline hover:text-darkRed">About</Link></li>
                     </ul>
                 </div>
                 <div className="items-center lg:hidden pr-4"><HamburgerMenu /></div>

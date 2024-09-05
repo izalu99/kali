@@ -43,30 +43,29 @@ const Search = () =>{
     return (    
     <div className='font-serif flex justify-center items-center'>
         <div className='w-screen sm:max-screen-xs md:max-w-screen-sm lg:max-w-screen-md xl:max-w-screen-md p-10 flex flex-col justify-center'>
-            <div className='flex flex-row justify-center '>
+            <div className='flex flex-row border-2 border-black rounded-md hover:border-darkRed active:border-darkRed'>
                 <input
                 name='searchInput' 
                 type="text" 
-                className="w-full text-black p-2 rounded-l-md border bg-chiffon"
+                className="w-full text-black p-2 bg-chiffon  rounded-md focus:outline-none"
                 placeholder="Search for a word or translation..."
                 value= {input}
                 onChange= {(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
                 />
                 <button 
-                className="px-4 rounded-r-md bg-black text-white transition-colors duration-200 hover:bg-darkRed"
+                className="px-4 py-0 m-0 justify-end bg-black text-white transition-colors duration-200 hover:bg-darkRed "
                 onClick={handleSearch}>
                     <FontAwesomeIcon icon={faSearch} />
                 </button>
             </div>
-            {errorMessage && hasSearched=== false && <small className="text-chiffon text-center">{errorMessage}</small>}
+            {errorMessage && hasSearched=== false && <small className="text-darkRed text-center">{errorMessage}</small>}
             <div className="w-full pt-4 flex flex-col items-center justify-center space-y-4">
-                {loading && <ClipLoader color="#faf3cd" />}
-                {error && <p>Error: {error.message}</p>}
+                {loading && <ClipLoader color="#738589" />}
+                {error && <p color="#B20c06">Error: {error.message}</p>}
                 {data && <SearchResults results={searchResults}/>}
             </div>
         </div>
-        
     </div>
         
     )

@@ -4,7 +4,7 @@ import Footer from "@/components/footer";
 
 const MenuLayout = ({ children }: { children: React.ReactNode }) => {
     return (
-        <div className="flex min-h-screen justify-between flex-col bg-darkRed">
+        <div className="flex min-h-screen justify-between flex-col bg-chiffon">
             <Header />
             <div>{children}</div>
             <Footer />
