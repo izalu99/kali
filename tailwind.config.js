@@ -8,12 +8,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        black: '#101010',
-        darkRed: '#B20c06',
-        sunglow:'#FFC917',
-        mikadoYellow:'#FFE602',
-        chiffon:'#FDFFFF',
-        lightGray:'#738589',
+        black: '#101010', // primary
+        darkRed: '#B20c06', // accent
+        sunglow:'#FFC917', //highlight
+        mikadoYellow:'#FFE602', //highlight 
+        chiffon:'#FDFFFF', // background
+        lightGray:'#738589', // secondary
       },
     },
   },
