@@ -4,7 +4,7 @@ const AtoZ = () => {
         <div className='sticky top-0 grid grid-cols-10 gap-1'>
             {letters.map((letter) => (
                 <button key={letter} 
-                className='text-xs text-center font-serif font-semibold text-chiffon p-4 rounded-lg hover:text-black'>
+                className='text-xs text-center font-serif font-semibold text-black p-4 rounded-lg hover:text-darkRed'>
                 {letter}</button>
             ))}
         </div>
