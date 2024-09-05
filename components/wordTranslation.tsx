@@ -11,6 +11,7 @@ const WordTranslation = ({word, translation}: any) => {
             <div className="space-y-4">
                 <h1 className="text-4xl font-semibold text-chiffon">{word.text}</h1>
                 <div className='text-base text-lightGray space-y-1'>
+                    {word.pronunciation && <span className="font-semibold">[{word.pronunciation}], </span>}
                     {word.type && <span className="font-semibold">{word.type}</span>}
                     {word.type && word.tense && <span className="font-semibold">, </span>}
                     {word.tense && <span className="font-semibold">{word.tense}</span>}

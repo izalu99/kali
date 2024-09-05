@@ -6,6 +6,7 @@ const SEARCH_QUERY = gql`
         search(input: $input) {
             id
             text
+            pronunciation
             type
             tense
             example

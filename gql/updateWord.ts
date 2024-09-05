@@ -7,6 +7,7 @@ const UPDATEWORD_MUTATION = gql`
             example
             id
             tense
+            pronunciation
             text
             type
         }
