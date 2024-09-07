@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import ApolloProviderWrapper from "./apolloprovider";
+import { Analytics } from '@vercel/analytics/react';
 
 
 
@@ -26,6 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <ApolloProviderWrapper>
           {children}
           </ApolloProviderWrapper>
+          <Analytics />
         </body>
       </html>
     </ClerkProvider>
