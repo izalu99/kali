@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import UPDATEWORD_MUTATION from '@/gql/updateWord';
 import UPDATETRANSLATION_MUTATION from '@/gql/updateTranslation';
@@ -22,10 +22,7 @@ const AdminWordTranslation = ({ word, translation }: any) => {
     const [translationText, setTranslationText] = useState(translation.text);
     const [translationLanguage, setTranslationLanguage] = useState(translation.language || '');
     const [wordTransDeleted, setWordTransDeleted] = useState(false);
-    useEffect(() => {
-        console.log('Rendered word:', word);
-        console.log('Rendered translation:', translation);
-    }, [word, translation]);
+    
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
