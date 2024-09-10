@@ -37,7 +37,6 @@ const resolvers = {
             const sanitizedInput = input.trim().toLowerCase();
 
             try {
-               // search in the words table
                const foundWords = await db.query.words.findMany({
                     where: or(
                         like(words.text, `%${sanitizedInput}%`),
@@ -45,13 +44,12 @@ const resolvers = {
                     ),
                });
 
-               // if no words are found, search in the translations table
                 if (foundWords.length === 0) {
                      const foundTranslations = await db.query.translations.findMany({
                         where:like(translations.text, `%${sanitizedInput}%`)
                     });
 
-                    // now we map the found translations to their respective words
+                   
                     const wordsFromTranslations = await Promise.all(
                         foundTranslations.map(
                             async (translation: any) => {
@@ -75,13 +73,11 @@ const resolvers = {
     },
 
     /**
-     * Note:
-     * The Word and Translation field resolvers below are used to resolve the relationships between the Word and Translation types.
-     * graphql uses these implicitly; 
-     * e.g., when a query is made for a Word, the translations field resolver is called to resolve the translations field of the type Word.
-     * find out more by searching for "graphql field resolvers..."
+     * Resolves relationships between Word and Translation types.
+     * These field resolvers are implicitly used by GraphQL.
+     * For example, querying a Word calls the translations resolver.
+     * More info: "GraphQL field resolvers".
      */
-
     Word: {
         translations: async (parent: any) => {
             try {
@@ -116,7 +112,7 @@ const resolvers = {
 
         createWord: async (_:any, { input }:any, __:any) => {
             try {
-                // Check if the word already exists
+                
                 const existingWord = await db.query.words.findFirst({
                     where: eq(words.text, input.text),
                 });
@@ -124,7 +120,7 @@ const resolvers = {
                     throw new GraphQLError('Word already exists');
                 }
 
-                // Create the word (if it doesn't exist)
+                
                 const word = await db.insert(words).values({...input}).returning();
                 return word[0];
             } catch (error: any) {
@@ -137,7 +133,7 @@ const resolvers = {
 
         createTranslation: async (_:any, { input }:any, __:any) => {
             try {
-                // Check if the translation already exists
+                
                 const existingTranslation = await db.query.translations.findFirst({
                     where: eq(translations.text, input.text),
                 });
@@ -145,7 +141,7 @@ const resolvers = {
                     throw new GraphQLError('Translation already exists');
                 }
 
-                // Create the translation (if it doesn't exist)
+                
                 const translation = await db.insert(translations).values({...input}).returning();
                 return translation[0];
             
@@ -159,7 +155,7 @@ const resolvers = {
 
         updateWord: async (_:any, { input }:any, __:any) => {
             try {
-                // Check if the word exists
+                
                 const existingWord = await db.query.words.findFirst({
                     where: eq(words.id, input.id),
                 });
@@ -167,7 +163,7 @@ const resolvers = {
                     throw new GraphQLError('Word does not exist or Word ID not found.');
                 }
 
-                // Update the word
+                
                 const word = await db.update(words).set({...input}).where(eq(words.id, input.id)).returning();
                 return word[0];
             } catch (error: any) {
@@ -181,7 +177,7 @@ const resolvers = {
 
         updateTranslation: async (_:any, { input }:any, __:any) => {
             try {
-                // Check if the translation exists
+                
                 const existingTranslation = await db.query.translations.findFirst({
                     where: eq(translations.id, input.id),
                 });
@@ -189,7 +185,7 @@ const resolvers = {
                     throw new GraphQLError('Translation does not exist or Translation ID not found.');
                 }
 
-                // Update the translation
+                
                 const translation = await db.update(translations).set({...input}).where(eq(translations.id, input.id)).returning();
                 return translation[0];
             }catch (error: any) {
@@ -201,10 +197,10 @@ const resolvers = {
         },
 
 
-        //delete a translation
+        
         deleteTranslationAndWord: async (_:any, { input }:any, __:any) => {
             try {
-                // Check if the translation exists
+                
                 const existingTranslation = await db.query.translations.findFirst({
                     where: eq(translations.id, input.id),
                 });
@@ -219,10 +215,10 @@ const resolvers = {
                     throw new GraphQLError('Word does not exist or Word ID not found.');
                 }
 
-                // delete the translation first
+                
                 const deletedTranslation = await db.delete(translations).where(eq(translations.id, input.id)).returning();
                 
-                // then delete the associated word
+                
                 const deletedWord = await db.delete(words).where(eq(words.id, existingWord.id)).returning();
 
                 return {
@@ -240,7 +236,7 @@ const resolvers = {
         },
 
 
-    }//end of Mutation
-}//end of resolvers
+    }
+}
 
 export default resolvers;

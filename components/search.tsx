@@ -16,7 +16,6 @@ const Search = () =>{
     const [errorMessage, setErrorMessage] = useState('');
     const [search, {loading, data, error}] = useLazyQuery(SEARCH_QUERY,{
         onCompleted: (data) => {
-            //console.log(data);
             setSearchResults(data.search);
             setHasSearched(true);
             setInput('');
@@ -43,7 +42,7 @@ const Search = () =>{
     return (    
     <div className='font-serif flex justify-center items-center'>
         <div className='w-screen sm:max-screen-xs md:max-w-screen-sm lg:max-w-screen-md xl:max-w-screen-md p-10 flex flex-col justify-center'>
-            <div className='flex flex-row border-2 border-black rounded-md hover:border-darkRed active:border-darkRed'>
+            <form id="search" className='flex flex-row border-2 border-black rounded-md hover:border-darkRed active:border-darkRed'>
                 <input
                 name='searchInput' 
                 type="text" 
@@ -53,12 +52,16 @@ const Search = () =>{
                 onChange= {(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
                 />
-                <button 
+                <button
+                type="button"
+                name='searchButton'
+                role="button" 
                 className="px-4 py-0 m-0 justify-end bg-black text-white transition-colors duration-200 hover:bg-darkRed "
-                onClick={handleSearch}>
+                onClick={handleSearch}
+                aria-label="Search">
                     <FontAwesomeIcon icon={faSearch} />
                 </button>
-            </div>
+            </form>
             {errorMessage && hasSearched=== false && <small className="text-darkRed text-center">{errorMessage}</small>}
             <div className="w-full pt-4 flex flex-col items-center justify-center space-y-4">
                 {loading && <ClipLoader color="#738589" />}
