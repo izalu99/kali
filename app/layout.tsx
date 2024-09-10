@@ -9,10 +9,10 @@ import { Analytics } from '@vercel/analytics/react';
 
 const inter = Inter({ subsets: ["latin"] });
 
-//export const metadata = {
-//  title: "kkd",
-//  description: "A dictionary made with Next.js",
-//};
+export const metadata = {
+  title: "kali",
+  description: "A translation tool for learning kankanaey.",
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
