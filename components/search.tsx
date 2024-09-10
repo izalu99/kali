@@ -1,12 +1,15 @@
 'use client'
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useLazyQuery} from '@apollo/client';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { ClipLoader } from 'react-spinners';
 import SEARCH_QUERY from '@/gql/searchQuery';
-import SearchResults from '@/components/searchResults';
+import debounce   from 'lodash.debounce';
+import dynamic from 'next/dynamic';
+
+const SearchResults = dynamic(() => import('@/components/searchResults'));
 
 
 const Search = () =>{
@@ -22,20 +25,29 @@ const Search = () =>{
         },
     });
     
-    const handleSearch = async () => {
-        if(!input.trim()|| input.length === 0){
+    const handleSearch = async (searchInput: string) => {
+        if(!searchInput.trim()|| searchInput.length === 0){
             setErrorMessage('Please enter a word or translation.');
             setHasSearched(false);
             return;
         }
 
-        search({variables: {input}});
+        search({variables: {input: searchInput}});
     };
+
+    const debouncedSearch = useCallback(debounce(handleSearch, 300),[]);
+
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const val = e.target.value;
+        setInput(val);
+        debouncedSearch(val);
+    }
 
     const handleKeyDown = (event: any) => {
         if(event.key === 'Enter'){
             event.preventDefault();
-            handleSearch();
+            handleSearch(input);
         }
     };
 
@@ -49,7 +61,7 @@ const Search = () =>{
                 className="w-full text-black p-2 bg-chiffon  rounded-md focus:outline-none"
                 placeholder="Search for a word or translation..."
                 value= {input}
-                onChange= {(e) => setInput(e.target.value)}
+                onChange= {handleInputChange}
                 onKeyDown={handleKeyDown}
                 />
                 <button
@@ -57,7 +69,7 @@ const Search = () =>{
                 name='searchButton'
                 role="button" 
                 className="px-4 py-0 m-0 justify-end bg-black text-white transition-colors duration-200 hover:bg-darkRed "
-                onClick={handleSearch}
+                onClick={() => handleSearch(input)}
                 aria-label="Search">
                     <FontAwesomeIcon icon={faSearch} />
                 </button>
