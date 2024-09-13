@@ -1,9 +1,7 @@
 'use client'
 import React, { useState } from 'react';
-import { useMutation } from '@apollo/client';
 import { v4 as uuidv4 } from 'uuid';
-import CREATEWORD_MUTATION from '@/gql/createWord';
-import CREATETRANSLATION_MUTATION from '@/gql/createTranslation';
+import { createWordAction, createTranslationAction } from '@/app/actions/actions';
 import Modal from '@/components/modal';
 
 const NewWordForm = () => {
@@ -12,8 +10,7 @@ const NewWordForm = () => {
     const wordId = generateWordId();
     const translationId = generateTransId();
 
-    const [createWord] = useMutation(CREATEWORD_MUTATION);
-    const [createTranslation] = useMutation(CREATETRANSLATION_MUTATION);
+    
     const [loading, setLoading] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
 
@@ -29,32 +26,29 @@ const NewWordForm = () => {
         e.preventDefault();
         setLoading(true);
 
-        const wData = {
-            id: wordId,
-            text: wordText,
-            pronunciation: wordPronunciation,
-            type: wordType,
-            tense: wordTense,
-            example: wordExample
-        };
-
-        const tData = {
-            id: translationId,
-            text: translationText,
-            language: translationLanguage,
-            wordId: wordId
-        };
+        const formData = new FormData(e.currentTarget);
+        formData.set('wordId', wordId);
+        formData.set('translationId', translationId);
+        formData.set('wordText', wordText);
+        formData.set('wordPronunciation', wordPronunciation);
+        formData.set('wordType', wordType);
+        formData.set('wordTense', wordTense);
+        formData.set('wordExample', wordExample);
+        formData.set('translationText', translationText);
+        formData.set('translationLanguage', translationLanguage);
+        formData.set('wordId', wordId);
 
         try {
-            await createWord({ variables: { input: wData } });
-            await createTranslation({ variables: { input: tData } });
-            setModalMessage('Word and translation created successfully!');
-        } catch (event: any) {
-            console.error('Error creating the word and translation: ', event);
-            setModalMessage('Error creating the word and translation: ' + event.message);
+            await createWordAction(formData);
+            await createTranslationAction(formData);
+            setModalMessage('Word and translation created successfully.');
+        } catch (error){
+            console.error('Error creating word and translation: ', error);
+            setModalMessage('Failed to create word and translation.');
         } finally {
             setLoading(false);
         }
+
     };
 
     return (

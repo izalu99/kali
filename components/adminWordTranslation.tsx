@@ -1,16 +1,14 @@
 'use client'
 import React, { useState } from 'react';
-import { useMutation } from '@apollo/client';
-import UPDATEWORD_MUTATION from '@/gql/updateWord';
+import { updateWordAction, updateTranslationAction, deleteTranslationAndWordAction } from '@/app/actions/actions';
 import UPDATETRANSLATION_MUTATION from '@/gql/updateTranslation';
 import Modal from '@/components/modal';
 import DELETETRANSLATIONANDWORD_MUTATION from '@/gql/deleteTranslationAndWord';
+import { text } from 'stream/consumers';
 
 // for word display after search
 const AdminWordTranslation = ({ word, translation }: any) => {
-    const [updateWord] = useMutation(UPDATEWORD_MUTATION);
-    const [updateTranslation] = useMutation(UPDATETRANSLATION_MUTATION);
-    const [deleteTranslationAndWord] = useMutation(DELETETRANSLATIONANDWORD_MUTATION);
+    
     const [loading, setLoading] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
 
@@ -28,25 +26,21 @@ const AdminWordTranslation = ({ word, translation }: any) => {
         e.preventDefault();
         setLoading(true);
 
-        const wData = {
-            id: word.id,
-            text: wordText,
-            pronunciation: wordPronunciation,
-            type: wordType,
-            tense: wordTense,
-            example: wordExample
-        };
-
-        const tData = {
-            id: translation.id,
-            text: translationText,
-            language: translationLanguage,
-            wordId: translation.wordId
-        };
+        const formData = new FormData(e.currentTarget);
+        formData.set('wordId', word.id);
+        formData.set('WordText', wordText);
+        formData.set('wordPronunciation', wordPronunciation);
+        formData.set('wordType', wordType);
+        formData.set('wordTense', wordTense);
+        formData.set('wordExample', wordExample);
+        formData.set('translationId', translation.id);
+        formData.set('translationText', translationText);
+        formData.set('translationLanguage', translationLanguage);
+        formData.set('wordId', translation.wordId);
 
         try {
-            await updateWord({ variables: { input: wData } });
-            await updateTranslation({ variables: { input: tData } });
+            await updateWordAction(formData);
+            await updateTranslationAction(formData);
             setModalMessage('Word and translation updated successfully!');
         } catch (event: any) {
             console.error('Error updating the word and translation: ', event);
@@ -59,15 +53,14 @@ const AdminWordTranslation = ({ word, translation }: any) => {
 
     const handleDelete = async () => {
         setLoading(true);
+        const tData = {
+            id: translation.id,
+            wordId: translation.wordId,
+            text: translation.text,
+            language: translation.language
+        }
         try{
-            await deleteTranslationAndWord({ variables:{
-                input: {
-                    id: translation.id,
-                    text: translation.text,
-                    language: translation.language,
-                    wordId: translation.wordId
-                }
-            }});
+            await deleteTranslationAndWordAction(tData)
             setModalMessage('Word and translation deleted successfully!');
             setWordTransDeleted(true);
         } catch(event: any){
