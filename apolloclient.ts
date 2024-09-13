@@ -1,6 +1,5 @@
 import {ApolloClient, InMemoryCache, createHttpLink} from '@apollo/client';
-import { request } from 'https';
-import { cookies } from 'next/headers';
+
 
 
 const getGraphqlUri = () => {
@@ -19,11 +18,7 @@ const getGraphqlUri = () => {
 
 
 const client = new ApolloClient({
-    ssrMode: true,
-    link: createHttpLink({
-        uri: getGraphqlUri(),
-        credentials: 'same-origin',
-    }),
+    uri: getGraphqlUri(),
     cache: new InMemoryCache({
         resultCaching: false,
     })
