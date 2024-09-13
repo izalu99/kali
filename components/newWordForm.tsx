@@ -1,19 +1,15 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { createWordAction, createTranslationAction } from '@/app/actions/actions';
 import Modal from '@/components/modal';
 
 const NewWordForm = () => {
-    const generateWordId = () => uuidv4();
-    const generateTransId = () => uuidv4();
-    const wordId = generateWordId();
-    const translationId = generateTransId();
-
     
     const [loading, setLoading] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
-
+    const [wordId, setWordId] = useState('');
+    const [translationId, setTranslationId] = useState('');
     const [wordText, setWordText] = useState('');
     const [wordPronunciation, setWordPronunciation] = useState('');
     const [wordType, setWordType] = useState('');
@@ -21,6 +17,12 @@ const NewWordForm = () => {
     const [wordExample, setWordExample] = useState('');
     const [translationText, setTranslationText] = useState('');
     const [translationLanguage, setTranslationLanguage] = useState('');
+
+
+    useEffect(() => {
+        setWordId(uuidv4());
+        setTranslationId(uuidv4());
+    }, []);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();

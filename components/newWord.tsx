@@ -7,14 +7,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const NewWord = () => {
-    const [isNewWordBtnClicked, setIsNewWordBtnClicked] = useState(false);
     const [newWordForms, setNewWordForms] = useState<number[]>([]);
     const [showPopup, setShowPopup] = useState(false);
     const formContainerRef = useRef<HTMLDivElement>(null);
 
     const handleNewWordBtn = () => {
         if (newWordForms.length < 3){
-            setIsNewWordBtnClicked(true);
             setNewWordForms([...newWordForms, newWordForms.length + 1]);
             setTimeout(() => {
                 formContainerRef.current?.scrollIntoView({behavior: 'smooth'});
@@ -27,9 +25,6 @@ const NewWord = () => {
 
     const handleCloseBtn = (index: number) => {
         setNewWordForms(newWordForms.filter((_, i) => i !== index));
-        if (newWordForms.length === 1) {
-            setIsNewWordBtnClicked(false);
-        }
     };
 
     const handleClosePopup = () => {
