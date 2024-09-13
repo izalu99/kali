@@ -35,7 +35,7 @@ const NewWord = () => {
         <div className='font-serif p-4'>
             <button 
                 onClick={handleNewWordBtn} 
-                className='bg-sunglow hover:bg-black text-black hover:text-chiffon font-medium text-sm lg:text-lg rounded-lg p-2 mx-auto focus:outline-none transition-colors duration-200 flex items-center space-x-2'>
+                className='bg-blue-300 hover:bg-black text-black hover:text-chiffon font-medium text-sm lg:text-lg rounded-lg p-2 mx-auto focus:outline-none transition-colors duration-200 flex items-center space-x-2'>
                 <FontAwesomeIcon icon={faPlus} />
                 <span>New Word</span>
             </button>

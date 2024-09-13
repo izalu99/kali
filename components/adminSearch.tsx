@@ -62,7 +62,7 @@ const AdminSearch = () =>{
                 />
                 <button 
                 type="submit"
-                className="px-4 rounded-r-md bg-sunglow text-black hover:text-chiffon transition-colors duration-200 hover:bg-black"
+                className="px-4 rounded-r-md bg-black text-chiffon hover:text-black transition-colors duration-200 hover:bg-blue-300"
                 aria-label="Search"
                 >
                     <FontAwesomeIcon icon={faSearch} />

@@ -3,11 +3,10 @@ import AtoZ from "@/components/atoz";
 
 const browse = () => {
     return (
-        <div>
+        <div className="flex flex-col w-full justify-between">
             <AtoZ />
-            <h1 className='text-black'>Under constructions atm.</h1>
+            <h1 className='flex text-black justify-center align-middle'>Under construction...</h1>
             <div>
-                <p>display here the cards that start with the clicked letter </p>
             </div>
             
         </div>
