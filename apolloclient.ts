@@ -18,7 +18,9 @@ const client = new ApolloClient({
         uri: getGraphqlUri(),
         credentials: 'same-origin',
     }),
-    cache: new InMemoryCache()
+    cache: new InMemoryCache({
+        resultCaching: false,
+    })
 })
 
 export default client;
