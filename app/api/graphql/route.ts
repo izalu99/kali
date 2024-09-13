@@ -2,7 +2,7 @@
 import { ApolloServer } from '@apollo/server'
 import schema from './schema'
 import resolvers from './resolvers'
-import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default'
+import { ApolloServerPluginLandingPageLocalDefault, ApolloServerPluginLandingPageProductionDefault } from '@apollo/server/plugin/landingPage/default'
 import { NextResponse, NextRequest } from 'next/server'
 import { startServerAndCreateNextHandler } from '@as-integrations/next'
 
@@ -14,6 +14,11 @@ if (process.env.NODE_ENV === 'development') {
             embed:true
         })
     ]
+} else {
+    plugins = [ApolloServerPluginLandingPageProductionDefault({ 
+        embed: true,
+        graphRef: 'myGraph@production',
+    })]
 }
 
 

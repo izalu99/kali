@@ -1,4 +1,6 @@
 import {ApolloClient, InMemoryCache, createHttpLink} from '@apollo/client';
+import { request } from 'https';
+import { cookies } from 'next/headers';
 
 
 const getGraphqlUri = () => {
