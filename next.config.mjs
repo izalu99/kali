@@ -1,6 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     async headers(){
+
+        const devURL = process.env.NEXT_PUBLIC_DEV_URL || 'http://localhost:3000';
+        const prodURL = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : devURL;
+
         return [
             {
                 source: '/api/:path*',
@@ -11,7 +15,7 @@ const nextConfig = {
                     },
                     {
                         key: 'Access-Control-Allow-Origin',
-                        value: '*'
+                        value: prodURL
                     },
                     {
                         key: 'Access-Control-Allow-Methods',
