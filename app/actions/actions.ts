@@ -11,7 +11,6 @@ import DELETETRANSLATIONANDWORD_MUTATION from '@/gql/deleteTranslationAndWord';
 
 
 
-
 export const searchAction = async (formData: FormData) => {
 
     const searchInput = formData.get('searchInput') as string;
@@ -31,7 +30,7 @@ export const searchAction = async (formData: FormData) => {
 
 };
 
-// creating a new word/translation
+
 export const createWordAction = async (formData: FormData) => {
     const wordData = {
         id: formData.get('wordId'),
@@ -77,8 +76,6 @@ export const createTranslationAction = async (formData: FormData) => {
 };
 
 
-
-//updating a word/translation
 export const updateWordAction = async (formData: FormData) => {
     const wordData = {
         id: formData.get('wordId'),
@@ -102,7 +99,6 @@ export const updateWordAction = async (formData: FormData) => {
 };
 
 
-
 export const updateTranslationAction = async (formData: FormData) => {
     const translationData = {
         id: formData.get('translationId'),
@@ -124,16 +120,12 @@ export const updateTranslationAction = async (formData: FormData) => {
 }
 
 
-
 type Tdata = {
     id: string,
     wordId: string,
     language: string,
     text: string
 };
-
-// deleting a word/translation
-
 export const deleteTranslationAndWordAction = async (tData: Tdata) => {
 
     try {

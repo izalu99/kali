@@ -60,33 +60,33 @@ const NewWordForm = () => {
                         <h1 className='text-black font-bold text-3xl mb-4'>New Word</h1>
                         <div className='flex flex-col group'>
                             <label className="font-medium text-black mb-2">Id</label>
-                            <input name='wordId' className="bg-gray-100 p-2 text-gray-700 disabled:bg-gray-200 rounded-lg" value={wordId} required disabled></input>
+                            <input aria-label='wordId' name='wordId' className="bg-gray-100 p-2 text-gray-700 disabled:bg-gray-200 rounded-lg" value={wordId} required disabled></input>
                             <small className="text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200">This field is automatically created.</small>
                         </div>
                         
                         <div className='flex flex-col'>
                             <label className="font-medium text-black mb-2">Text</label>
-                            <input name='wordText' className="bg-gray-100 p-2 rounded-lg text-black" value={wordText} onChange={(e) => setWordText(e.target.value)} placeholder='Word text' required></input>
+                            <input aria-label='wordText' name='wordText' className="bg-gray-100 p-2 rounded-lg text-black" value={wordText} onChange={(e) => setWordText(e.target.value)} placeholder='Word text' required></input>
                         </div>
 
                         <div className='flex flex-col'>
                             <label className="font-medium text-black mb-2">Pronunciation</label>
-                            <input name='wordPronunciation' className="bg-gray-100 p-2 rounded-lg text-black" value={wordPronunciation} onChange={(e) => setWordPronunciation(e.target.value)} placeholder='How is the word is spoken by ear...'></input>
+                            <input aria-label='wordPronunciation' name='wordPronunciation' className="bg-gray-100 p-2 rounded-lg text-black" value={wordPronunciation} onChange={(e) => setWordPronunciation(e.target.value)} placeholder='How is the word is spoken by ear...'></input>
                         </div>
     
                         <div className='flex flex-col'>
                             <label className="font-medium text-black mb-2">Word Type</label>
-                            <input name='wordType' className="bg-gray-100 p-2 rounded-lg text-black" value={wordType} onChange={(e) => setWordType(e.target.value)} placeholder='e.g., adjective, adverb, noun, verb,...'></input>
+                            <input aria-label='wordType' name='wordType' className="bg-gray-100 p-2 rounded-lg text-black" value={wordType} onChange={(e) => setWordType(e.target.value)} placeholder='e.g., adjective, adverb, noun, verb,...'></input>
                         </div>
     
                         <div className='flex flex-col'>
                             <label className="font-medium text-black mb-2">Tense</label>
-                            <input name='wordTense' className="bg-gray-100 p-2 rounded-lg text-black" value={wordTense} onChange={(e) => setWordTense(e.target.value)} placeholder='e.g., past, present, future'></input>
+                            <input aria-label='wordTense' name='wordTense' className="bg-gray-100 p-2 rounded-lg text-black" value={wordTense} onChange={(e) => setWordTense(e.target.value)} placeholder='e.g., past, present, future'></input>
                         </div>
     
                         <div className='flex flex-col'>
                             <label className="font-medium text-black mb-2">Example Sentence</label>
-                            <input name='wordExample' className="bg-gray-100 p-2 rounded-lg text-black" value={wordExample} onChange={(e) => setWordExample(e.target.value)} placeholder='Example'></input>
+                            <input aria-label='wordExample' name='wordExample' className="bg-gray-100 p-2 rounded-lg text-black" value={wordExample} onChange={(e) => setWordExample(e.target.value)} placeholder='Example'></input>
                         </div>
                     </div>
                     
@@ -94,23 +94,23 @@ const NewWordForm = () => {
                         <h1 className='text-black font-bold text-3xl mb-4'>Translation</h1>
                         <div className='flex flex-col group'>
                             <label className="font-medium text-black mb-2">Translation Id</label>
-                            <input name='translationId' className="bg-gray-100 p-2 rounded-lg text-gray-700 disabled:bg-gray-200" value={translationId} disabled></input>
+                            <input aria-label='translationId' name='translationId' className="bg-gray-100 p-2 rounded-lg text-gray-700 disabled:bg-gray-200" value={translationId} disabled></input>
                             <small className="text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200">This field is automatically created.</small>
                         </div>
                         
                         <div className='flex flex-col'>
                             <label className="font-medium text-black mb-2">Translation Text</label>
-                            <input name='translationText' className="bg-gray-100 p-2 rounded-lg text-black" value={translationText} onChange={(e) => setTranslationText(e.target.value)} placeholder='Translation text' required></input>
+                            <input aria-label='translationText' name='translationText' className="bg-gray-100 p-2 rounded-lg text-black" value={translationText} onChange={(e) => setTranslationText(e.target.value)} placeholder='Translation text' required></input>
                         </div>
                         
                         <div className='flex flex-col'>
                             <label className="font-medium text-black mb-2">Translation Language</label>
-                            <input name='translationLanguage' className="bg-gray-100 p-2 rounded-lg text-black" value={translationLanguage} onChange={(e) => setTranslationLanguage(e.target.value)} placeholder='e.g., English' required></input>
+                            <input aria-label='translationLanguage' name='translationLanguage' className="bg-gray-100 p-2 rounded-lg text-black" value={translationLanguage} onChange={(e) => setTranslationLanguage(e.target.value)} placeholder='e.g., English' required></input>
                         </div>
                         
                         <div className='flex flex-col group'>
                             <label className="font-medium text-black mb-2">Word Id</label>
-                            <input name='wordId' className="bg-gray-100 p-2 rounded-lg text-gray-700 disabled:bg-gray-200" value={wordId} required disabled></input>
+                            <input aria-label='wordId' name='wordId' className="bg-gray-100 p-2 rounded-lg text-gray-700 disabled:bg-gray-200" value={wordId} required disabled></input>
                             <small className="text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200">This field is automatically created.</small>
                         </div>
                     </div>
