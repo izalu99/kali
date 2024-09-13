@@ -1,75 +1,36 @@
-# Kali
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Overview
+## Getting Started
 
-Kali is a web application designed to help users learn and translate the kankanaey dialect. The app provides a user-friendly interface for searching words and translations, and it leverages modern web technologies to deliver a seamless experience.
+First, run the development server:
 
-## Features
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-- **Search Functionality**: Quickly search for words and their translations.
-- **Debounced Search**: Efficient search with debouncing to reduce server load.
-- **Responsive Design**: Works on both desktop and mobile devices.
-- **Admin Interface**: Manage translations and other data through an admin interface.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Technologies Used
+You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
-- **React**: Frontend library for building user interfaces.
-- **Next.js**: Framework for server-side rendering and static site generation.
-- **Apollo Client**: State management library for GraphQL.
-- **FontAwesome**: Icon library for adding icons.
-- **Tailwind CSS**: Utility-first CSS framework for styling.
-- **GraphQL**: Query language for your API.
-- **Clerk**: Authentication and user management.
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Installation
+## Learn More
 
-### Prerequisites
+To learn more about Next.js, take a look at the following resources:
 
-- Node.js (v14 or higher)
-- npm or yarn
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-### Steps
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-1. Clone the repository:
+## Deploy on Vercel
 
-    ```sh
-    git clone 
-    cd whatever-name-you-want-to-name-it
-    ```
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-2. Install dependencies:
-
-    ```sh
-    npm install
-    # or
-    yarn install
-    ```
-
-3. Set up environment variables:
-
-    Create a `.env.local` file in the root directory and add the necessary environment variables. Example:
-
-    ```env
-    NEXT_PUBLIC_API_URL=https://api.yourdomain.com
-    CLERK_FRONTEND_API=your-clerk-frontend-api
-    ...
-    ```
-
-4. Run the development server:
-
-    ```sh
-    npm run dev
-    # or
-    yarn dev
-    ```
-
-5. Open your browser and navigate to `http://localhost:3000`.
-
-## Usage
-
-- **Search**: Use the search bar to find translations.
-- **Admin**: Access the admin interface to manage translations.
-
-## License
-
-*In progress...*
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

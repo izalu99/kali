@@ -2,7 +2,7 @@
 const Footer = () => {
     return (
         <footer className='bg-transparent p-8'>
-        <p className='text-black'></p>
+        <p className='text-chiffon'>Footer</p>
         </footer>
     );
 };
