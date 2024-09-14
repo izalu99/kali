@@ -7,7 +7,7 @@ const getGraphqlUri = () => {
     if (process.env.NODE_ENV === 'development') {
         return `${process.env.NEXT_PUBLIC_API_URL}/api/graphql`;
     } else {
-        return `https://${process.env.NEXT_PUBLIC_API_URL}/api/graphql`;
+        return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/graphql`;
     }
 };
 
