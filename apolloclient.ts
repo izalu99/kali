@@ -4,9 +4,11 @@ import { setContext } from '@apollo/client/link/context';
 
 
 const getGraphqlUri = () => {
-    const apiUrl = process.env.VERCEL_URL? process.env.VERCEL_URL : 'http://localhost:3000';
-    console.log('apiUrl: ', `https://{apiUrl}/api/graphql`);
-    return `https://${apiUrl}/api/graphql`;
+    if (process.env.NODE_ENV === 'development') {
+        return `${process.env.NEXT_PUBLIC_API_URL}/api/graphql`;
+    } else {
+        return `https://${process.env.NEXT_PUBLIC_API_URL}/api/graphql`;
+    }
 };
 
 
