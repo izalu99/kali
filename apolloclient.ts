@@ -5,11 +5,7 @@ const getGraphqlUri = () => {
         console.log('development mode');
         console.log(process.env.NEXT_PUBLIC_API_URL);
         return `${process.env.NEXT_PUBLIC_API_URL}/api/graphql`;        
-    } else if(process.env.VERCEL_ENV === 'preview') {
-        console.log('preview mode');
-        return 'https://kaliprev.vercel.app/api/graphql';
-    } 
-    else{
+    } else{
         const vercelUrl = process.env.VERCEL_URL;
         console.log('production mode');
         console.log(vercelUrl);
@@ -21,9 +17,7 @@ const getGraphqlUri = () => {
 
 const client = new ApolloClient({
     uri: getGraphqlUri(),
-    cache: new InMemoryCache({
-        resultCaching: false,
-    }),
+    cache: new InMemoryCache(),
     credentials: 'include',
 })
 
