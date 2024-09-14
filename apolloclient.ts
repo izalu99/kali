@@ -10,7 +10,7 @@ const getGraphqlUri = () => {
         const vercelUrl = 'kali-ktd9ty1e7-iccetea.vercel.app/'
         console.log('production or preview mode');
         console.log(vercelUrl);
-        return `https://${vercelUrl}/api/graphql`;
+        return `/api/graphql`;
     }
 };
 
