@@ -8,7 +8,7 @@ const getGraphqlUri = () => {
     return 'http://localhost:3000/api/graphql'; // Hardcoded localhost for dev mode
   } else {
     // In Vercel Preview/Production environments
-    const vercelUrl = process.env.VERCEL_URL || process.env.NEXT_PUBLIC_API_URL;
+    const vercelUrl = process.env.VERCEL_URL;
     if (!vercelUrl) {
       throw new Error('GraphQL API URL is not set for the production environment.');
     }
