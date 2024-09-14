@@ -5,9 +5,13 @@ const getGraphqlUri = () => {
         console.log('development mode');
         console.log(process.env.NEXT_PUBLIC_API_URL);
         return `${process.env.NEXT_PUBLIC_API_URL}/api/graphql`;        
-    } else{
+    } else if(process.env.VERCEL_ENV === 'preview') {
+        console.log('preview mode');
+        return 'https://kaliprev.vercel.app/api/graphql';
+    } 
+    else{
         const vercelUrl = process.env.VERCEL_URL;
-        console.log('production or preview mode');
+        console.log('production mode');
         console.log(vercelUrl);
         return `https://${vercelUrl}/api/graphql`;
     }
