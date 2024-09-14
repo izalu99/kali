@@ -18,6 +18,7 @@ const Search = () => {
   const handleSearch = async (formData: FormData) => {
     try {
       const results = await searchAction(formData);
+      console.log(results);
       setSearchResults(results);
       setHasSearched(true);
       setErrorMessage('');

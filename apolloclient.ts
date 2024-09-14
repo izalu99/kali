@@ -1,6 +1,4 @@
-import {ApolloClient, InMemoryCache, createHttpLink} from '@apollo/client';
-
-
+import {ApolloClient, InMemoryCache} from '@apollo/client';
 
 const getGraphqlUri = () => {
     if(process.env.NODE_ENV === 'development' || process.env.VERCEL_ENV === 'development') {
@@ -21,7 +19,12 @@ const client = new ApolloClient({
     uri: getGraphqlUri(),
     cache: new InMemoryCache({
         resultCaching: false,
-    })
+    }),
+    headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS'
+    }
 })
 
 export default client;

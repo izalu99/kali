@@ -30,6 +30,7 @@ const server = new ApolloServer({
 
 const handler = startServerAndCreateNextHandler<NextRequest>(server,{})
 
+
 export async function GET(req: NextRequest) {
     return handler(req)
 }
