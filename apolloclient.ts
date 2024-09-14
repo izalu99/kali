@@ -14,10 +14,7 @@ const getGraphqlUri = () => {
 
 const httpLink = new HttpLink({
     uri: getGraphqlUri(),
-    credentials:'same-origin',
-    headers: {
-        'Content-Type': 'application/json',
-    }
+    credentials:'same-origin'
 });
 
 
@@ -25,7 +22,6 @@ const authLink = setContext((_, { headers }) => {
     return {
         headers: {
             ...headers,
-            'Content-Type': 'application/json',
         }
     }
 });
