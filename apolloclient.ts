@@ -6,11 +6,10 @@ const getGraphqlUri = () => {
         console.log(process.env.NEXT_PUBLIC_API_URL);
         return `${process.env.NEXT_PUBLIC_API_URL}/api/graphql`;        
     } else{
-        //const vercelUrl = process.env.VERCEL_URL;
-        const vercelUrl = 'kali-ktd9ty1e7-iccetea.vercel.app/'
+        const vercelUrl = process.env.VERCEL_URL;
         console.log('production or preview mode');
         console.log(vercelUrl);
-        return `/api/graphql`;
+        return `https://${vercelUrl}/api/graphql`;
     }
 };
 
@@ -21,11 +20,7 @@ const client = new ApolloClient({
     cache: new InMemoryCache({
         resultCaching: false,
     }),
-    headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS'
-    }
+    credentials: 'include',
 })
 
 export default client;
