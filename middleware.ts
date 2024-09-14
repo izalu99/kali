@@ -11,10 +11,6 @@ const isProtectedRoute = createRouteMatcher([
   
   export default clerkMiddleware((auth, req) => {
 
-    // allow post requests to the graphql api
-    if (req.url.startsWith('/api/graphql') && req.method === 'POST') {
-      return;
-    }
 
     if (isProtectedRoute(req)) {
       auth().protect()
