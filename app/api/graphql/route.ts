@@ -28,7 +28,9 @@ const server = new ApolloServer({
     plugins,
 })
 
-const handler = startServerAndCreateNextHandler<NextRequest>(server,{})
+const handler = startServerAndCreateNextHandler<NextRequest>(server,{
+    context: async (req, res) => ({req, res}),
+});
 
 
 export async function GET(req: NextRequest) {

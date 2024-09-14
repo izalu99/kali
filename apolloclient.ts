@@ -1,4 +1,7 @@
 import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
+
+
 
 const getGraphqlUri = () => {
     if(process.env.NODE_ENV === 'development' || process.env.VERCEL_ENV === 'development') {
@@ -14,15 +17,26 @@ const getGraphqlUri = () => {
 };
 
 
+const httpLink = new HttpLink({
+    uri: getGraphqlUri(),
+    credentials:'include'
+});
+
+
+const authLink = setContext((_, { headers }) => {
+    return {
+        headers: {
+            ...headers,
+        }
+    }
+});
+
+
 
 const client = new ApolloClient({
     ssrMode: typeof window === 'undefined',
-    link: new HttpLink({
-        uri: getGraphqlUri(),
-        credentials: 'same-origin'
-    }),
+    link: authLink.concat(httpLink),
     cache: new InMemoryCache()  
-})
+});
 
 export default client;
-
