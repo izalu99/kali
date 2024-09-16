@@ -70,7 +70,7 @@ const Search = () => {
           {isPending ? (
             <ClipLoader color={'#000'} />
           ) : (
-            searchResults.length > 0 && <SearchResults results={searchResults} />
+            hasSearched && <SearchResults results={searchResults} />
           )}
         </div>
       </div>
