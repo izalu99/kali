@@ -11,14 +11,26 @@ const Cursor = () => {
             setCursorPosition({ x: e.clientX, y: e.clientY });
         };
 
-        const updatePosition = (e: MouseEvent) => {
-            requestAnimationFrame(() => handleCursorMove(e));
+        const handleTouchMove = (e: TouchEvent) => {
+            setCursorPosition({ x: e.touches[0].clientX, y: e.touches[0].clientY });
+        }
+
+        const updatePosition = (e: MouseEvent | TouchEvent) => {
+            requestAnimationFrame(() => {
+                if(e instanceof TouchEvent) {
+                    handleTouchMove(e);
+                } else if(e instanceof MouseEvent) {
+                    handleCursorMove(e);
+                }
+            });
         };
 
         window.addEventListener('mousemove', updatePosition);
+        window.addEventListener('touchmove', updatePosition);
 
         return () => {
             window.removeEventListener('mousemove', updatePosition);
+            window.removeEventListener('touchmove', updatePosition);
         };
     }, []);
 
@@ -26,8 +38,8 @@ const Cursor = () => {
         <motion.div
             className='fixed w-8 h-8 bg-darkRed bg-opacity-50 rounded-full pointer-events-none z-50 flex items-center justify-center'
             animate={{
-                x: cursorPosition.x - 5,
-                y: cursorPosition.y - 5
+                x: cursorPosition.x - 6,
+                y: cursorPosition.y - 6
             }}
             transition={{
                 type: 'spring',
