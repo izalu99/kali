@@ -30,6 +30,18 @@ export const searchAction = async (formData: FormData) => {
 
 };
 
+export const searchRandomWordAction = async (word: string) => {
+    try {
+        const { data } = await client.query({
+            query: SEARCH_QUERY,
+            variables: { input: word }
+        });
+        return data.search;
+    } catch (error) {
+        console.error('Error searching for  a random word: ', error);
+    }
+};
+
 
 export const createWordAction = async (formData: FormData) => {
     const wordData = {
@@ -140,4 +152,25 @@ export const deleteTranslationAndWordAction = async (tData: Tdata) => {
     }
 };
 
+
+export const getRandomWord = async (searchRandomWordAction: (word: string) => Promise<any>) => {
+    const  letterPairs = ['ka', 'si','wa','da','ma']
+    const index = Math.floor(Math.random() * letterPairs.length);
+    const randomWord = letterPairs[index];
+    
+    try{
+        const wordResults = await searchRandomWordAction(randomWord);
+
+        if (wordResults.length > 0) {
+            const word = wordResults[0];
+            return word;
+        } else{
+            return null;
+        }
+    } catch (error){
+        console.error('Error searching for random word: ', error);
+        return null;
+    }
+
+};
 

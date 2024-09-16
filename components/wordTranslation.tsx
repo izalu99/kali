@@ -3,8 +3,7 @@ import React from 'react';
 
 // for word display after search
 const WordTranslation = ({word, translation}: any) => {
-    //console.log('word:', word);
-    //console.log('translation:', translation);
+
     return (
         <div key={word.id} 
         className="h-96 p-6 bg-black rounded-md flex flex-col justify-end">
