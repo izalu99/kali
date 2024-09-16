@@ -153,3 +153,24 @@ export const deleteTranslationAndWordAction = async (tData: Tdata) => {
 };
 
 
+export const getRandomWord = async (searchRandomWordAction: (word: string) => Promise<any>) => {
+    const  letterPairs = ['ka', 'si','wa','da','ma']
+    const index = Math.floor(Math.random() * letterPairs.length);
+    const randomWord = letterPairs[index];
+    
+    try{
+        const wordResults = await searchRandomWordAction(randomWord);
+
+        if (wordResults.length > 0) {
+            const word = wordResults[0];
+            return word;
+        } else{
+            return null;
+        }
+    } catch (error){
+        console.error('Error searching for random word: ', error);
+        return null;
+    }
+
+};
+

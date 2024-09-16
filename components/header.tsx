@@ -7,7 +7,7 @@ import { SignedIn, UserButton } from '@clerk/nextjs';
 
 const Header = () => {
     return (
-        <div className="flex flex-row justify-between sticky top-0 z-50 bg-chiffon p-6 font-serif rounded-b-md">
+        <div className="flex flex-row justify-between sticky top-0 z-50 bg-chiffon p-6 font-serif rounded-b-md border-black border-b-4">
             <div className='flex flex-row flex-grow justify-between'>
                 <div className=''><BlogName /></div>
                 <div className='hidden lg:flex pr-4'>
