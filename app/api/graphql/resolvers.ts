@@ -134,14 +134,6 @@ const resolvers = {
         createTranslation: async (_:any, { input }:any, __:any) => {
             try {
                 
-                const existingTranslation = await db.query.translations.findFirst({
-                    where: eq(translations.text, input.text),
-                });
-                if (existingTranslation) {
-                    throw new GraphQLError('Translation already exists');
-                }
-
-                
                 const translation = await db.insert(translations).values({...input}).returning();
                 return translation[0];
             
