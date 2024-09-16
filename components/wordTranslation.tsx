@@ -6,7 +6,7 @@ const WordTranslation = ({word, translation}: any) => {
 
     return (
         <div key={word.id} 
-        className="h-96 p-6 bg-black rounded-md flex flex-col justify-end">
+        className="h-96 p-6 bg-black rounded-md flex flex-col justify-end font-serif">
             <div className="space-y-4">
                 <h1 className="text-4xl font-semibold text-chiffon">{word.text}</h1>
                 <div className='text-base text-lightGray space-y-1'>

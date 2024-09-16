@@ -24,7 +24,7 @@ const WordOfTheDay = () => {
     }, []);
 
     if (!word || !translation) {
-        return <div className='flex flex-col items-center justify-center w-full'>
+        return <div className='flex flex-col items-center justify-center w-full font-serif'>
                     <h1 className='pt-4 text-2xl font-semibold text-black text-center'>Word of the Day</h1>
                     <div className='w-screen sm:max-screen-xs md:max-w-screen-sm lg:max-w-screen-md xl:max-w-screen-md p-10 flex flex-col justify-center'>
                     <div className='text-black text-center align-middle'>
@@ -36,7 +36,7 @@ const WordOfTheDay = () => {
 
     return (
         <div className='flex flex-col items-center w-full'>
-            <h1 className='pt-4 text-2xl font-semibold text-black text-center'>Word of the Day</h1>
+            <h1 className='pt-4 text-2xl font-semibold text-black text-center font-serif'>Word of the Day</h1>
             <div className='w-screen sm:max-screen-xs md:max-w-screen-sm lg:max-w-screen-md xl:max-w-screen-md p-10 flex flex-col justify-center'>
                 <WordTranslation word={word} translation={translation} />
             </div>
