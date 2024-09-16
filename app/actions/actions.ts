@@ -30,6 +30,18 @@ export const searchAction = async (formData: FormData) => {
 
 };
 
+export const searchRandomWordAction = async (word: string) => {
+    try {
+        const { data } = await client.query({
+            query: SEARCH_QUERY,
+            variables: { input: word }
+        });
+        return data.search;
+    } catch (error) {
+        console.error('Error searching for  a random word: ', error);
+    }
+};
+
 
 export const createWordAction = async (formData: FormData) => {
     const wordData = {

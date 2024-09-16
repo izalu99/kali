@@ -1,7 +1,8 @@
-"use client"
+'use client';
 
 import Headline from "@/components/headline";
 import Search from "@/components/search";
+import WordOfTheDay from "@/components/wordOfTheDay";
 import React from 'react';
 export default function Home() {
 
@@ -11,6 +12,9 @@ export default function Home() {
         <Headline />
         <div className='flex-grow mt-8 w-full'>
           <Search />
+        </div>
+        <div>
+          <WordOfTheDay />
         </div>
       </div>
     </main>
