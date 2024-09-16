@@ -13,7 +13,7 @@ export default function Home() {
         <div className='flex-grow mt-8 w-full'>
           <Search />
         </div>
-        <div className="bg-darkRed rounded-md shadow-black shadow-2xl">
+        <div className="">
           <WordOfTheDay />
         </div>
       </div>
