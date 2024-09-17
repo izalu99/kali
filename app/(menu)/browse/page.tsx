@@ -7,7 +7,7 @@ import { WordsContext } from "@/app/context/wordsContext";
  
 const Browse = () => {
     const header = 'Browse Words';
-    const {words, isPending} = useContext(WordsContext) || { words: [], isPending: false };
+    const {words, isPending, refresh} = useContext(WordsContext) || { words: [], isPending: false, refresh: () => {} };
     const letters = [
         'a', 'e', 'i', 'o', 'u',
         'ba', 'be', 'bi', 'bo', 'bu',
@@ -29,6 +29,7 @@ const Browse = () => {
 
 
     useEffect(() => {     
+        refresh();
         if (selectedLetter) {
             const filtered = words.filter((word: { text: string; }) => {
                 return word.text && word.text.toLowerCase().startsWith(selectedLetter.toLowerCase());
