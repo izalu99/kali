@@ -5,11 +5,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import dynamic from 'next/dynamic';
 import { searchAction } from '@/app/actions/actions';
-import { ClipLoader } from 'react-spinners';
 
 const SearchResults = dynamic(() => import('@/components/searchResults'));
 
 const Search = () => {
+  const header = 'Search Results';
   const [input, setInput] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [hasSearched, setHasSearched] = useState(false);
@@ -67,11 +67,9 @@ const Search = () => {
         )}
 
         <div className="w-full pt-4 flex flex-col items-center justify-center space-y-4">
-          {isPending ? (
-            <ClipLoader color={'#000'} />
-          ) : (
-            hasSearched && <SearchResults results={searchResults} />
-          )}
+          {
+            hasSearched && <SearchResults loading={isPending} header={header} results={searchResults} />
+          }
         </div>
       </div>
     </div>

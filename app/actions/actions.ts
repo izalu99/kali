@@ -8,6 +8,7 @@ import CREATETRANSLATION_MUTATION from '@/gql/createTranslation';
 import UPDATEWORD_MUTATION from '@/gql/updateWord';
 import UPDATETRANSLATION_MUTATION from '@/gql/updateTranslation';
 import DELETETRANSLATIONANDWORD_MUTATION from '@/gql/deleteTranslationAndWord';
+import WORDS_QUERY from '@/gql/words';
 
 
 
@@ -174,3 +175,15 @@ export const getRandomWord = async (searchRandomWordAction: (word: string) => Pr
 
 };
 
+
+
+export const getWords = async () => {
+    try {
+        const { data } = await client.query({
+            query: WORDS_QUERY
+        });
+        return data.words;
+    } catch (error) {
+        console.error('Error fetching words: ', error);
+    }
+};

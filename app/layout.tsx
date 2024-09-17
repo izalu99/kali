@@ -7,7 +7,8 @@ import { Analytics } from '@vercel/analytics/react';
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import Cursor from "@/components/cursor";
-
+import { WordOTDProvider } from "@/app/context/wordOfTheDayContext";
+import { WordsProvider } from "./context/wordsContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,9 +31,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <body className={inter.className}>
           <Cursor />
           <ApolloProviderWrapper>
-            <Header />
-            {children}
-            <Footer />
+            <WordOTDProvider>
+              <WordsProvider>
+              <Header />
+              {children}
+              <Footer />
+              </WordsProvider>
+            </WordOTDProvider>
           </ApolloProviderWrapper>
           <Analytics />
         </body>

@@ -2,17 +2,21 @@
 
 import React from 'react';
 import WordTranslation from './wordTranslation';
+import { ClipLoader } from 'react-spinners';
 
-
-const SearchResults = ({ results }: any) => {
+const SearchResults = ({ header, results, loading }: any) => {
     
     const allResultsEmpty = results.every((result: any) => result.length === 0);
     return (
         <div className="w-full bg-transparent flex flex-col justify-center">
             <div className="py-4 space-y-6">
-                <h1 className="text-2xl font-semibold text-black text-center">Search Results</h1>
+                <h1 className="text-2xl font-semibold text-black text-center">{header}</h1>
                 <div className="max-h-screen overflow-y-auto p-2">
-                    {allResultsEmpty ? (
+                    {loading ? (
+                        <div className="flex justify-center items-center">
+                            <ClipLoader color={'#000'} />
+                        </div>
+                    ):allResultsEmpty ? (
                         <div className='text-black w-full p-6 text-center'>
                             <p className="text-sm">No results found</p>
                         </div>
