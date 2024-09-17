@@ -9,17 +9,12 @@ import { words, translations } from "@/db/schema";
 const resolvers = {
     
     Query: {
-
-        me: async () => {
-            return "Hi there!";
-        },
-
         words: async () => {
             try{
                 const words = await db.query.words.findMany();
                 return words;
-            } catch (error) {
-                throw new GraphQLError('Error getting words');
+            } catch (error: any) {
+                throw new GraphQLError('Error getting words: ', error);
             }
         },
 
@@ -27,8 +22,8 @@ const resolvers = {
             try{
                 const translations = await db.query.translations.findMany();
                 return translations;
-            } catch (error) {
-                throw new GraphQLError('Error getting translations');
+            } catch (error: any) {
+                throw new GraphQLError('Error getting translations: ', error);
             }
         },
     
@@ -65,8 +60,8 @@ const resolvers = {
                 }
 
                 return foundWords;
-            } catch (error) {
-                throw new GraphQLError('Error searching');
+            } catch (error: any) {
+                throw new GraphQLError('Error searching the word or translation: ', error);
             }
         },
 
@@ -85,8 +80,8 @@ const resolvers = {
                     where: eq(translations.wordId, parent.id),
                 });
                 return theTranslations;
-            } catch (error) {
-                throw new GraphQLError('Error getting translations');
+            } catch (error: any) {
+                throw new GraphQLError('Error getting translations: ', error);
             }
         }
     },
@@ -99,8 +94,8 @@ const resolvers = {
                     where: eq(words.id, parent.wordId),
                 });
                 return theWord;
-            } catch (error) {
-                throw new GraphQLError('Error getting word');
+            } catch (error: any) {
+                throw new GraphQLError('Error getting word: ', error);
             }
         }
     },
@@ -117,17 +112,17 @@ const resolvers = {
                     where: eq(words.text, input.text),
                 });
                 if (existingWord) {
-                    throw new GraphQLError('Word already exists');
+                    throw new GraphQLError('Word already exists.');
                 }
 
                 
                 const word = await db.insert(words).values({...input}).returning();
                 return word[0];
             } catch (error: any) {
-                if (error.message === 'Word already exists') {
+                if (error.message === 'Word already exists.') {
                     throw new GraphQLError(error.message);
                 }
-                throw new GraphQLError('Error creating word');
+                throw new GraphQLError('Error creating word: ', error);
             }
         },
 
@@ -138,10 +133,7 @@ const resolvers = {
                 return translation[0];
             
             } catch(error:any){
-                if (error.message === 'Translation already exists') {
-                    throw new GraphQLError(error.message);
-                }
-                throw new GraphQLError('Error creating translation');
+                throw new GraphQLError('Error creating translation: ', error);
             }
         },
 
@@ -162,7 +154,7 @@ const resolvers = {
                 if (error.message === 'Word does not exist or Word ID not found.') {
                     throw new GraphQLError(error.message);
                 }
-                throw new GraphQLError('Error updating word');
+                throw new GraphQLError('Error updating word: ', error);
             }
         },
 
@@ -184,7 +176,7 @@ const resolvers = {
                 if (error.message === 'Translation does not exist or Translation ID not found.') {
                     throw new GraphQLError(error.message);
                 }
-                throw new GraphQLError('Error updating translation');
+                throw new GraphQLError('Error updating translation: ', error);
             }
         },
 
@@ -223,7 +215,7 @@ const resolvers = {
                     error.message === 'Word does not exist or Word ID not found.')  {
                         throw new GraphQLError(error.message);
                 }
-                throw new GraphQLError('Error deleting translation and word.');
+                throw new GraphQLError('Error deleting translation and word: ', error);
             }
         },
 
