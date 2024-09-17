@@ -2,7 +2,13 @@
 import { getWords } from "@/app/actions/actions";
 import { useState, useEffect, useCallback, useTransition, createContext, ReactNode} from "react";
 
-export const WordsContext = createContext<any>(null);
+
+interface WordsContextType {
+    words: any[];
+    isPending: boolean;
+    refresh: () => void;
+}
+export const WordsContext = createContext<WordsContextType | null>(null);
 
 
 export const WordsProvider = ({children} : {children: ReactNode}) => {

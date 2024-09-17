@@ -7,7 +7,7 @@ import { WordsContext } from "@/app/context/wordsContext";
  
 const Browse = () => {
     const header = 'Browse Words';
-    const {words, isPending, refresh} = useContext(WordsContext);
+    const {words, isPending} = useContext(WordsContext) || { words: [], isPending: false };
     const letters = [
         'a', 'e', 'i', 'o', 'u',
         'ba', 'be', 'bi', 'bo', 'bu',
