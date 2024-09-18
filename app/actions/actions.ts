@@ -12,7 +12,7 @@ import WORDS_QUERY from '@/gql/words';
 
 
 
-export const searchAction = async (formData: FormData) => {
+export const searchAction = async (formData: FormData, limit: number, offset: number) => {
 
     const searchInput = formData.get('searchInput') as string;
     if (!searchInput || searchInput.trim() === '') {
@@ -22,9 +22,11 @@ export const searchAction = async (formData: FormData) => {
     try {
         const { data } = await client.query({
             query: SEARCH_QUERY,
-            variables: { input: searchInput }
+            variables: { input: searchInput, limit: limit, offset: offset}
         });
-        return data.search;
+    const results = data.search;
+    const hasMore = results.length === limit;
+    return { results, hasMore };
     } catch (error) {
         console.error('Error searching for word: ', error);
     }
@@ -177,10 +179,11 @@ export const getRandomWord = async (searchRandomWordAction: (word: string) => Pr
 
 
 
-export const getWords = async () => {
+export const getWords = async (limit: number, offset: number) => {
     try {
         const { data } = await client.query({
-            query: WORDS_QUERY
+            query: WORDS_QUERY,
+            variables: { limit, offset}
         });
         return data.words;
     } catch (error) {

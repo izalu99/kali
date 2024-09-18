@@ -6,21 +6,44 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import dynamic from 'next/dynamic';
 import { searchAction } from '@/app/actions/actions';
 
+
 const SearchResults = dynamic(() => import('@/components/searchResults'));
+
+export interface Translation {
+  id: string;
+  text: string;
+  language: string;
+  wordId: number;
+}
+
+export interface Word {
+  id: string;
+  text: string;
+  pronunciation: string;
+  type: string;
+  tense: string;
+  example: string;
+  translations: Translation[];
+}
 
 const Search = () => {
   const header = 'Search Results';
-  const [input, setInput] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
-  const [hasSearched, setHasSearched] = useState(false);
+  const [input, setInput] = useState<string>('');
+  const [searchResults, setSearchResults] = useState<Word[]>([]);
+  const [hasSearched, setHasSearched] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isPending, startTransition] = useTransition();
+  const [limit] = useState<number>(10);
+  const [offset, setOffset] = useState<number>(0);
+  const [hasMore, setHasMore] = useState<boolean>(true);
 
   const handleSearch = async (formData: FormData) => {
     try {
-      const results = await searchAction(formData);
+      setOffset(0);
+      const { results, hasMore } = await searchAction(formData, limit, 0) as { results: any; hasMore: boolean; };
       console.log(results);
       setSearchResults(results);
+      setHasMore(hasMore)
       setHasSearched(true);
       setErrorMessage('');
     } catch (error: any) {
@@ -36,6 +59,23 @@ const Search = () => {
       handleSearch(formData);
     });
   };
+
+  const handleLoadMore = async () => {
+    try{
+      const newOffset = offset + limit;
+      setOffset(newOffset);
+      const formData = new FormData();
+      formData.append('searchInput', input);
+      const { results, hasMore } = await searchAction(formData, limit, newOffset) as { results: any; hasMore: boolean; };
+      setSearchResults((prevResults: Word[]) => [...prevResults, ...results]);
+      setHasMore(hasMore);
+      console.log(results);
+    } catch (error) {
+      console.error('Error loading more search results: ', error);
+
+    }
+  }
+
 
   return (
     <div className='font-serif flex justify-center items-center'>
@@ -69,6 +109,29 @@ const Search = () => {
         <div className="w-full pt-4 flex flex-col items-center justify-center space-y-4">
           {
             hasSearched && <SearchResults loading={isPending} header={header} results={searchResults} />
+          }
+          {
+            hasSearched && !isPending && searchResults.length > 0 && hasMore && (
+              <button
+                onClick={handleLoadMore}
+                className='
+                  min-w-[44px]
+                  max-w-[144px]
+                  text-xs
+                  text-center
+                  align-middle
+                  font-serif
+                  font-semibold
+                  text-black
+                  p-4
+                  rounded-full
+                  bg-lightGray
+                  hover:text-chiffon
+                  hover:bg-darkRed'
+              >
+                Load More
+              </button>
+            )
           }
         </div>
       </div>

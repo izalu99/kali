@@ -7,7 +7,7 @@ import { WordsContext } from "@/app/context/wordsContext";
  
 const Browse = () => {
     const header = 'Browse Words';
-    const {words, isPending, refresh} = useContext(WordsContext) || { words: [], isPending: false, refresh: () => {} };
+    const {words, isPending, loadMore} = useContext(WordsContext) || { words: [], isPending: false, loadMore: () => {} };
     const letters = [
         'a', 'e', 'i', 'o', 'u',
         'ba', 'be', 'bi', 'bo', 'bu',
@@ -27,17 +27,20 @@ const Browse = () => {
     const [selectedLetter, setSelectedLetter] = useState<string>('');
     const [filteredWords, setFilteredWords] = useState<any[]>([]);
 
+    console.log('words: ', words);
+    console.log('filteredWords: ', filteredWords);
+
 
     useEffect(() => {     
-        refresh();
         if (selectedLetter) {
             const filtered = words.filter((word: { text: string; }) => {
                 return word.text && word.text.toLowerCase().startsWith(selectedLetter.toLowerCase());
             });
             console.log('filtered: ', filtered);
+            console.log('words: ', words);
             setFilteredWords(filtered);
         } else {
-            setFilteredWords([]);
+            setFilteredWords(words);
         }
     }, [selectedLetter, words]);
 
@@ -74,10 +77,27 @@ const Browse = () => {
             ))}
             </div>
             <div className='flex justify-center align-middle self-center w-[60%]'>
-                { selectedLetter === '' ? 
-                <SearchResults loading={isPending} header={header}  results={words} /> 
-                :  <SearchResults loading={isPending} header={header}  results={filteredWords} />
-                }
+                <SearchResults loading={isPending} header={header}  results={filteredWords} />
+            </div>
+            <div className='flex justify-center align-middle self-center w-[60%]'>
+                <button
+                    onClick={loadMore}
+                    className='
+                    min-w-[44px]
+                    max-w-[144px]
+                    text-xs
+                    text-center
+                    align-middle
+                    font-serif
+                    font-semibold
+                    text-black
+                    p-4
+                    rounded-full
+                    bg-lightGray
+                    hover:text-chiffon
+                    hover:bg-darkRed'>
+                    {isPending ? 'Loading...' : 'Load More'}
+                </button>
             </div>
             
         </div>

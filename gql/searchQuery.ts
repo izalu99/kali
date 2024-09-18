@@ -2,8 +2,8 @@
 import { gql} from '@apollo/client';
 
 const SEARCH_QUERY = gql`
-    query Search($input: String!) {
-        search(input: $input) {
+    query Search($input: String!, $limit: Int, $offset: Int) {
+        search(input: $input, limit: $limit, offset: $offset) {
             id
             text
             pronunciation

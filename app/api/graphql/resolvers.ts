@@ -9,7 +9,7 @@ import { words, translations } from "@/db/schema";
 const resolvers = {
     
     Query: {
-        words: async (_:any, {limit = 10, offset = 0}: {limit: number, offset: number}) => {
+        words: async (_:any, {limit, offset}: {limit: number, offset: number}) => {
             try{
                 const words = await db.query.words.findMany({
                     limit,
@@ -30,7 +30,7 @@ const resolvers = {
             }
         },
     
-        search: async (_: any, { input }: any) => {
+        search: async (_: any, { input, limit, offset }: {input: any, limit: number, offset: number}) => {
 
             const sanitizedInput = input.trim().toLowerCase();
 
@@ -40,6 +40,8 @@ const resolvers = {
                         like(words.text, `%${sanitizedInput}%`),
                         like(words.example, `%${sanitizedInput}%`),
                     ),
+                    limit,
+                    offset,
                });
 
                 if (foundWords.length === 0) {

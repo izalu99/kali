@@ -1,12 +1,12 @@
 'use client'
 import { getWords } from "@/app/actions/actions";
-import { useState, useEffect, useCallback, useTransition, createContext, ReactNode} from "react";
+import { useState, useEffect, useCallback, useTransition, createContext, ReactNode, useRef} from "react";
 
 
 interface WordsContextType {
     words: any[];
     isPending: boolean;
-    refresh: () => void;
+    loadMore: () => void;
 }
 export const WordsContext = createContext<WordsContextType | null>(null);
 
@@ -14,22 +14,45 @@ export const WordsContext = createContext<WordsContextType | null>(null);
 export const WordsProvider = ({children} : {children: ReactNode}) => {
     const [words, setWords] = useState<any[]>([]);
     const [isPending, startTransition] = useTransition();
-    const getWordsData = useCallback(async () => {
-        const wordsData = await getWords();
-        if (wordsData) {
-            setWords(wordsData);
-        } else {
-            setWords([]);
-            console.error('Error getting words data.');
-        }
+    const [limit] = useState<number>(10);
+    const [offset, setOffset] = useState<number>(0);
+    const initialFetchDone = useRef<boolean>(false);
+
+    const getWordsData = useCallback(async (limit: number, offset:number) => {
+        try{
+            console.log('getting words data...');
+            console.log('limit: ', limit);
+            console.log('offset: ', offset);
+            const wordsData = await getWords(limit, offset);
+            if (wordsData) {
+                setWords(prevWords => [...prevWords, ...wordsData]);
+            } else {
+                console.error('Error getting words data.');
+            }
+        } catch (error) {
+            console.error('Error getting words data: ', error);
+        }  
     }, []);
 
     useEffect(() => {
-        startTransition(() => { getWordsData() });
-    }, [getWordsData, startTransition]);
+        if (!initialFetchDone.current) {
+            startTransition(() => { getWordsData(limit, offset) });
+            initialFetchDone.current = true;
+        }
+    }, [limit, offset]);
+
+
+    const loadMore = () => {
+        setOffset(prevOffset => {
+            const newOffset = prevOffset + limit;
+            startTransition(() => { getWordsData(limit, newOffset) });
+            return newOffset;
+        });
+    };
+
 
     return (
-        <WordsContext.Provider value={{words, isPending, refresh: getWordsData}}>
+        <WordsContext.Provider value={{words, isPending, loadMore}}>
             {children}
         </WordsContext.Provider>
     )
