@@ -9,9 +9,12 @@ import { words, translations } from "@/db/schema";
 const resolvers = {
     
     Query: {
-        words: async () => {
+        words: async (_:any, {limit = 10, offset = 0}: {limit: number, offset: number}) => {
             try{
-                const words = await db.query.words.findMany();
+                const words = await db.query.words.findMany({
+                    limit,
+                    offset,
+                });
                 return words;
             } catch (error: any) {
                 throw new GraphQLError('Error getting words: ', error);
