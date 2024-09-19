@@ -1,7 +1,7 @@
 import { db } from "@/db/db";
 import { __InputValue, GraphQLError } from "graphql";
 
-import { eq, like, or} from 'drizzle-orm';
+import { eq, like, or, and, gte, lt, lte} from 'drizzle-orm';
 
 import { words, translations } from "@/db/schema";
 
@@ -9,17 +9,19 @@ import { words, translations } from "@/db/schema";
 const resolvers = {
     
     Query: {
-
-        me: async () => {
-            return "Hi there!";
-        },
-
-        words: async () => {
+        words: async (_:any, {input, limit, offset}: {input: string, limit: number, offset: number}) => {
             try{
-                const words = await db.query.words.findMany();
-                return words;
-            } catch (error) {
-                throw new GraphQLError('Error getting words');
+                const wordsStartingWith = await db.query.words.findMany({
+                    where: and(
+                        gte(words.text, input),
+                        lt(words.text, input + 'z'),
+                    ),
+                    limit,
+                    offset,
+                });
+                return wordsStartingWith;
+            } catch (error: any) {
+                throw new GraphQLError('Error getting words: ', error);
             }
         },
 
@@ -27,46 +29,61 @@ const resolvers = {
             try{
                 const translations = await db.query.translations.findMany();
                 return translations;
-            } catch (error) {
-                throw new GraphQLError('Error getting translations');
+            } catch (error: any) {
+                throw new GraphQLError('Error getting translations: ', error);
             }
         },
     
-        search: async (_: any, { input }: any) => {
+        search: async (_: any, { input, limit, offset }: {input: any, limit: number, offset: number}) => {
 
             const sanitizedInput = input.trim().toLowerCase();
 
             try {
-               const foundWords = await db.query.words.findMany({
+                //words starting with the input
+                const foundWordsStartingWith = await db.query.words.findMany({
+                    where: and(
+                        gte(words.text, sanitizedInput),
+                        lt(words.text, sanitizedInput + 'z'),
+                    ),
+                    limit,
+                    offset,
+                });
+
+                if (foundWordsStartingWith.length === 0) {
+                    // words that contain the input
+                    const foundWords = await db.query.words.findMany({
                     where: or(
                         like(words.text, `%${sanitizedInput}%`),
                         like(words.example, `%${sanitizedInput}%`),
                     ),
-               });
-
-                if (foundWords.length === 0) {
-                     const foundTranslations = await db.query.translations.findMany({
-                        where:like(translations.text, `%${sanitizedInput}%`)
+                    limit,
+                    offset,
                     });
 
-                   
-                    const wordsFromTranslations = await Promise.all(
-                        foundTranslations.map(
-                            async (translation: any) => {
-                            const associatedWord = await db.query.words.findFirst({
-                                where: eq(words.id, translation.wordId),
-                            });
-                            return associatedWord;
-                            }
-                        )
-                    );
+                    if (foundWords.length === 0) {
+                        const foundTranslations = await db.query.translations.findMany({
+                           where:like(translations.text, `%${sanitizedInput}%`)
+                       });
 
-                    return wordsFromTranslations.filter((word: any) => word !== null);
+                       const wordsFromTranslations = await Promise.all(
+                            foundTranslations.map(
+                                async (translation: any) => {
+                                const associatedWord = await db.query.words.findFirst({
+                                    where: eq(words.id, translation.wordId),
+                                });
+                                return associatedWord;
+                                }
+                            )
+                        );
+                        return wordsFromTranslations.filter((word: any) => word !== null);
+                    }
+
+                    return foundWords;
                 }
-
-                return foundWords;
-            } catch (error) {
-                throw new GraphQLError('Error searching');
+                return foundWordsStartingWith;
+                
+            } catch (error: any) {
+                throw new GraphQLError('Error searching the word or translation: ', error);
             }
         },
 
@@ -85,8 +102,8 @@ const resolvers = {
                     where: eq(translations.wordId, parent.id),
                 });
                 return theTranslations;
-            } catch (error) {
-                throw new GraphQLError('Error getting translations');
+            } catch (error: any) {
+                throw new GraphQLError('Error getting translations: ', error);
             }
         }
     },
@@ -99,8 +116,8 @@ const resolvers = {
                     where: eq(words.id, parent.wordId),
                 });
                 return theWord;
-            } catch (error) {
-                throw new GraphQLError('Error getting word');
+            } catch (error: any) {
+                throw new GraphQLError('Error getting word: ', error);
             }
         }
     },
@@ -117,39 +134,28 @@ const resolvers = {
                     where: eq(words.text, input.text),
                 });
                 if (existingWord) {
-                    throw new GraphQLError('Word already exists');
+                    throw new GraphQLError('Word already exists.');
                 }
 
                 
                 const word = await db.insert(words).values({...input}).returning();
                 return word[0];
             } catch (error: any) {
-                if (error.message === 'Word already exists') {
+                if (error.message === 'Word already exists.') {
                     throw new GraphQLError(error.message);
                 }
-                throw new GraphQLError('Error creating word');
+                throw new GraphQLError('Error creating word: ', error);
             }
         },
 
         createTranslation: async (_:any, { input }:any, __:any) => {
             try {
                 
-                const existingTranslation = await db.query.translations.findFirst({
-                    where: eq(translations.text, input.text),
-                });
-                if (existingTranslation) {
-                    throw new GraphQLError('Translation already exists');
-                }
-
-                
                 const translation = await db.insert(translations).values({...input}).returning();
                 return translation[0];
             
             } catch(error:any){
-                if (error.message === 'Translation already exists') {
-                    throw new GraphQLError(error.message);
-                }
-                throw new GraphQLError('Error creating translation');
+                throw new GraphQLError('Error creating translation: ', error);
             }
         },
 
@@ -170,7 +176,7 @@ const resolvers = {
                 if (error.message === 'Word does not exist or Word ID not found.') {
                     throw new GraphQLError(error.message);
                 }
-                throw new GraphQLError('Error updating word');
+                throw new GraphQLError('Error updating word: ', error);
             }
         },
 
@@ -192,7 +198,7 @@ const resolvers = {
                 if (error.message === 'Translation does not exist or Translation ID not found.') {
                     throw new GraphQLError(error.message);
                 }
-                throw new GraphQLError('Error updating translation');
+                throw new GraphQLError('Error updating translation: ', error);
             }
         },
 
@@ -231,7 +237,7 @@ const resolvers = {
                     error.message === 'Word does not exist or Word ID not found.')  {
                         throw new GraphQLError(error.message);
                 }
-                throw new GraphQLError('Error deleting translation and word.');
+                throw new GraphQLError('Error deleting translation and word: ', error);
             }
         },
 

@@ -8,6 +8,7 @@ import { ClipLoader } from 'react-spinners';
 import { searchAction } from "@/app/actions/actions";
 
 import dynamic from 'next/dynamic';
+import { Word } from "./search";
 
 const AdminSearchResults = dynamic(() => import('@/components/adminSearchResults'));
 
@@ -16,15 +17,19 @@ const AdminSearchResults = dynamic(() => import('@/components/adminSearchResults
 
 const AdminSearch = () =>{
     const [input, setInput] = useState('');
-    const [searchResults,setSearchResults] = useState([]);
+    const [searchResults,setSearchResults] = useState<Word[]>([]);
     const [hasSearched, setHasSearched] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [isPending, startTransition] = useTransition();
+    const [limit] = useState<number>(10);
+    const [offset, setOffset] = useState<number>(0);
+    const [hasMore, setHasMore] = useState<boolean>(true);
     
     const handleSearch = async (formData: FormData) => {
         try {
-            const results = await searchAction(formData);
+            const {results, hasMore} = await searchAction(formData, limit, 0) as {results: any; hasMore: boolean};
             setSearchResults(results);
+            setHasMore(hasMore);
             setHasSearched(true);
             setErrorMessage('');
         } catch (error: any) {
@@ -32,6 +37,22 @@ const AdminSearch = () =>{
             setHasSearched(false);
         }
     }
+
+    const handleLoadMore = async () => {
+        try{
+          const newOffset = offset + limit;
+          setOffset(newOffset);
+          const formData = new FormData();
+          formData.append('searchInput', input);
+          const { results, hasMore } = await searchAction(formData, limit, newOffset) as { results: any; hasMore: boolean; };
+          setSearchResults((prevResults: Word[]) => [...prevResults, ...results]);
+          setHasMore(hasMore);
+          console.log(results);
+        } catch (error) {
+          console.error('Error loading more search results: ', error);
+    
+        }
+      }
     
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -74,6 +95,28 @@ const AdminSearch = () =>{
                     <small className="text-darkRed text-center">{errorMessage}</small>
                 )}
                 {hasSearched && <AdminSearchResults results={searchResults} />}
+                {
+                hasSearched && !isPending && searchResults.length > 0 && hasMore && (
+                <button
+                    onClick={handleLoadMore}
+                    className='
+                    min-w-[44px]
+                    max-w-[144px]
+                    text-xs
+                    text-center
+                    align-middle
+                    font-serif
+                    font-semibold
+                    text-black
+                    p-4
+                    rounded-full
+                    bg-lightGray
+                    hover:text-chiffon
+                    hover:bg-darkRed'
+                >
+                    Load More
+                </button>
+                )}
             </div>
         </div>
         

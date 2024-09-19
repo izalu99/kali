@@ -1,27 +1,13 @@
 'use client';
-import { useState, useEffect, useCallback } from "react";
-import { getRandomWord, searchRandomWordAction } from "@/app/actions/actions"
+import { useContext } from "react";
 import WordTranslation from "./wordTranslation";
-import { ClipLoader } from 'react-spinners';
+import { ClipLoader } from "react-spinners";
+
+import { WordContext } from "@/app/context/wordOfTheDayContext";
 
 const WordOfTheDay = () => {
-    const [word, setWord] = useState(null);
-    const [translation, setTranslation] = useState(null);
-
-    const getWord = useCallback(async () => {
-        const randomWord = await getRandomWord(searchRandomWordAction);
-        if (randomWord) {
-            setWord(randomWord);
-            if (randomWord.translations.length > 0) {
-                const randomTranslation = randomWord.translations[0];
-                setTranslation(randomTranslation);
-            }
-        }
-    }, []);
-
-    useEffect(() => {
-        getWord();
-    }, []);
+    const context = useContext(WordContext);
+    const {word, translation, refreshWord} = context || {};
 
     if (!word || !translation) {
         return <div className='flex flex-col items-center justify-center w-full font-serif'>

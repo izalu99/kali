@@ -2,8 +2,8 @@
 import { gql} from '@apollo/client';
 
 const WORDS_QUERY = gql`
-    query Words {
-    words {
+    query Words($input:String!, $limit: Int, $offset: Int) {
+    words (input: $input, limit: $limit, offset: $offset) {
         id
         text
         pronunciation

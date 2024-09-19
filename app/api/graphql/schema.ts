@@ -39,9 +39,9 @@ const schema = `
     
     type Query {
         me: String!
-        words: [Word]
+        words(input:String!, limit: Int, offset: Int): [Word]
         translations: [Translation]
-        search(input:String!): [Word]!
+        search(input:String!, limit: Int, offset: Int): [Word]!
     }
     
     input CreateWordInput {

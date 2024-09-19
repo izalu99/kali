@@ -19,8 +19,6 @@ if (!token) {
     throw new Error('TURSO_AUTH_TOKEN is not set')
 }
 
-//log the url 
-console.log(typeof url)
 
 //validate the url 
 try{

@@ -8,10 +8,11 @@ import CREATETRANSLATION_MUTATION from '@/gql/createTranslation';
 import UPDATEWORD_MUTATION from '@/gql/updateWord';
 import UPDATETRANSLATION_MUTATION from '@/gql/updateTranslation';
 import DELETETRANSLATIONANDWORD_MUTATION from '@/gql/deleteTranslationAndWord';
+import WORDS_QUERY from '@/gql/words';
 
 
 
-export const searchAction = async (formData: FormData) => {
+export const searchAction = async (formData: FormData, limit: number, offset: number) => {
 
     const searchInput = formData.get('searchInput') as string;
     if (!searchInput || searchInput.trim() === '') {
@@ -21,9 +22,11 @@ export const searchAction = async (formData: FormData) => {
     try {
         const { data } = await client.query({
             query: SEARCH_QUERY,
-            variables: { input: searchInput }
+            variables: { input: searchInput, limit: limit, offset: offset}
         });
-        return data.search;
+    const results = data.search;
+    const hasMore = results.length === limit;
+    return { results, hasMore };
     } catch (error) {
         console.error('Error searching for word: ', error);
     }
@@ -174,3 +177,18 @@ export const getRandomWord = async (searchRandomWordAction: (word: string) => Pr
 
 };
 
+
+
+export const getWordsAction = async (input: string, limit: number, offset: number) => {
+    try {
+        const { data } = await client.query({
+            query: WORDS_QUERY,
+            variables: { input:input, limit:limit, offset:offset}
+        });
+        const words = data.words;
+        const hasMore = words.length === limit;
+        return { words, hasMore };
+    } catch (error) {
+        console.error('Error fetching words: ', error);
+    }
+};
