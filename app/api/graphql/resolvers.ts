@@ -1,7 +1,7 @@
 import { db } from "@/db/db";
 import { __InputValue, GraphQLError } from "graphql";
 
-import { eq, like, or} from 'drizzle-orm';
+import { eq, like, or, and, gte, lt, lte} from 'drizzle-orm';
 
 import { words, translations } from "@/db/schema";
 
@@ -9,13 +9,17 @@ import { words, translations } from "@/db/schema";
 const resolvers = {
     
     Query: {
-        words: async (_:any, {limit, offset}: {limit: number, offset: number}) => {
+        words: async (_:any, {input, limit, offset}: {input: string, limit: number, offset: number}) => {
             try{
-                const words = await db.query.words.findMany({
+                const wordsStartingWith = await db.query.words.findMany({
+                    where: and(
+                        gte(words.text, input),
+                        lt(words.text, input + 'z'),
+                    ),
                     limit,
                     offset,
                 });
-                return words;
+                return wordsStartingWith;
             } catch (error: any) {
                 throw new GraphQLError('Error getting words: ', error);
             }
@@ -35,36 +39,49 @@ const resolvers = {
             const sanitizedInput = input.trim().toLowerCase();
 
             try {
-               const foundWords = await db.query.words.findMany({
+                //words starting with the input
+                const foundWordsStartingWith = await db.query.words.findMany({
+                    where: and(
+                        gte(words.text, sanitizedInput),
+                        lt(words.text, sanitizedInput + 'z'),
+                    ),
+                    limit,
+                    offset,
+                });
+
+                if (foundWordsStartingWith.length === 0) {
+                    // words that contain the input
+                    const foundWords = await db.query.words.findMany({
                     where: or(
                         like(words.text, `%${sanitizedInput}%`),
                         like(words.example, `%${sanitizedInput}%`),
                     ),
                     limit,
                     offset,
-               });
-
-                if (foundWords.length === 0) {
-                     const foundTranslations = await db.query.translations.findMany({
-                        where:like(translations.text, `%${sanitizedInput}%`)
                     });
 
-                   
-                    const wordsFromTranslations = await Promise.all(
-                        foundTranslations.map(
-                            async (translation: any) => {
-                            const associatedWord = await db.query.words.findFirst({
-                                where: eq(words.id, translation.wordId),
-                            });
-                            return associatedWord;
-                            }
-                        )
-                    );
+                    if (foundWords.length === 0) {
+                        const foundTranslations = await db.query.translations.findMany({
+                           where:like(translations.text, `%${sanitizedInput}%`)
+                       });
 
-                    return wordsFromTranslations.filter((word: any) => word !== null);
+                       const wordsFromTranslations = await Promise.all(
+                            foundTranslations.map(
+                                async (translation: any) => {
+                                const associatedWord = await db.query.words.findFirst({
+                                    where: eq(words.id, translation.wordId),
+                                });
+                                return associatedWord;
+                                }
+                            )
+                        );
+                        return wordsFromTranslations.filter((word: any) => word !== null);
+                    }
+
+                    return foundWords;
                 }
-
-                return foundWords;
+                return foundWordsStartingWith;
+                
             } catch (error: any) {
                 throw new GraphQLError('Error searching the word or translation: ', error);
             }

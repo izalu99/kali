@@ -179,13 +179,15 @@ export const getRandomWord = async (searchRandomWordAction: (word: string) => Pr
 
 
 
-export const getWords = async (limit: number, offset: number) => {
+export const getWordsAction = async (input: string, limit: number, offset: number) => {
     try {
         const { data } = await client.query({
             query: WORDS_QUERY,
-            variables: { limit, offset}
+            variables: { input:input, limit:limit, offset:offset}
         });
-        return data.words;
+        const words = data.words;
+        const hasMore = words.length === limit;
+        return { words, hasMore };
     } catch (error) {
         console.error('Error fetching words: ', error);
     }

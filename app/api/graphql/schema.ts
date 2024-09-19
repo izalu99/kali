@@ -39,7 +39,7 @@ const schema = `
     
     type Query {
         me: String!
-        words(limit: Int, offset: Int): [Word]
+        words(input:String!, limit: Int, offset: Int): [Word]
         translations: [Translation]
         search(input:String!, limit: Int, offset: Int): [Word]!
     }

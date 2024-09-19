@@ -1,13 +1,14 @@
 'use client'
 
-import { useState, useEffect, useContext} from "react";
+import { useState, useEffect, useContext, useTransition } from "react";
 import SearchResults  from "@/components/searchResults";
-import { WordsContext } from "@/app/context/wordsContext";
 
- 
+import { getWordsAction } from "@/app/actions/actions";
+import { Word } from "@/components/search";
+
+
 const Browse = () => {
     const header = 'Browse Words';
-    const {words, isPending, loadMore} = useContext(WordsContext) || { words: [], isPending: false, loadMore: () => {} };
     const letters = [
         'a', 'e', 'i', 'o', 'u',
         'ba', 'be', 'bi', 'bo', 'bu',
@@ -26,28 +27,56 @@ const Browse = () => {
         'ya', 'ye', 'yi', 'yo', 'yu',];
     const [selectedLetter, setSelectedLetter] = useState<string>('');
     const [filteredWords, setFilteredWords] = useState<any[]>([]);
+    const [isPending, startTransition] = useTransition();
+    const [limit] = useState<number>(10);
+    const [offset, setOffset] = useState<number>(0);
+    const [hasMore, setHasMore] = useState<boolean>(true);
+    const [errorMessage, setErrorMessage] = useState('');
 
-    console.log('words: ', words);
+    
     console.log('filteredWords: ', filteredWords);
 
 
-    useEffect(() => {     
-        if (selectedLetter) {
-            const filtered = words.filter((word: { text: string; }) => {
-                return word.text && word.text.toLowerCase().startsWith(selectedLetter.toLowerCase());
-            });
-            console.log('filtered: ', filtered);
+    
+
+    const getWordsByLetter = async (letter: string) => {
+        console.log('clicked letter: ', letter);
+        try{
+            setOffset(0);
+            setSelectedLetter(letter);
+            const { words, hasMore } = await getWordsAction(letter, limit, 0) as { words: any; hasMore: boolean; };
             console.log('words: ', words);
-            setFilteredWords(filtered);
-        } else {
             setFilteredWords(words);
+            setHasMore(hasMore);
+
+        } catch (error: any) {
+            setErrorMessage(error.message);
+            console.error('Error filtering words: ', error);
         }
-    }, [selectedLetter, words]);
+    };
+
 
     const handleClickedLetter = (letter: string) => {
-        console.log('clicked letter: ', letter);
-        setSelectedLetter(letter);
+        startTransition(() => {
+            getWordsByLetter(letter);
+        });
     };
+
+
+    const handleLoadMore = async () => {
+        try{
+            const newOffset = offset + limit;
+            setOffset(newOffset);
+            const { words, hasMore } = await getWordsAction(selectedLetter, limit, newOffset) as { words: any; hasMore: boolean; };
+            setFilteredWords((prevWords: Word[]) => [...prevWords, ...words]);
+            setHasMore(hasMore);
+            console.log(words);
+        } catch (error) {
+            console.error('Error loading more search results: ', error);
+        }
+    }
+
+
 
 
     return (
@@ -78,10 +107,11 @@ const Browse = () => {
             </div>
             <div className='flex justify-center align-middle self-center w-[60%]'>
                 <SearchResults loading={isPending} header={header}  results={filteredWords} />
+                {errorMessage && <small className="text-darkRed text-center">{errorMessage}</small>}
             </div>
             <div className='flex justify-center align-middle self-center w-[60%]'>
-                <button
-                    onClick={loadMore}
+                {hasMore && <button
+                    onClick={handleLoadMore}
                     className='
                     min-w-[44px]
                     max-w-[144px]
@@ -97,7 +127,7 @@ const Browse = () => {
                     hover:text-chiffon
                     hover:bg-darkRed'>
                     {isPending ? 'Loading...' : 'Load More'}
-                </button>
+                </button>}
             </div>
             
         </div>
