@@ -20,6 +20,7 @@ Kali is a web application designed to help users learn and translate the kankana
 - **Tailwind CSS**: Utility-first CSS framework for styling.
 - **GraphQL**: Query language for your API.
 - **Clerk**: Authentication and user management.
+- **Contentful**: *Soon to be implemented* as our CMS
 
 ## Installation
 
@@ -68,7 +69,8 @@ Kali is a web application designed to help users learn and translate the kankana
 ## Usage
 
 - **Search**: Use the search bar to find translations.
-- **Admin**: Access the admin interface to manage translations.
+- **Admin**: Access the admin interface to manage translations. Atm, only Accessible by me.
+- **Browse**: Click cta 'Dive into the alphabet' to look for words by the 'abakada' alphabet.
 
 ## License
 
