@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useContext, useTransition } from "react";
+import { useState, useTransition } from "react";
 import SearchResults  from "@/components/searchResults";
 
 import { getWordsAction } from "@/app/actions/actions";
@@ -81,8 +81,10 @@ const Browse = () => {
 
     return (
         <div className="flex flex-col w-full justify-between">
-            <h1 className='pt-10 sm:text-lg md:text-xl lg:text-xl xl:text-xl flex text-black justify-center align-middle'>Select any of the 'abakada' alphabet below to browse.</h1>
-            <div className='p-8 sticky grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-2'>
+            <h1 className='font-serif pt-10 sm:text-lg md:text-xl lg:text-2xl xl:text-4xl flex text-chiffon justify-center align-middle font-semibold mb-6'>
+                Select any of the 'abakada' alphabet below to browse.
+            </h1>
+            <div className='p-8 sticky grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-4'>
             {letters.map((letter) => (
                 <button 
                 key={letter} 
@@ -95,12 +97,16 @@ const Browse = () => {
                 align-middle 
                 font-serif 
                 font-semibold 
-                text-black 
+                text-chiffon
                 p-4 
                 rounded-full 
-                bg-lightGray 
-                hover:text-chiffon 
-                hover:bg-darkRed'>
+                bg-red-600 
+                hover:bg-darkRed
+                duration-300
+                ease-in-out
+                shadow-lg
+                transform hover:scale-105
+                '>
                     {letter}
                 </button>
             ))}
@@ -115,17 +121,19 @@ const Browse = () => {
                     className='
                     min-w-[44px]
                     max-w-[144px]
-                    text-xs
+                    text-sm
                     text-center
                     align-middle
                     font-serif
                     font-semibold
-                    text-black
+                    text-chiffon
                     p-4
                     rounded-full
-                    bg-lightGray
+                    bg-red-600
                     hover:text-chiffon
-                    hover:bg-darkRed'>
+                    hover:bg-darkRed
+                    duration-300
+                    ease-in-out'>
                     {isPending ? 'Loading...' : 'Load More'}
                 </button>}
             </div>
