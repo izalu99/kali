@@ -185,10 +185,15 @@ export const getWordsAction = async (input: string, limit: number, offset: numbe
             query: WORDS_QUERY,
             variables: { input:input, limit:limit, offset:offset}
         });
+
+        if (!data.words) {
+            throw new Error('No words found.');
+        }
         const words = data.words;
         const hasMore = words.length === limit;
         return { words, hasMore };
     } catch (error) {
         console.error('Error fetching words: ', error);
+        throw new Error('Failed to fetch words.');
     }
 };
