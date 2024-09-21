@@ -7,7 +7,8 @@ const Hero = () => {
             <h1 className="text-xl px-10 ">Welcome to kali.</h1>
             <p className='text-lg mb-8 px-10'> A library for learners in the meaning, history and usage of kankanaey words and phrases, one of the many dialects of the Cordilleras.</p>
             <div className='mt-10 flex flex-wrap justify-center items-center space-x-4'>
-                <button className="
+                <Link href="/browse">
+                    <button className="
                     min-w-[120px]
                     max-w-[200px]
                     text-sm
@@ -24,11 +25,11 @@ const Hero = () => {
                     duration-300
                     ease-in-out
                     ">
-                    <Link href="/browse">
                         <span>Dive into the alphabet</span>
-                    </Link>
-                </button>
-                <button className="
+                    </button>
+                </Link>
+                <Link href="/about">
+                    <button className="
                     min-w-[120px]
                     max-w-[200px]
                     text-sm
@@ -44,10 +45,9 @@ const Hero = () => {
                     hover:bg-darkRed
                     duration-300
                     ease-in-out">
-                        <Link href="/about">
                             <span>About this project</span>
-                        </Link>
-                </button>
+                    </button>
+                </Link>
             </div>
       </div>
     );
