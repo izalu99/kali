@@ -25,3 +25,12 @@ export type SearchQuery = {
         }[]
     }
 };
+
+
+export type WordOfTheDayQuery = {
+        wordOfTheDayCollection: {
+          items: {
+            heading: string
+          }[]
+        }
+};
