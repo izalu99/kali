@@ -78,7 +78,7 @@ const Search = () => {
 
 
   return (
-    <div className='rounded-md font-serif flex justify-center items-center min-h-96 bg-gradient-to-r from-blue-700 to-purple-700'>
+    <div className='rounded-md font-serif flex justify-center items-center min-h-96 bg-transparent'>
       <div className='w-screen sm:max-screen-xs md:max-w-screen-sm lg:max-w-screen-md xl:max-w-screen-md p-10 flex flex-col justify-center bg-transparent'>
       <h1 className="text-4xl font-bold text-white mb-6">Search</h1>
         <form 
@@ -96,7 +96,7 @@ const Search = () => {
           />
           <button
             type="submit"
-            className="px-4 py-2 bg-blue-500 text-chiffon rounded-r-md transition-colors duration-200 hover:bg-blue-700"
+            className="px-4 py-2 bg-purple-400 text-chiffon rounded-r-md transition-colors duration-200 hover:bg-darkRed"
             aria-label="Search"
           >
             <FontAwesomeIcon icon={faSearch} />
@@ -126,11 +126,14 @@ const Search = () => {
                   text-white
                   p-4
                   rounded-full
-                  bg-red-600
+                  bg-purple-400
                   hover:text-chiffon
                   hover:bg-darkRed
                   duration-300
-                  ease-in-out'
+                  ease-in-out
+                  shadow-lg
+                  transform hover:scale-105
+                  '
               >
                 Load More
               </button>

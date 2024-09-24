@@ -3,23 +3,22 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 59, 130, 246; /* Blue */
-  --background-end-rgb: 139, 92, 246; /* Purple */
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 0, 0, 0; /* Blue */
+  --background-end-rgb: 124, 58, 237; /* Purple */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 37, 99, 235; /* Darker Blue */
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 0, 0, 0; /* Darker Blue */
     --background-end-rgb: 124, 58, 237; /* Darker Purple */
   }
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to right,
+  background: radial-gradient(
       rgb(var(--background-start-rgb)),
       rgb(var(--background-end-rgb))
     );

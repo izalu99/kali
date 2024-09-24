@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const Menu = () => {
     return (
-        <div data-testid="menu" className="fixed right-0 h-full w-full bg-gradient-to-r from-blue-500 to-purple-500 shadow-lg p-5 flex items-center justify-center">
+        <div data-testid="menu" className="fixed right-0 h-full w-full bg-purple-950 shadow-lg bg-opacity-80 p-5 flex items-center justify-center">
             <ul className="flex flex-col w-full text-center text-2xl justify-center items-center space-y-10 text-chiffon">
                 <li className='w-full group'><Link href="/" className="block w-full no-underline group-hover:text-red-300">Main</Link></li>
                 <li className='w-full group'><Link href="/browse" className="block w-full no-underline group-hover:text-red-300">Browse</Link></li>

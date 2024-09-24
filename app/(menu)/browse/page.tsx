@@ -34,7 +34,7 @@ const Browse = () => {
     const [errorMessage, setErrorMessage] = useState('');
 
     
-    console.log('filteredWords: ', filteredWords);
+    //console.log('filteredWords: ', filteredWords);
 
 
     
@@ -45,7 +45,7 @@ const Browse = () => {
             setOffset(0);
             setSelectedLetter(letter);
             const { words, hasMore } = await getWordsAction(letter, limit, 0) as { words: any; hasMore: boolean; };
-            console.log('words: ', words);
+            //console.log('words: ', words);
             setFilteredWords(words);
             setHasMore(hasMore);
 
@@ -70,7 +70,6 @@ const Browse = () => {
             const { words, hasMore } = await getWordsAction(selectedLetter, limit, newOffset) as { words: any; hasMore: boolean; };
             setFilteredWords((prevWords: Word[]) => [...prevWords, ...words]);
             setHasMore(hasMore);
-            console.log(words);
         } catch (error) {
             console.error('Error loading more search results: ', error);
         }
@@ -100,7 +99,7 @@ const Browse = () => {
                 text-chiffon
                 p-4 
                 rounded-full 
-                bg-red-600 
+                bg-purple-400
                 hover:bg-darkRed
                 duration-300
                 ease-in-out
@@ -129,11 +128,13 @@ const Browse = () => {
                     text-chiffon
                     p-4
                     rounded-full
-                    bg-red-600
+                    bg-purple-400
                     hover:text-chiffon
                     hover:bg-darkRed
                     duration-300
-                    ease-in-out'>
+                    ease-in-out
+                    shadow-lg
+                    transform hover:scale-105'>
                     {isPending ? 'Loading...' : 'Load More'}
                 </button>}
             </div>

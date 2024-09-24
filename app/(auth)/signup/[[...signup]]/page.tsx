@@ -2,7 +2,7 @@
 
 export default function Page() {
     return (
-        <div className='flex flex-grow justify-center align-middle'>
+        <div className='min-h-screen flex flex-col justify-center items-center'>
             Cannot sign up.
         </div>
     )
