@@ -1,4 +1,4 @@
-import { HeroQuery } from "@/types";
+import { HeroQuery, SearchQuery } from "@/types";
 import { contentGqlFetcher } from "./fetch";
 
 
@@ -23,7 +23,29 @@ export const getContentForHero = async () => {
     const data = await contentGqlFetcher<HeroQuery>({query});
     
     if(!data) {
-        throw new Error('Failed to get content');
+        throw new Error('Failed to get hero content');
+    }
+
+    return data;
+
+}
+
+
+export const getContentForSearch = async () => {
+    const query = `#graphql
+        query SearchCollection {
+            searchCollection {
+                items {
+                heading
+                searchResultsHeading
+                }
+            }
+        }
+    `
+    const data = await contentGqlFetcher<SearchQuery>({query});
+    
+    if(!data) {
+        throw new Error('Failed to get search content');
     }
 
     return data;

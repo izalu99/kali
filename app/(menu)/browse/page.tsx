@@ -45,7 +45,6 @@ const Browse = () => {
             setOffset(0);
             setSelectedLetter(letter);
             const { words, hasMore } = await getWordsAction(letter, limit, 0) as { words: any; hasMore: boolean; };
-            //console.log('words: ', words);
             setFilteredWords(words);
             setHasMore(hasMore);
 
@@ -80,9 +79,10 @@ const Browse = () => {
 
     return (
         <div className="flex flex-col w-full justify-between">
-            <h1 className='font-serif pt-10 sm:text-lg md:text-xl lg:text-2xl xl:text-4xl flex text-chiffon justify-center align-middle font-semibold mb-6'>
+            <h1 className='font-serif pt-10 sm:text-lg md:text-xl lg:text-2xl xl:text-4xl flex text-chiffon justify-center align-middle font-bold mb-6'>{header}</h1>
+            <h2 className='font-serif pt-5 sm:text-md md:text-lg lg:text-xl xl:text-2xl flex text-chiffon justify-center align-middle font-medium mb-6'>
                 Select any of the 'abakada' alphabet below to browse.
-            </h1>
+            </h2>
             <div className='p-8 sticky grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-4'>
             {letters.map((letter) => (
                 <button 
@@ -110,8 +110,8 @@ const Browse = () => {
                 </button>
             ))}
             </div>
-            <div className='flex justify-center align-middle self-center w-[60%]'>
-                <SearchResults loading={isPending} header={header}  results={filteredWords} />
+            <div className='pt-10 flex justify-center align-middle self-center w-[60%]'>
+                <SearchResults loading={isPending} header={selectedLetter}  results={filteredWords} />
                 {errorMessage && <small className="text-darkRed text-center">{errorMessage}</small>}
             </div>
             <div className='flex justify-center align-middle self-center w-[60%]'>

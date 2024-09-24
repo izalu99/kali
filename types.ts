@@ -14,4 +14,14 @@ export type HeroQuery = {
             }
         }[]
     }
-}
+};
+
+
+export type SearchQuery = {
+    searchCollection: {
+        items: {
+            heading: string
+            searchResultsHeading: string
+        }[]
+    }
+};

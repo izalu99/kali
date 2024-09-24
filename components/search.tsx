@@ -1,10 +1,12 @@
 'use client';
 
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import dynamic from 'next/dynamic';
 import { searchAction } from '@/app/actions/actions';
+import { getContentForSearch } from "@/content/queries";
+
 
 
 const SearchResults = dynamic(() => import('@/components/searchResults'));
@@ -27,7 +29,8 @@ export interface Word {
 }
 
 const Search = () => {
-  const header = 'Search Results';
+  const [heading, setHeading] = useState<string>('');
+  const [searchResultsHeading, setSearchResultsHeading] = useState<string>('');
   const [input, setInput] = useState<string>('');
   const [searchResults, setSearchResults] = useState<Word[]>([]);
   const [hasSearched, setHasSearched] = useState<boolean>(false);
@@ -36,6 +39,21 @@ const Search = () => {
   const [limit] = useState<number>(10);
   const [offset, setOffset] = useState<number>(0);
   const [hasMore, setHasMore] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchContent = async () => {
+      try {
+        const data = await getContentForSearch();
+        const { heading, searchResultsHeading } = data.searchCollection.items[0];
+        setHeading(heading);
+        setSearchResultsHeading(searchResultsHeading);
+      } catch (error) {
+        console.error('Error fetching search content:', error);
+      }
+    };
+
+    fetchContent();
+  }, []);
 
   const handleSearch = async (formData: FormData) => {
     try {
@@ -80,7 +98,7 @@ const Search = () => {
   return (
     <div className='rounded-md font-serif flex justify-center items-center min-h-96 bg-transparent'>
       <div className='w-screen sm:max-screen-xs md:max-w-screen-sm lg:max-w-screen-md xl:max-w-screen-md p-10 flex flex-col justify-center bg-transparent'>
-      <h1 className="text-4xl font-bold text-white mb-6">Search</h1>
+      <h1 className="text-4xl font-bold text-white mb-6">{heading}</h1>
         <form 
           id="search" 
           className='flex flex-row border-2 border-gray-300 rounded-md focus-within:border-blue-500'
@@ -109,7 +127,7 @@ const Search = () => {
 
         <div className="w-full pt-4 flex flex-col items-center justify-center space-y-4">
           {
-            hasSearched && <SearchResults loading={isPending} header={header} results={searchResults} />
+            hasSearched && <SearchResults loading={isPending} header={searchResultsHeading} results={searchResults} />
           }
           {
             hasSearched && !isPending && searchResults.length > 0 && hasMore && (

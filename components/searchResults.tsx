@@ -10,7 +10,7 @@ const SearchResults = ({ header, results, loading }: any) => {
     return (
         <div className="w-full bg-transparent flex flex-col justify-center">
             <div className="py-4 space-y-6">
-                <h1 className="text-2xl font-semibold font-serif text-chiffon text-center">{header}</h1>
+                <h1 className="text-4xl font-bold font-serif text-chiffon text-center">{header}</h1>
                 <div className="max-h-screen overflow-y-auto p-2">
                     {loading ? (
                         <div className="flex justify-center items-center">
