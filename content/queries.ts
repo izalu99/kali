@@ -1,6 +1,7 @@
 import { HeroQuery, SearchQuery } from "@/types";
 import { contentGqlFetcher } from "./fetch";
 
+/** fetches content from cms */
 
 export const getContentForHero = async () => {
     const query = `#graphql
