@@ -1,5 +1,6 @@
 
 /** types for cms queries */
+
 export type HeroQuery = {
     heroCollection: {
         items: {
