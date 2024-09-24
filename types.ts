@@ -35,3 +35,17 @@ export type WordOfTheDayQuery = {
           }[]
         }
 };
+
+
+export type HeaderQuery = {
+    headerCollection: {
+        items: {
+            pagesCollection: {
+                items: {
+                    link: string
+                    label: string
+                }[]
+            }
+        }[]
+    }    
+};

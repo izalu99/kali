@@ -1,4 +1,4 @@
-import { HeroQuery, SearchQuery, WordOfTheDayQuery } from "@/types";
+import { HeroQuery, SearchQuery, WordOfTheDayQuery, HeaderQuery } from "@/types";
 import { contentGqlFetcher } from "./fetch";
 
 /** fetches content from cms */
@@ -68,6 +68,32 @@ export const getContentForWordOfTheDay = async () => {
     
     if(!data) {
         throw new Error('Failed to get word of the day content');
+    }
+
+    return data;
+
+}
+
+
+export const getContentForHeader = async () => {
+    const query = `#graphql
+        query HeaderCollection {
+            headerCollection {
+                items {
+                    pagesCollection {
+                        items {
+                        link
+                        label
+                        }
+                    }
+                }
+            }
+        }
+    `
+    const data = await contentGqlFetcher<HeaderQuery>({query});
+    
+    if(!data) {
+        throw new Error('Failed to get header content');
     }
 
     return data;
