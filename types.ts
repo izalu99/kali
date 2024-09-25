@@ -59,3 +59,13 @@ export type BrowseQuery = {
         }[]
     }
 }
+
+
+export type AboutQuery = {
+    aboutCollection: {
+        items: {
+        heading: string
+        description: string
+        }[]
+    } 
+}

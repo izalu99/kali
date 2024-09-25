@@ -1,4 +1,4 @@
-import { HeroQuery, SearchQuery, WordOfTheDayQuery, HeaderQuery, BrowseQuery } from "@/types";
+import { HeroQuery, SearchQuery, WordOfTheDayQuery, HeaderQuery, BrowseQuery, AboutQuery } from "@/types";
 import { contentGqlFetcher } from "./fetch";
 
 /** fetches content from cms */
@@ -119,3 +119,27 @@ export const getContentForBrowse = async () => {
 
     return data;
 }
+
+
+
+export const getContentForAbout = async () => {
+    const query = `#graphql
+        query AboutCollection {
+            aboutCollection {
+                items {
+                heading
+                description
+                }
+            }
+        }
+    `
+    const data = await contentGqlFetcher<AboutQuery>({query});
+    if(!data) {
+        throw new Error('Failed to get about page content.');
+    }
+
+    return data;
+}
+
+
+
