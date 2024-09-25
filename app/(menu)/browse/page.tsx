@@ -1,14 +1,15 @@
 'use client'
 
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import SearchResults  from "@/components/searchResults";
+import { getContentForBrowse } from "@/content/queries";
 
 import { getWordsAction } from "@/app/actions/actions";
 import { Word } from "@/components/search";
+import { ClipLoader } from 'react-spinners';
 
 
 const Browse = () => {
-    const header = 'Browse Words';
     const letters = [
         'a', 'e', 'i', 'o', 'u',
         'ba', 'be', 'bi', 'bo', 'bu',
@@ -32,10 +33,23 @@ const Browse = () => {
     const [offset, setOffset] = useState<number>(0);
     const [hasMore, setHasMore] = useState<boolean>(true);
     const [errorMessage, setErrorMessage] = useState('');
+    const [heading, setHeading] = useState<string>('');
+    const [subHeading, setSubHeading] = useState<string>('');
 
     
-    console.log('filteredWords: ', filteredWords);
-
+    useEffect(() => {
+        const fetchContent = async () => {
+            try {
+                const data = await getContentForBrowse();
+                setHeading(data.browseCollection.items[0].heading);
+                setSubHeading(data.browseCollection.items[0].subHeading);
+            } catch (error: any) {
+                setErrorMessage(error.message);
+                console.error('Error fetching browse content: ', error);
+            }
+        }
+        fetchContent();
+    }, []);
 
     
 
@@ -45,7 +59,6 @@ const Browse = () => {
             setOffset(0);
             setSelectedLetter(letter);
             const { words, hasMore } = await getWordsAction(letter, limit, 0) as { words: any; hasMore: boolean; };
-            console.log('words: ', words);
             setFilteredWords(words);
             setHasMore(hasMore);
 
@@ -70,7 +83,6 @@ const Browse = () => {
             const { words, hasMore } = await getWordsAction(selectedLetter, limit, newOffset) as { words: any; hasMore: boolean; };
             setFilteredWords((prevWords: Word[]) => [...prevWords, ...words]);
             setHasMore(hasMore);
-            console.log(words);
         } catch (error) {
             console.error('Error loading more search results: ', error);
         }
@@ -81,9 +93,10 @@ const Browse = () => {
 
     return (
         <div className="flex flex-col w-full justify-between">
-            <h1 className='font-serif pt-10 sm:text-lg md:text-xl lg:text-2xl xl:text-4xl flex text-chiffon justify-center align-middle font-semibold mb-6'>
-                Select any of the 'abakada' alphabet below to browse.
-            </h1>
+            <h1 className='font-serif pt-10 sm:text-lg md:text-xl lg:text-2xl xl:text-4xl flex text-chiffon justify-center align-middle font-bold mb-6'>{heading}</h1>
+            <h2 className='font-serif pt-5 sm:text-md md:text-lg lg:text-xl xl:text-2xl flex text-chiffon justify-center align-middle font-medium mb-6'>
+                {subHeading}
+            </h2>
             <div className='p-8 sticky grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-4'>
             {letters.map((letter) => (
                 <button 
@@ -100,7 +113,7 @@ const Browse = () => {
                 text-chiffon
                 p-4 
                 rounded-full 
-                bg-red-600 
+                bg-purple-400
                 hover:bg-darkRed
                 duration-300
                 ease-in-out
@@ -111,8 +124,8 @@ const Browse = () => {
                 </button>
             ))}
             </div>
-            <div className='flex justify-center align-middle self-center w-[60%]'>
-                <SearchResults loading={isPending} header={header}  results={filteredWords} />
+            <div className='pt-10 flex justify-center align-middle self-center w-[60%]'>
+                <SearchResults loading={isPending} header={selectedLetter}  results={filteredWords} />
                 {errorMessage && <small className="text-darkRed text-center">{errorMessage}</small>}
             </div>
             <div className='flex justify-center align-middle self-center w-[60%]'>
@@ -129,12 +142,14 @@ const Browse = () => {
                     text-chiffon
                     p-4
                     rounded-full
-                    bg-red-600
+                    bg-purple-400
                     hover:text-chiffon
                     hover:bg-darkRed
                     duration-300
-                    ease-in-out'>
-                    {isPending ? 'Loading...' : 'Load More'}
+                    ease-in-out
+                    shadow-lg
+                    transform hover:scale-105'>
+                    {isPending ? <ClipLoader color={'#FDFFFF'} /> : 'Load More'}
                 </button>}
             </div>
             

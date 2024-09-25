@@ -3,8 +3,18 @@ import React, { useState } from "react";
 import Hamburger from "./hamburger"
 import Menu from "./menu"
 
+interface MenuItem {
+    link: string;
+    label: string;
+  }
+  
+  interface MenuProps {
+    items: MenuItem[];
+  }
 
-const HamburgerMenu = () => {
+
+
+const HamburgerMenu = ({ items }: MenuProps) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     
     const handleHamburgerClick = () => {
@@ -16,7 +26,7 @@ const HamburgerMenu = () => {
             <Hamburger isOpen={isMenuOpen}/>
             {isMenuOpen && 
                 <div className="absolute right-0 mt-8 items-center shadow-lg">
-                    <Menu/>    
+                    <Menu items={items}/>    
                 </div>
             }
         </div>

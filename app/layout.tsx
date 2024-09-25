@@ -8,6 +8,7 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import Cursor from "@/components/cursor";
 import { WordOTDProvider } from "@/app/context/wordOfTheDayContext";
+import { Main } from "next/document";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -32,8 +33,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Cursor />
           <ApolloProviderWrapper>
             <WordOTDProvider>
-              <Header />
-              {children}
+              <div className='min-h-screen flex flex-col'>
+                <main className="flex-grow">
+                  <Header />
+                  {children}
+                </main>
+              </div>
               <Footer />
             </WordOTDProvider>
           </ApolloProviderWrapper>
