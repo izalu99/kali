@@ -11,7 +11,7 @@ const WordOfTheDay = () => {
 
     if (!word || !translation) {
         return <div className='flex flex-col items-center justify-center w-full font-serif'>
-                    <h1 className='pt-4 text-2xl font-semibold text-chiffon text-center'>{heading}</h1>
+                    <h1 className='pt-4 pb-8 text-2xl font-semibold text-chiffon text-center'>{heading}</h1>
                     <div className='w-screen sm:max-screen-xs md:max-w-screen-sm lg:max-w-screen-md xl:max-w-screen-md p-10 flex flex-col justify-center'>
                     <div className='text-chiffon text-center align-middle'>
                         <ClipLoader color={'#FDFFFF'} />
@@ -22,8 +22,8 @@ const WordOfTheDay = () => {
 
     return (
         <div className='flex flex-col items-center w-full'>
-            <h1 className='pt-4 text-2xl font-semibold text-chiffon text-center font-serif'>{heading}</h1>
-            <div className='p-0 rounded-md w-screen sm:max-screen-xs md:max-w-screen-sm lg:max-w-screen-md xl:max-w-screen-md flex flex-col justify-center shadow-purple-200 shadow-lg'>
+            <h1 className='pt-4 pb-8 text-2xl font-semibold text-chiffon text-center font-serif'>{heading}</h1>
+            <div className='rounded-md w-screen sm:max-screen-xs md:max-w-screen-sm lg:max-w-screen-md xl:max-w-screen-md flex flex-col justify-center shadow-purple-200 shadow-lg'>
                 <WordTranslation word={word} translation={translation} />
             </div>
             
