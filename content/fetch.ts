@@ -6,10 +6,7 @@ const contentfulPreviewAccessToken = process.env.NEXT_PUBLIC_CONTENTFUL_PREVIEW_
 
 export const contentGqlFetcher = async <T>({
     query, variables={}, preview = false}: 
-    {query:string, variables?: any, preview?: boolean}): Promise<T | undefined> => {
-    
-        console.log('fetching content')
-        
+    {query:string, variables?: any, preview?: boolean}): Promise<T | undefined> => {    
         const res = await 
         fetch(`https://graphql.contentful.com/content/v1/spaces/${contenfulId}`,
             {
