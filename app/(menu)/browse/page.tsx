@@ -1,14 +1,14 @@
 'use client'
 
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import SearchResults  from "@/components/searchResults";
+import { getContentForBrowse } from "@/content/queries";
 
 import { getWordsAction } from "@/app/actions/actions";
 import { Word } from "@/components/search";
 
 
 const Browse = () => {
-    const header = 'Browse Words';
     const letters = [
         'a', 'e', 'i', 'o', 'u',
         'ba', 'be', 'bi', 'bo', 'bu',
@@ -32,10 +32,23 @@ const Browse = () => {
     const [offset, setOffset] = useState<number>(0);
     const [hasMore, setHasMore] = useState<boolean>(true);
     const [errorMessage, setErrorMessage] = useState('');
+    const [heading, setHeading] = useState<string>('');
+    const [subHeading, setSubHeading] = useState<string>('');
 
     
-    //console.log('filteredWords: ', filteredWords);
-
+    useEffect(() => {
+        const fetchContent = async () => {
+            try {
+                const data = await getContentForBrowse();
+                setHeading(data.browseCollection.items[0].heading);
+                setSubHeading(data.browseCollection.items[0].subHeading);
+            } catch (error: any) {
+                setErrorMessage(error.message);
+                console.error('Error fetching browse content: ', error);
+            }
+        }
+        fetchContent();
+    }, []);
 
     
 
@@ -79,9 +92,9 @@ const Browse = () => {
 
     return (
         <div className="flex flex-col w-full justify-between">
-            <h1 className='font-serif pt-10 sm:text-lg md:text-xl lg:text-2xl xl:text-4xl flex text-chiffon justify-center align-middle font-bold mb-6'>{header}</h1>
+            <h1 className='font-serif pt-10 sm:text-lg md:text-xl lg:text-2xl xl:text-4xl flex text-chiffon justify-center align-middle font-bold mb-6'>{heading}</h1>
             <h2 className='font-serif pt-5 sm:text-md md:text-lg lg:text-xl xl:text-2xl flex text-chiffon justify-center align-middle font-medium mb-6'>
-                Select any of the 'abakada' alphabet below to browse.
+                {subHeading}
             </h2>
             <div className='p-8 sticky grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-4'>
             {letters.map((letter) => (

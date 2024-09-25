@@ -49,3 +49,13 @@ export type HeaderQuery = {
         }[]
     }    
 };
+
+
+export type BrowseQuery = {
+    browseCollection: {
+        items: {
+        heading: string
+        subHeading: string
+        }[]
+    }
+}

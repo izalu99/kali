@@ -6,7 +6,6 @@ import { getContentForHeader } from "@/content/queries";
 
 const Header = async () => {
     const data = await getContentForHeader();
-    //console.log(data.headerCollection.items[0].pagesCollection.items);
     const items = data.headerCollection.items[0].pagesCollection.items;
     return (
         <div id='header' className="flex flex-row justify-between sticky top-0 z-40 bg-purple-950  bg-opacity-80 p-6 font-serif shadow-lg text-chiffon">
