@@ -14,7 +14,7 @@ const SearchResults = ({ header, results, loading }: any) => {
                 <div className="max-h-screen overflow-y-auto p-2">
                     {loading ? (
                         <div className="flex justify-center items-center">
-                            <ClipLoader color={'#000'} />
+                            <ClipLoader color={'#FDFFFF'} />
                         </div>
                     ):allResultsEmpty ? (
                         <div className='text-chiffon font-serif w-full p-6 text-center'>

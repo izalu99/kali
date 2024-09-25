@@ -6,6 +6,7 @@ import { getContentForBrowse } from "@/content/queries";
 
 import { getWordsAction } from "@/app/actions/actions";
 import { Word } from "@/components/search";
+import { ClipLoader } from 'react-spinners';
 
 
 const Browse = () => {
@@ -148,7 +149,7 @@ const Browse = () => {
                     ease-in-out
                     shadow-lg
                     transform hover:scale-105'>
-                    {isPending ? 'Loading...' : 'Load More'}
+                    {isPending ? <ClipLoader color={'#FDFFFF'} /> : 'Load More'}
                 </button>}
             </div>
             
