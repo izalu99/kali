@@ -62,6 +62,7 @@ const useAdminSearch = () => {
         hasMore,
         handleSubmit,
         handleLoadMore,
+        handleSearch
     };
 
 }

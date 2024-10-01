@@ -31,6 +31,7 @@ const AdminSearch = () => {
         <div className='w-full flex flex-col'>
             <form
             id="adminSearch"
+            data-testid="adminSearch"
             className='flex flex-row justify-center' 
             onSubmit={handleSubmit}>
                 <input

@@ -1,16 +1,18 @@
 
 import useAdminSearch from '@/hooks/componentHooks/useAdminSearch';
+import { renderHook, act } from '@testing-library/react';
 import { searchAction } from '@/app/actions/actions';
-import { renderHook } from '@testing-library/react';
 
 jest.mock('@/app/actions/actions', () => ({
     searchAction: jest.fn(),
-}));
+  }));
+
 
 
 describe('useAdminSearch', () =>{
 
-    test('should return the correct values', () => {
+
+    test('1. Should return the correct initial states', () => {
         const { result } = renderHook(() => useAdminSearch());
         const { input, 
             setInput, 
@@ -31,4 +33,18 @@ describe('useAdminSearch', () =>{
         expect(typeof handleSubmit).toBe('function');
         expect(typeof handleLoadMore).toBe('function');
     });
+
+
+    test('2. Should update input state correctly', () => {
+        const { result } = renderHook(() => useAdminSearch());
+        const { setInput } = result.current;
+
+        act(() => {
+            setInput('test');
+        })
+
+        expect(result.current.input).toBe('test');
+        
+    });
+    
 })
