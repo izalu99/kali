@@ -13,8 +13,6 @@ import dynamic from 'next/dynamic';
 const AdminSearchResults = dynamic(() => import('@/components/adminSearchResults'));
 
 
-
-
 const AdminSearch = () => {
     const {
         input,
