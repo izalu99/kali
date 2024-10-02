@@ -22,49 +22,6 @@ Kali is a web application designed to help users learn and translate the kankana
 - **Clerk**: Authentication and user management.
 - **Contentful**: For content management
 
-## Installation
-
-### Prerequisites
-
-- Node.js (v14 or higher)
-- npm or yarn
-
-### Steps
-
-1. Clone the repository:
-
-    ```sh
-    git clone 
-    cd whatever-name-you-want-to-name-it
-    ```
-
-2. Install dependencies:
-
-    ```sh
-    npm install
-    # or
-    yarn install
-    ```
-
-3. Set up environment variables:
-
-    Create a `.env.local` file in the root directory and add the necessary environment variables. Example:
-
-    ```env
-    NEXT_PUBLIC_API_URL=https://api.yourdomain.com
-    CLERK_FRONTEND_API=your-clerk-frontend-api
-    ...
-    ```
-
-4. Run the development server:
-
-    ```sh
-    npm run dev
-    # or
-    yarn dev
-    ```
-
-5. Open your browser and navigate to `http://localhost:3000`.
 
 ## Usage
 
