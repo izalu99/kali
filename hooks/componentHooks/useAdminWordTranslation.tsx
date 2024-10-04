@@ -5,7 +5,7 @@ import {
     updateTranslationAction, 
     deleteTranslationAndWordAction } from '@/app/actions/actions';
 
-const useAdminWordTranslation = ({ word, translation }: any) => {
+const useAdminWordTranslation = ({ word = {}, translation={} }: any) => {
     const [loading, setLoading] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
     const [wordText, setWordText] = useState(word.text || '');
