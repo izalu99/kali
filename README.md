@@ -13,7 +13,7 @@ Also, for me to learn how the technologies listed below work together. As well a
 ### Future Features to include
 
 - allow a list of definitions/ translations to a word.
-- api
+- api documentation
 - automated e2e tests and automated unit tests with github actions.
 
 ## Technologies Used
