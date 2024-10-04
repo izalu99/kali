@@ -1,7 +1,7 @@
 
 import { useState, useTransition } from "react";
 import { searchAction } from "@/app/actions/actions";
-import { Word } from "@/components/search";
+import { Word } from "@/hooks/componentHooks/useSearch";
 
 const useAdminSearch = () => {
     const [input, setInput] = useState('');
