@@ -1,15 +1,18 @@
 # Kali
+Kali is a digital library of kankanaey words (in roman characters). Their definitions and/or translations are in english.
+The purpose is for preserving one of spoken dialects in the Northern parts of the Philippines.
 
-## Overview
-
-Kali is a web application designed to help users learn and translate the kankanaey dialect. The app provides a user-friendly interface for searching words and translations, and it leverages modern web technologies to deliver a seamless experience.
 
 ## Features
 
 - **Search Functionality**: Quickly search for words and their translations.
-- **Debounced Search**: Efficient search with debouncing to reduce server load.
 - **Responsive Design**: Works on both desktop and mobile devices.
-- **Admin Interface**: Manage translations and other data through an admin interface.
+- **Browse**: Look for words with the letters they start with.
+
+### Future Features to include
+
+- allow a list of definitions/ translations to a word.
+- api
 
 ## Technologies Used
 
@@ -22,13 +25,7 @@ Kali is a web application designed to help users learn and translate the kankana
 - **Clerk**: Authentication and user management.
 - **Contentful**: For content management
 
-
-## Usage
-
-- **Search**: Use the search bar to find translations.
-- **Admin**: Access the admin interface to manage translations. Atm, only Accessible by me.
-- **Browse**: Click cta 'Dive into the alphabet' to look for words by the 'abakada' alphabet.
-
 ## License
 
-*In progress...*
+GNU GPLv3
+
