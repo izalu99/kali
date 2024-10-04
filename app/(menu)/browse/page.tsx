@@ -5,7 +5,7 @@ import SearchResults  from "@/components/searchResults";
 import { getContentForBrowse } from "@/content/queries";
 
 import { getWordsAction } from "@/app/actions/actions";
-import { Word } from "@/components/search";
+import { Word } from "@/hooks/componentHooks/useSearch";
 import { ClipLoader } from 'react-spinners';
 
 
