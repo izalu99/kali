@@ -1,11 +1,11 @@
 import Link from 'next/link';
 
-interface MenuItem {
+export interface MenuItem {
   link: string;
   label: string;
 }
 
-interface MenuProps {
+export interface MenuProps {
   items: MenuItem[];
 }
 

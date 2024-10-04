@@ -1,5 +1,6 @@
 import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+import fetch from 'cross-fetch';
 
 
 
@@ -14,7 +15,8 @@ const getGraphqlUri = () => {
 
 const httpLink = new HttpLink({
     uri: getGraphqlUri(),
-    credentials:'same-origin'
+    credentials:'same-origin',
+    fetch
 });
 
 

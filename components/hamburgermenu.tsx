@@ -3,14 +3,10 @@ import React, { useState } from "react";
 import Hamburger from "./hamburger"
 import Menu from "./menu"
 
-interface MenuItem {
-    link: string;
-    label: string;
-  }
-  
-  interface MenuProps {
-    items: MenuItem[];
-  }
+import { MenuProps }  from "./menu"
+
+
+
 
 
 
