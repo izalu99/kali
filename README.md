@@ -9,6 +9,11 @@ The purpose is for preserving one of spoken dialects in the Northern parts of th
 - **Responsive Design**: Works on both desktop and mobile devices.
 - **Browse**: Look for words with the letters they start with.
 
+### Future Features to include
+
+- allow a list of definitions/ translations to a word.
+- api
+
 ## Technologies Used
 
 - **React**: Frontend library for building user interfaces.
