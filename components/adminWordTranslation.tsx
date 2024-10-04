@@ -1,7 +1,7 @@
 'use client'
 
 import Modal from '@/components/modal';
-import useAdminSearchTranslation from '@/hooks/componentHooks/useAdminSearchTranslation';
+import useAdminWordTranslation from '@/hooks/componentHooks/useAdminWordTranslation';
 
 
 // for word display after search
@@ -28,7 +28,7 @@ const AdminWordTranslation = ({ word, translation }: any) => {
         wordTransDeleted,
         handleSubmit,
         handleDelete
-    } = useAdminSearchTranslation({word, translation});
+    } = useAdminWordTranslation({word, translation});
     
     if(wordTransDeleted) return null;
     

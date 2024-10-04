@@ -5,7 +5,7 @@ import {
     updateTranslationAction, 
     deleteTranslationAndWordAction } from '@/app/actions/actions';
 
-const useAdminSearchTranslation = ({ word, translation }: any) => {
+const useAdminWordTranslation = ({ word, translation }: any) => {
     const [loading, setLoading] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
 
@@ -92,4 +92,4 @@ const useAdminSearchTranslation = ({ word, translation }: any) => {
     }
 }
 
-export default useAdminSearchTranslation;
+export default useAdminWordTranslation;
