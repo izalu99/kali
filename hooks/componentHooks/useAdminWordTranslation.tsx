@@ -14,7 +14,7 @@ const useAdminWordTranslation = ({ word, translation }: any) => {
     const [wordType, setWordType] = useState(word.type || '');
     const [wordTense, setWordTense] = useState(word.tense || '');
     const [wordExample, setWordExample] = useState(word.example || '');
-    const [translationText, setTranslationText] = useState(translation.text);
+    const [translationText, setTranslationText] = useState(translation.text || '');
     const [translationLanguage, setTranslationLanguage] = useState(translation.language || '');
     const [wordTransDeleted, setWordTransDeleted] = useState(false);
     
