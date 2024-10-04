@@ -23,8 +23,9 @@ The purpose is for preserving one of spoken dialects in the Northern parts of th
 - **Tailwind CSS**: Utility-first CSS framework for styling.
 - **GraphQL**: Query language for your API.
 - **Clerk**: Authentication and user management.
-
+- **Contentful**: For content management
 
 ## License
 
 GNU GPLv3
+
