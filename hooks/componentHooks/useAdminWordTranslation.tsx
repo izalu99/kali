@@ -8,8 +8,7 @@ import {
 const useAdminWordTranslation = ({ word, translation }: any) => {
     const [loading, setLoading] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
-
-    const [wordText, setWordText] = useState(word.text);
+    const [wordText, setWordText] = useState(word.text || '');
     const [wordPronunciation, setWordPronunciation] = useState(word.pronunciation || '');
     const [wordType, setWordType] = useState(word.type || '');
     const [wordTense, setWordTense] = useState(word.tense || '');
