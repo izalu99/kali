@@ -2,7 +2,7 @@
 
 Kali is a digital library of kankanaey words (in roman characters). Their definitions and/or translations are in english.
 The purpose is for preserving one of spoken dialects in the Northern parts of the Philippines as well as making it acessible to anyone interested to it.
-Also, for me to learn how the technologies listed below work together.
+Also, for me to learn how the technologies listed below work together. As well as  using the server side rendering with the new server components combined with client components.
 
 ## Features
 
@@ -14,6 +14,7 @@ Also, for me to learn how the technologies listed below work together.
 
 - allow a list of definitions/ translations to a word.
 - api
+- automated e2e tests and automated unit tests with github actions.
 
 ## Technologies Used
 
@@ -27,6 +28,12 @@ Also, for me to learn how the technologies listed below work together.
 - **Tailwind CSS**: Utility-first CSS framework for styling.
 - **Clerk**: Authentication and user management.
 - **Contentful**: For content management. It's probably overkill right now, in the early stages but I wanted to learn it and also for future scaling or change of maintainer.
+
+
+## Tests
+
+- Unit tests on hooks and functions being implemented.
+- Server components with next.js yet to find a way to test them.
 
 ## License
 
