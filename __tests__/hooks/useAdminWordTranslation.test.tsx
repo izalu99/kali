@@ -1,9 +1,10 @@
 
 
+import { updateWordAction, updateTranslationAction, deleteTranslationAndWordAction } from "@/app/actions/actions";
 import useAdminWordTranslation
  from "@/hooks/componentHooks/useAdminWordTranslation";
 
-import { renderHook} from "@testing-library/react";
+import { renderHook, act} from "@testing-library/react";
 
 
 
@@ -13,6 +14,28 @@ jest.mock('@/app/actions/actions', () => ({
     updateTranslationAction: jest.fn(),
     deleteTranslationAndWordAction: jest.fn()
   }));
+
+class MockFormData {
+    private data: Record<string, any>;
+    constructor() {
+        this.data = {};
+    }
+    append(key: string, value: string) {
+        this.data[key] = value;
+    }
+
+    set(key: string, value: string) {
+        this.data[key] = value;
+    }
+    get(key: string) {
+        return this.data[key];
+    }
+    getAll() {
+        return this.data;
+    }
+}
+
+global.FormData = MockFormData as any;
 
 
 describe('useAdminWordTranslation', () => {
@@ -98,6 +121,69 @@ describe('useAdminWordTranslation', () => {
         expect(result.current.wordTransDeleted).toBe(false);
         expect(typeof result.current.handleSubmit).toBe('function');
         expect(typeof result.current.handleDelete).toBe('function');
-    });    
+    });
+
+
+    test('3. Should handle submit correctly', async () => {
+        const mockWord = {
+            id: 1,
+            text: 'mockWord',
+            pronunciation: 'mockPronunciation',
+            type: 'mockType',
+            tense: 'mockTense',
+            example: 'mockExample'
+        }
+        const mockTranslation = {
+            id: 1,
+            wordId: 1,
+            text: 'mockTranslation',
+            language: 'mockLanguage'
+        }
+        const { result } = renderHook(() =>
+            useAdminWordTranslation({word: mockWord, translation: mockTranslation}));
+        
+        const mockEvent = {
+            preventDefault: jest.fn(),
+            currentTarget: new MockFormData()
+        }
+
+        await act(async () => {
+            await result.current.handleSubmit(mockEvent as any);
+        })
+
+        expect(mockEvent.preventDefault).toHaveBeenCalled();
+        expect(result.current.modalMessage).toBe('Word and translation updated successfully!');
+        expect(updateWordAction).toHaveBeenCalled();
+        expect(updateTranslationAction).toHaveBeenCalled();
+    });
+
+
+    test('4. Should handle delete correctly', async () => {
+        const mockWord = {
+            id: 1,
+            text: 'mockWord',
+            pronunciation: 'mockPronunciation',
+            type: 'mockType',
+            tense: 'mockTense',
+            example: 'mockExample'
+        }
+        const mockTranslation = {
+            id: 1,
+            wordId: 1,
+            text: 'mockTranslation',
+            language: 'mockLanguage'
+        }
+        const { result } = renderHook(() =>
+            useAdminWordTranslation({word: mockWord, translation: mockTranslation}));
+
+        await act(async () => {
+            await result.current.handleDelete();
+        });
+
+        expect(result.current.modalMessage).toBe('Word and translation deleted successfully!');
+        expect(result.current.wordTransDeleted).toBe(true);
+        expect(deleteTranslationAndWordAction).toHaveBeenCalled();
+
+    });
 });
 
