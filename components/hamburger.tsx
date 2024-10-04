@@ -1,8 +1,6 @@
 
 "use client"
 
-import { useState } from 'react';
-
 const Hamburger = ({ isOpen }: { isOpen: boolean }) => {
     return (
         <div data-testid="hamburger" className="relative w-9 h-7 flex flex-col justify-center space-y-2 mt-1">
