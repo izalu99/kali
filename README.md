@@ -1,15 +1,13 @@
 # Kali
+Kali is a digital library of kankanaey words (in roman characters). Their definitions and/or translations are in english.
+The purpose is for preserving one of spoken dialects in the Northern parts of the Philippines.
 
-## Overview
-
-Kali is a web application designed to help users learn and translate the kankanaey dialect. The app provides a user-friendly interface for searching words and translations, and it leverages modern web technologies to deliver a seamless experience.
 
 ## Features
 
 - **Search Functionality**: Quickly search for words and their translations.
-- **Debounced Search**: Efficient search with debouncing to reduce server load.
 - **Responsive Design**: Works on both desktop and mobile devices.
-- **Admin Interface**: Manage translations and other data through an admin interface.
+- **Browse**: Look for words with the letters they start with.
 
 ## Technologies Used
 
@@ -21,55 +19,7 @@ Kali is a web application designed to help users learn and translate the kankana
 - **GraphQL**: Query language for your API.
 - **Clerk**: Authentication and user management.
 
-## Installation
-
-### Prerequisites
-
-- Node.js (v14 or higher)
-- npm or yarn
-
-### Steps
-
-1. Clone the repository:
-
-    ```sh
-    git clone 
-    cd whatever-name-you-want-to-name-it
-    ```
-
-2. Install dependencies:
-
-    ```sh
-    npm install
-    # or
-    yarn install
-    ```
-
-3. Set up environment variables:
-
-    Create a `.env.local` file in the root directory and add the necessary environment variables. Example:
-
-    ```env
-    NEXT_PUBLIC_API_URL=https://api.yourdomain.com
-    CLERK_FRONTEND_API=your-clerk-frontend-api
-    ...
-    ```
-
-4. Run the development server:
-
-    ```sh
-    npm run dev
-    # or
-    yarn dev
-    ```
-
-5. Open your browser and navigate to `http://localhost:3000`.
-
-## Usage
-
-- **Search**: Use the search bar to find translations.
-- **Admin**: Access the admin interface to manage translations.
 
 ## License
 
-*In progress...*
+GNU GPLv3
